@@ -1,0 +1,33 @@
+{
+  "name": "@medisys/test",
+  "version": "0.1.2",
+  "description": "> TODO: description",
+  "author": "Medisys <medisysadmin@medinno.com>",
+  "homepage": "https://github.com/medisysinnovation/medisys#readme",
+  "license": "MIT",
+  "source": "lib/index.js",
+  "main": "dist/index.js",
+  "exports": "dist/index.modern.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medisysinnovation/medisys.git"
+  },
+  "scripts": {
+    "build": "microbundle --no-compress --format modern,cjs",
+    "build:compress": "microbundle --format modern,cjs",
+    "test": "run-s test:unit test:lint test:build"
+  },
+  "bugs": {
+    "url": "https://github.com/medisysinnovation/medisys/issues"
+  }
+}
