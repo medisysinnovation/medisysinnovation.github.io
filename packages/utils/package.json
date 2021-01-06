@@ -11,11 +11,11 @@
   "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "directories": {
-    "lib": "lib",
+    "src": "src",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "src"
   ],
   "publishConfig": {
     "access": "public"
