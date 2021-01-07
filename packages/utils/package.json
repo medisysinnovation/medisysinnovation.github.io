@@ -6,7 +6,7 @@
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
   "license": "MIT",
   "source": "src/index.ts",
-  "main": "dist/index/utils.js",
+  "main": "dist/index",
   "typings": "dist/index",
   "exports": "dist/index.modern.js",
   "module": "dist/index.module.js",
