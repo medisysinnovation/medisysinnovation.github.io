@@ -1,6 +1,7 @@
 import { Moment } from "moment";
 
 export * from "./calculation";
+export * from "./test";
 
 export const dateTimeCompare = (
   a: Moment | undefined | null,
