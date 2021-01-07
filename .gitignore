@@ -24,3 +24,5 @@ packages/bundler-webpack/src/fixtures/outputPath/bar
 /examples/*/logs
 /examples/*/run
 /examples/*/.idea
+
+lerna-debug.log
