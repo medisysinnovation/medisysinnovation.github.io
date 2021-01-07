@@ -3,14 +3,16 @@
   "private": true,
   "author": "Medisys <medisysadmin@medinno.com>",
   "devDependencies": {
+    "@types/node": "^14.14.20",
     "lerna": "^3.22.1",
-    "microbundle": "^0.13.0"
+    "microbundle": "^0.13.0",
+    "typescript": "^4.1.3"
   },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "build": "lerna run build",
+    "build": "lerna run tsc && lerna run build",
     "build:compress": "lerna run build:compress",
     "test": "lerna run test"
   }

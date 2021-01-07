@@ -1,6 +1,6 @@
 /node_modules
 /packages/*/lib
-# /packages/*/dist
+/packages/*/distgit rm -r
 /packages/*/node_modules
 /coverage
 /.nyc_output
