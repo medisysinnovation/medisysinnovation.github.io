@@ -2,8 +2,6 @@ import { Moment } from "moment";
 
 export * from "./calculation";
 
-export * from "./getFile";
-
 export const dateTimeCompare = (
   a: Moment | undefined | null,
   b: Moment | undefined | null
