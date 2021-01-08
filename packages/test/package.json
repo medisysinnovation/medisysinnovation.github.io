@@ -24,11 +24,13 @@
   },
   "scripts": {
     "build": "microbundle --no-compress --format modern,cjs",
-    "build:compress": "microbundle --format modern,cjs",
-    "test": "run-s test:unit test:lint test:build"
+    "build:compress": "microbundle --format modern,cjs"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
-  "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac"
+  "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
