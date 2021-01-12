@@ -1,7 +1,4 @@
-import RenderAuthorize, {
-  RenderComponentAuthorize,
-  Authorized as AuthorizedUtils,
-} from "../Authorized";
+import RenderAuthorize, { RenderComponentAuthorize } from "../Authorized";
 // use localStorage to store the authority info, which might be sent from server in actual project.
 export function getAuthority(str?: string): string | string[] {
   const authorityString =
@@ -52,5 +49,4 @@ const reloadAuthorized = (): void => {
  */
 (window as any).reloadAuthorized = reloadAuthorized;
 
-export { reloadAuthorized, ComponentAuthorized, AuthorizedUtils };
-export default Authorized;
+export { Authorized, reloadAuthorized, ComponentAuthorized };
