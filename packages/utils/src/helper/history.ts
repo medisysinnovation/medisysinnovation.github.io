@@ -1,5 +1,5 @@
 // @ts-nocheck
-export {
+import {
   createBrowserHistory,
   createHashHistory,
   createMemoryHistory,
