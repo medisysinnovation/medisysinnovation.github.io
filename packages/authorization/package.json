@@ -30,7 +30,9 @@
   },
   "scripts": {
     "tsc": "tsc --noEmit",
-    "build": "tsc --noEmit && microbundle --no-compress",
+    "build": "npm run build:types && npm run build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
     "build:compress": "tsc && microbundle --format modern,cjs",
     "test": "run-s test:unit test:lint test:build"
   },
@@ -50,7 +52,10 @@
     "@babel/preset-typescript": "7.12.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "babel-loader": "8.1.0"
+    "@babel/cli": "^7.8.3",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "typescript": "^3.7.5"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
