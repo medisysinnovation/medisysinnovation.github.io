@@ -1,8 +1,8 @@
-import { Redirect, Route } from 'umi';
+import { Redirect, Route } from "react-router-dom";
 
-import React from 'react';
-import Authorized from './Authorized';
-import { IAuthorityType } from './CheckPermissions';
+import React from "react";
+import Authorized from "./Authorized";
+import { IAuthorityType } from "./CheckPermissions";
 
 interface AuthorizedRouteProps {
   currentAuthority: string;
@@ -21,11 +21,18 @@ const AuthorizedRoute: React.SFC<AuthorizedRouteProps> = ({
 }) => (
   <Authorized
     authority={authority}
-    noMatch={<Route {...rest} render={() => <Redirect to={{ pathname: redirectPath }} />} />}
+    noMatch={
+      <Route
+        {...rest}
+        render={() => <Redirect to={{ pathname: redirectPath }} />}
+      />
+    }
   >
     <Route
       {...rest}
-      render={(props: any) => (Component ? <Component {...props} /> : render(props))}
+      render={(props: any) =>
+        Component ? <Component {...props} /> : render(props)
+      }
     />
   </Authorized>
 );
