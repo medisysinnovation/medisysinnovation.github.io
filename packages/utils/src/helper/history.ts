@@ -3,7 +3,7 @@ export {
   createBrowserHistory,
   createHashHistory,
   createMemoryHistory,
-} from "history-with-query";
+} from "history";
 export type { MemoryHistory, History as HWQHistory } from "history-with-query";
 let options = {
   basename: "/",
