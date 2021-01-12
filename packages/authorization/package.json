@@ -1,0 +1,51 @@
+{
+  "name": "authorization",
+  "version": "0.1.33",
+  "description": "Medisys UI Access Control Package",
+  "keywords": [
+    "medisys"
+  ],
+  "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
+  "homepage": "https://github.com/medisysinnovation/medisys#readme",
+  "license": "MIT",
+  "source": "src/index.ts",
+  "main": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
+  "exports": "dist/index.modern.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
+  "directories": {
+    "src": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medisysinnovation/medisys.git"
+  },
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "build": "tsc --noEmit && microbundle --no-compress",
+    "build:compress": "tsc && microbundle --format modern,cjs",
+    "test": "run-s test:unit test:lint test:build"
+  },
+  "dependencies": {
+    "antd": "^4.10.2",
+    "history-with-query": "^4.10.4",
+    "lodash": "4.17.20",
+    "moment": "^2.29.1",
+    "react": "^17.0.1",
+    "umi-request": "^1.3.5"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.17"
+  },
+  "bugs": {
+    "url": "https://github.com/medisysinnovation/medisys/issues"
+  }
+}
