@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import config from "../../../../config";
+import { config } from "../config";
 import { POST } from "../network/request";
 import LOCAL_STORAGE_KEY from "../constant/localStorageKey";
 

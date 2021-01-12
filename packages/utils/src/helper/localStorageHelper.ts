@@ -1,6 +1,7 @@
 import LOCAL_STORAGE_KEY from "../constant/localStorageKey";
+import { config } from "../config";
 
-import SaveTokenPayload from "../../../../config/interfaces/misc/SaveTokenPayload";
+import SaveTokenPayload from "../interface/misc/SaveTokenPayload";
 
 export const saveAuthToken = (payload: SaveTokenPayload) => {
   const { access_token: accessToken, refresh_token: refreshToken } = payload;

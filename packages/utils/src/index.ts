@@ -1,3 +1,4 @@
+export { initilaze } from "./config";
 export * from "./helper";
 export * from "./calculation";
 export * from "./compare";

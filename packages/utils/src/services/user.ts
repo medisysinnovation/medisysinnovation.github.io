@@ -1,9 +1,9 @@
 import request from "../network/baseRequest";
 
 import { GET, PUT } from "../network/request";
-import config from "../../../../config";
+import { config } from "../config";
 
-import { User } from "../../../../config/interfaces/response/User";
+import { User } from "../interface/response/User";
 
 export interface ChangePasswordFormValues {
   currentPassword: string;
