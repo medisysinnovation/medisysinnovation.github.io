@@ -1,6 +1,6 @@
 {
   "name": "@medisys/test",
-  "version": "0.1.28",
+  "version": "0.1.21",
   "description": "> TODO: description",
   "author": "Medisys <medisysadmin@medinno.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -24,7 +24,8 @@
   },
   "scripts": {
     "build": "microbundle --no-compress --format modern,cjs",
-    "build:compress": "microbundle --format modern,cjs"
+    "build:compress": "microbundle --format modern,cjs",
+    "test": "run-s test:unit test:lint test:build"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
@@ -32,5 +33,9 @@
   "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac",
   "devDependencies": {
     "npm-run-all": "^4.1.5"
+  },
+  "dependencies": {
+    "history-with-query": "^4.10.4",
+    "umi-request": "^1.3.5"
   }
 }
