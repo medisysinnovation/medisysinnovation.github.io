@@ -1,15 +1,18 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
     "noLib": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "ESNext",
     "sourceMap": true,
     "lib": ["es2017", "es7", "es6", "dom"]
+    // "jsx": "react",
+    // "jsxFactory": "h",
+    // "jsxFragmentFactory": "Fragment"
   },
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
