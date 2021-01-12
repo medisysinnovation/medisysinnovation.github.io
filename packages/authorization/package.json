@@ -46,8 +46,13 @@
   },
   "devDependencies": {
     "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0"
+    "@types/react-dom": "^17.0.0",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-react": "7.12.1",
+    "@babel/preset-typescript": "7.12.1",
+    "babel-loader": "8.1.0"
   },
+  "peerDependencies": {},
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
