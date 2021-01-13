@@ -2,7 +2,7 @@
   "name": "@medisys/utils",
   "version": "0.1.42",
   "description": "medisys/utils",
-  "author": "Medisys <medisysadmin@medinno.com>",
+  "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
   "license": "MIT",
   "source": "src/index.ts",
