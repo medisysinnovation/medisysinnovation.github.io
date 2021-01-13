@@ -27,9 +27,10 @@
   },
   "scripts": {
     "tsc": "tsc --noEmit",
-    "build": "tsc --noEmit && microbundle --no-compress --jsx React.createElement",
+    "build:old": "tsc --noEmit && microbundle --no-compress --jsx React.createElement",
     "build:compress": "tsc && microbundle --format modern",
-    "test": "run-s test:unit test:lint test:build"
+    "test": "run-s test:unit test:lint test:build",
+    "build": "webpack --mode production"
   },
   "dependencies": {
     "@medisys/utils": "^0.1.45",
@@ -49,8 +50,12 @@
     "@babel/preset-typescript": "^7.12.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
     "less": "^4.1.0",
     "less-loader": "^7.2.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^8.0.14",
     "typescript": "^3.7.5"
   },
   "bugs": {

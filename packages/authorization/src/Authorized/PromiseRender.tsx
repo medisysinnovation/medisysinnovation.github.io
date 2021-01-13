@@ -1,7 +1,7 @@
-import React from 'react';
-import { Spin } from 'antd';
-import isEqual from 'lodash/isEqual';
-import { isComponentClass } from './Secured';
+import React from "react";
+import { Spin } from "antd";
+import isEqual from "lodash/isEqual";
+import { isComponentClass } from "./Secured";
 // eslint-disable-next-line import/no-cycle
 
 interface PromiseRenderProps<T, K> {
@@ -26,7 +26,10 @@ export default class PromiseRender<T, K> extends React.Component<
     this.setRenderComponent(this.props);
   }
 
-  shouldComponentUpdate = (nextProps: PromiseRenderProps<T, K>, nextState: PromiseRenderState) => {
+  shouldComponentUpdate = (
+    nextProps: PromiseRenderProps<T, K>,
+    nextState: PromiseRenderState
+  ) => {
     const { component } = this.state;
     if (!isEqual(nextProps, this.props)) {
       this.setRenderComponent(nextProps);
@@ -58,7 +61,7 @@ export default class PromiseRender<T, K> extends React.Component<
   // Authorized  render is already instantiated, children is no instantiated
   // Secured is not instantiated
   checkIsInstantiation = (
-    target: React.ReactNode | React.ComponentClass,
+    target: React.ReactNode | React.ComponentClass
   ): React.FunctionComponent => {
     if (isComponentClass(target)) {
       const Target = target as React.ComponentClass;
@@ -79,11 +82,11 @@ export default class PromiseRender<T, K> extends React.Component<
     ) : (
       <div
         style={{
-          width: '100%',
-          height: '100%',
-          margin: 'auto',
+          width: "100%",
+          height: "100%",
+          margin: "auto",
           paddingTop: 50,
-          textAlign: 'center',
+          textAlign: "center",
         }}
       >
         <Spin size="large" />

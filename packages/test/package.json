@@ -5,15 +5,18 @@
   "author": "Medisys <medisysadmin@medinno.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
   "license": "MIT",
-  "source": "lib/index.js",
-  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "main": "dist/index.umd.js",
+  "types": "dist/index.d.ts",
   "exports": "dist/index.modern.js",
+  "module": "dist/index.module.js",
+  "unpkg": "dist/index.umd.js",
   "directories": {
-    "lib": "lib",
+    "src": "src",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "src"
   ],
   "publishConfig": {
     "access": "public"
@@ -25,14 +28,17 @@
   "scripts": {
     "build": "microbundle --no-compress --format modern,es,cjs,umd",
     "build:compress": "microbundle --format modern,cjs",
-    "test": "run-s test:unit test:lint test:build"
+    "test": "run-s test:unit test:lint test:build",
+    "build:webpack": "webpack"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
   "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac",
   "devDependencies": {
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "ts-loader": "^8.0.14",
+    "typescript": "^3.7.5"
   },
   "dependencies": {
     "history-with-query": "^4.10.4",

@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sources":["../lib/index.js"],"sourcesContent":["'use strict';\n\nmodule.exports = test;\n\nfunction test() {\n    // TODO\n}\n"],"names":["module","exports","test"],"mappings":"AAEAA,MAAM,CAACC,OAAP,GAAiBC,IAAjB;;AAEA,SAASA,IAAT,GAAgB;AAEf;;"}
+{"version":3,"file":"index.js","sources":["../src/a/index.ts"],"sourcesContent":["export function asb() {\r\n  console.log(123);\r\n}\r\n"],"names":["asb","console","log"],"mappings":"SAAgBA;AACdC,EAAAA,OAAO,CAACC,GAAR,CAAY,GAAZ;AACD;;;;"}

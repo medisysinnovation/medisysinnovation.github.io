@@ -12,7 +12,7 @@
   "module": "dist/index.module.js",
   "unpkg": "dist/index.umd.js",
   "directories": {
-    "src": "dist",
+    "src": "src",
     "test": "__tests__"
   },
   "files": [
