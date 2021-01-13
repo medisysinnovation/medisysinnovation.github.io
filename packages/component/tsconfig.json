@@ -15,5 +15,6 @@
     "suppressImplicitAnyIndexErrors": true,
     "declaration": true
   },
-  "include": ["./src"]
+  "include": ["./src"],
+  "typings": "./typings/index.d.ts"
 }

@@ -27,7 +27,7 @@
   },
   "scripts": {
     "tsc": "tsc --noEmit",
-    "build": "tsc --noEmit && microbundle --no-compress --jsx React.createElement --format modern",
+    "build": "tsc --noEmit && microbundle --no-compress --jsx React.createElement",
     "build:compress": "tsc && microbundle --format modern",
     "test": "run-s test:unit test:lint test:build"
   },
@@ -49,6 +49,8 @@
     "@babel/preset-typescript": "^7.12.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "less": "^4.1.0",
+    "less-loader": "^7.2.1",
     "typescript": "^3.7.5"
   },
   "bugs": {
