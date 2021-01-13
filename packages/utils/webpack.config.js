@@ -6,7 +6,7 @@ module.exports = {
   entry: "./src/index.ts",
   devtool: "source-map",
   output: {
-    filename: "index.modern.js",
+    filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     // libraryTarget: "module",
   },

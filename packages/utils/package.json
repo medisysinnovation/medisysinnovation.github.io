@@ -5,12 +5,7 @@
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
   "license": "MIT",
-  "source": "src/index.ts",
-  "main": "dist/index.umd.js",
-  "types": "dist/index.d.ts",
-  "exports": "dist/index.modern.js",
-  "module": "dist/index.module.js",
-  "unpkg": "dist/index.umd.js",
+  "main": "dist/index.js",
   "directories": {
     "src": "src",
     "test": "__tests__"
@@ -27,7 +22,8 @@
   },
   "scripts": {
     "tsc": "tsc --noEmit",
-    "build": "tsc --noEmit && microbundle --no-compress",
+    "build": "webpack",
+    "build:old": "tsc --noEmit && microbundle --no-compress",
     "build:compress": "tsc && microbundle --format modern,cjs",
     "test": "run-s test:unit test:lint test:build"
   },
