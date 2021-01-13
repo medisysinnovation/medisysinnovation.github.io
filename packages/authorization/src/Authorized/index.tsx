@@ -10,6 +10,5 @@ Authorized.check = check;
 const RenderAuthorize = renderAuthorize(Authorized);
 
 const RenderComponentAuthorize = renderAuthorize(ComponentAuthorized);
-export { RenderComponentAuthorize };
-console.log(RenderAuthorize);
+export { RenderComponentAuthorize, check as CheckPermissions, Secured };
 export default RenderAuthorize;
