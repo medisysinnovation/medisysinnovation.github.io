@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.46",
+  "version": "0.1.47",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -28,7 +28,7 @@
     "build": "webpack --mode development"
   },
   "dependencies": {
-    "@medisys/utils": "^0.1.46",
+    "@medisys/utils": "^0.1.47",
     "antd": "^4.10.2",
     "lodash": "4.17.20",
     "moment": "^2.29.1",
