@@ -1,2 +1,4 @@
 export * from "./history";
-export * from "./localStorageHelper";
+export * from "./download";
+
+export * from "./localStorage";

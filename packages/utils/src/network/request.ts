@@ -4,7 +4,7 @@ import { RequestOptionsInit } from "umi-request";
 import { refreshToken } from "../services/login";
 import LOCAL_STORAGE_KEY from "../constant/localStorageKey";
 import UnauthorizedError from "./UnauthorizedException";
-import { saveAuthToken } from "../helper/localStorageHelper";
+import { saveAuthToken } from "../helper/localStorage";
 const getHeaders = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEY.accessTokenKey);
 
