@@ -32,4 +32,4 @@ const JobCounter = (props: any) => {
     </Space>
   );
 };
-export default JobCounter;
+export { JobCounter };
