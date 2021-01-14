@@ -1,4 +1,4 @@
-export { initilaze } from "./config";
+export { initilaze, config } from "./config";
 export * from "./helper";
 export * from "./calculation";
 export * from "./compare";
