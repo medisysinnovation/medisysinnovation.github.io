@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.54",
+  "version": "0.1.55",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -32,7 +32,7 @@
     "test:bak": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
-    "@medisys/utils": "^0.1.53",
+    "@medisys/utils": "^0.1.55",
     "antd": "^4.10.2",
     "classnames": "^2.2.6",
     "lodash": "4.17.20",
