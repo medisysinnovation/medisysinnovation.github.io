@@ -1,6 +1,6 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable import/no-mutable-exports */
-let CURRENT: string | string[] = "NULL";
+let CURRENT: string | string[] = 'NULL';
 
 type CurrentAuthorityType = string | string[] | (() => typeof CURRENT);
 /**
@@ -8,26 +8,26 @@ type CurrentAuthorityType = string | string[] | (() => typeof CURRENT);
  * @param {string|()=>String} currentAuthority
  */
 const renderAuthorize = <T>(
-  authorize: T
+  authorize: T,
 ): ((currentAuthority: CurrentAuthorityType) => T) => (
-  currentAuthority: CurrentAuthorityType
+  currentAuthority: CurrentAuthorityType,
 ): T => {
   if (currentAuthority) {
-    if (typeof currentAuthority === "function") {
+    if (typeof currentAuthority === 'function') {
       CURRENT = currentAuthority();
     }
     if (
-      Object.prototype.toString.call(currentAuthority) === "[object String]" ||
+      Object.prototype.toString.call(currentAuthority) === '[object String]' ||
       Array.isArray(currentAuthority)
     ) {
       CURRENT = currentAuthority as string[];
     }
   } else {
-    CURRENT = "NULL";
+    CURRENT = 'NULL';
   }
   return authorize;
 };
 
 export { CURRENT };
 // export default <T>(auth: T) => renderAuthorize<T>(auth);
-export default (auth) => renderAuthorize(auth);
+export default (auth: any) => renderAuthorize(auth);

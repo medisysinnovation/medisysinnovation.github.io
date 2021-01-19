@@ -8,7 +8,7 @@
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
     "deploy": "npm run docs:build && npm run docs:deploy",
-    "release": "npm run build && npm publish",
+    "release": "lerna run build && lerna publish",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
@@ -35,9 +35,9 @@
     "dumi": "^1.0.13",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
+    "lerna": "^3.22.1",
     "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
-    "yorkie": "^2.0.0",
-    "lerna": "^3.22.1"
+    "yorkie": "^2.0.0"
   }
 }

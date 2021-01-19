@@ -17,11 +17,6 @@ v10.13.0
 ### Install
 
 ```bash
-// Install Material-UI
-$ npm install @material-ui/core
-
-// Install Antd-Design
-$ npm install antd
 
 // Install Medisys-UI
 $ npm install @medisys/medisys-ui

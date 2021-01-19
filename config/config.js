@@ -11,7 +11,6 @@ export default defineConfig({
   // hash: true,
   title: 'Medisys Lab',
   mode: 'site',
-  // favicon: "https://img.alicdn.com/tfs/TB1YHEpwUT1gK0jSZFhXXaAtVXa-28-27.svg",
   base: '/medisys',
   publicPath: '/medisys/',
   // exportStatic: {}, // 将所有路由输出为 HTML 目录结构，以免刷新页面时 404
@@ -21,8 +20,16 @@ export default defineConfig({
     '/guide': [
       {
         title: 'Introduction',
-        children: ['guide/index', 'guide/getting-started'],
+        children: [
+          'guide/index',
+          'guide/getting-started',
+          'guide/authorization',
+        ],
       },
+      // {
+      //   title: 'Authorization',
+      //   children: ['authorization/index'],
+      // },
 
       // {
       //   title: "Control and generate",
@@ -44,22 +51,22 @@ export default defineConfig({
     '/component': [
       {
         title: 'General',
-        children: ['component/button'],
+        children: ['component/button', 'component/job-status-tag'],
       },
     ],
   },
-  navs: {
-    'en-US': [
-      null,
-      { title: 'GitHub', path: 'https://github.com/umijs/dumi' },
-      { title: 'Changelog', path: 'https://github.com/umijs/dumi/releases' },
-    ],
-    'zh-CN': [
-      null,
-      { title: 'GitHub', path: 'https://github.com/umijs/dumi' },
-      { title: '更新日志', path: 'https://github.com/umijs/dumi/releases' },
-    ],
-  },
+  // navs: {
+  //   'en-US': [
+  //     null,
+  //     { title: 'GitHub', path: 'https://github.com/umijs/dumi' },
+  //     { title: 'Changelog', path: 'https://github.com/umijs/dumi/releases' },
+  //   ],
+  //   'zh-CN': [
+  //     null,
+  //     { title: 'GitHub', path: 'https://github.com/umijs/dumi' },
+  //     { title: '更新日志', path: 'https://github.com/umijs/dumi/releases' },
+  //   ],
+  // },
 
   // extraBabelPlugins: [
   //   [
