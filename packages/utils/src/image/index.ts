@@ -4,7 +4,7 @@ export function loadImage(src: string) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => resolve(img);
-    img.onerror = (e) => reject(e);
+    img.onerror = e => reject(e);
     img.src = src;
   });
 }
@@ -12,13 +12,13 @@ export function getDataUrlFromFile(file: File) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => resolve(reader.result);
-    reader.onerror = (e) => reject(e);
+    reader.onerror = e => reject(e);
     reader.readAsDataURL(file);
   });
 }
 export function getNewCanvasAndCtx(width: number, height: number) {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
   canvas.width = width;
   canvas.height = height;
   return [canvas, ctx];
@@ -31,10 +31,10 @@ export function cleanupCanvasMemory(canvas: any) {
 export function getFilefromDataUrl(
   dataUrl: any,
   filename: string,
-  lastModified = Date.now()
+  lastModified = Date.now(),
 ) {
-  return new Promise((resolve) => {
-    const arr = dataUrl.split(",");
+  return new Promise(resolve => {
+    const arr = dataUrl.split(',');
     const mime = arr[0].match(/:(.*?);/)[1];
     const bstr = window.atob(arr[1]);
     let n = bstr.length;
@@ -65,11 +65,15 @@ export function getFilefromDataUrl(
 }
 
 export async function canvasToFile(
+  // @ts-ignore
   canvas,
+  // @ts-ignore
   fileType,
+  // @ts-ignore
   fileName,
+  // @ts-ignore
   fileLastModified,
-  quality = 1
+  quality = 1,
 ) {
   // checked on Win Edge 44, Win IE 11, Win Firefox 76, MacOS Firefox 77, MacOS Safari 13.1
   const dataUrl = canvas.toDataURL(fileType, quality);
@@ -114,7 +118,7 @@ export async function compressImage(file: File | Blob) {
         file.name,
         // @ts-ignore
         file.lastModified,
-        quality
+        quality,
       );
       fileSize = compressedFile.size;
       cleanupCanvasMemory(canvas);

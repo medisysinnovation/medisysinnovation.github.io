@@ -1,5 +1,5 @@
-import _ from "lodash";
-export function defineConfig(config) {
+import _ from 'lodash';
+export function defineConfig(config: Object) {
   return config;
 }
 

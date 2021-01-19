@@ -1,1 +1,0 @@
-{"version":3,"file":"index.modern.js","sources":["../lib/index.js"],"sourcesContent":["'use strict';\n\nmodule.exports = test;\n\nfunction test() {\n    // TODO\n}\n"],"names":["module","exports","test"],"mappings":"AAEAA,MAAM,CAACC,OAAP,GAAiBC,IAAjB;;AAEA,SAASA,IAAT,GAAgB;AAEf"}

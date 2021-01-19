@@ -23,9 +23,12 @@
     "url": "git+https://github.com/medisysinnovation/medisys.git"
   },
   "scripts": {
-    "build": "microbundle --no-compress --format modern,es,cjs,umd",
-    "build:compress": "microbundle --format modern,cjs",
-    "test": "run-s test:unit test:lint test:build"
+    "build": "father-build",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "build:bak": "microbundle --no-compress --format modern,es,cjs,umd",
+    "build:compress:bak": "microbundle --format modern,cjs",
+    "test:bak": "run-s test:unit test:lint test:build"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"

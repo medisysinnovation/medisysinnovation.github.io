@@ -1,13 +1,27 @@
-[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+# medisys
 
-### Installation
+## Getting Started
 
+Install dependencies,
+
+```bash
+$ npm i
 ```
-npm install
+
+Start the dev server,
+
+```bash
+$ npm start
 ```
 
-### Compile and publish
+Build documentation,
 
+```bash
+$ npm run docs:build
 ```
-npm run publish
+
+Build library via `father-build`,
+
+```bash
+$ npm run build
 ```

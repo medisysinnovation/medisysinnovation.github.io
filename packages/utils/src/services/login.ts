@@ -1,7 +1,7 @@
-import { stringify } from "qs";
-import { config } from "../config";
-import { POST } from "../network/request";
-import LOCAL_STORAGE_KEY from "../constant/localStorageKey";
+import { stringify } from 'qs';
+import { config } from '../config';
+import { POST } from '../network/request';
+import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
 
 export interface LoginParamsType {
   username: string;
@@ -15,10 +15,10 @@ export const login = async (payload: LoginParamsType) => {
     {
       data: stringify(payload),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       getResponse: true,
-    }
+    },
   );
 
   return result;
@@ -26,8 +26,8 @@ export const login = async (payload: LoginParamsType) => {
 
 export const refreshToken = async () => {
   const FORM_DATA = {
-    grant_type: "refresh_token", // refresh_token for refresh token
-    scope: "offline_access",
+    grant_type: 'refresh_token', // refresh_token for refresh token
+    scope: 'offline_access',
     client_id: process.env.client_id,
     client_secret: process.env.client_secret,
   };
@@ -43,10 +43,10 @@ export const refreshToken = async () => {
     {
       data: stringify(requestBody),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       getResponse: true,
-    }
+    },
   );
   return result;
 };

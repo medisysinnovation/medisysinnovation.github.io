@@ -1,10 +1,10 @@
-import { history } from "../helper";
-import request from "./baseRequest";
-import { RequestOptionsInit } from "umi-request";
-import { refreshToken } from "../services/login";
-import LOCAL_STORAGE_KEY from "../constant/localStorageKey";
-import UnauthorizedError from "./UnauthorizedException";
-import { saveAuthToken } from "../helper/localStorage";
+import { history } from '../helper/history';
+import request from './baseRequest';
+import { RequestOptionsInit } from 'umi-request';
+import { refreshToken } from '../services/login';
+import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
+import UnauthorizedError from './UnauthorizedException';
+import { saveAuthToken } from '../helper/localStorage';
 const getHeaders = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEY.accessTokenKey);
 
@@ -16,7 +16,7 @@ const getHeaders = () => {
 
 const doRefreshTokenFirst = async () => {
   const hasRefreshToken = !!localStorage.getItem(
-    LOCAL_STORAGE_KEY.refreshTokenKey
+    LOCAL_STORAGE_KEY.refreshTokenKey,
   );
   if (!hasRefreshToken) return false;
 
@@ -38,7 +38,7 @@ const doRefreshTokenFirst = async () => {
 export const GET = async (
   url: string,
   payload?: any,
-  overrideOptions: RequestOptionsInit | undefined = {}
+  overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
   const options = {
     params: payload,
@@ -47,7 +47,7 @@ export const GET = async (
     ...overrideOptions,
   };
 
-  const streamTypeList = ["arrayBuffer", "blob"];
+  const streamTypeList = ['arrayBuffer', 'blob'];
   try {
     const result = await request.get(url, options);
     if (
@@ -75,7 +75,9 @@ export const GET = async (
 
         return result && result.data;
       }
-      history.replace("/user/login");
+
+      // @ts-ignore
+      history.replace('/user/login');
     }
 
     return undefined;
@@ -85,7 +87,7 @@ export const GET = async (
 export const POST = async (
   url: string,
   payload: any,
-  overrideOptions: RequestOptionsInit | undefined = {}
+  overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
   const options = {
     data: payload,
@@ -95,7 +97,7 @@ export const POST = async (
   };
   try {
     const result = await request.post(url, options);
-    const streamTypeList = ["arrayBuffer", "blob"];
+    const streamTypeList = ['arrayBuffer', 'blob'];
     if (
       overrideOptions.responseType &&
       streamTypeList.indexOf(overrideOptions.responseType) > -1
@@ -115,7 +117,8 @@ export const POST = async (
         });
         return result?.data ?? true;
       }
-      history.replace("/user/login");
+      // @ts-ignore
+      history.replace('/user/login');
     }
 
     return undefined;
@@ -125,7 +128,7 @@ export const POST = async (
 export const PUT = async (
   url: string,
   payload: any,
-  overrideOptions: RequestOptionsInit | undefined = {}
+  overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
   const options = {
     ...overrideOptions,
@@ -148,7 +151,8 @@ export const PUT = async (
         });
         return (result && result.data) ?? true;
       }
-      history.replace("/user/login");
+      // @ts-ignore
+      history.replace('/user/login');
     }
 
     return undefined;
@@ -176,7 +180,8 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
         });
         return result?.data ?? true;
       }
-      history.replace("/user/login");
+      // @ts-ignore
+      history.replace('/user/login');
     }
 
     return undefined;

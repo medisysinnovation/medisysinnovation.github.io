@@ -1,5 +1,9 @@
-module.exports = test;
+'use strict';
 
-function test() {// TODO
-}
-//# sourceMappingURL=index.js.map
+Object.defineProperty(exports, '__esModule', { value: true });
+
+var abc = function abc() {
+  console.log('test');
+};
+
+exports.abc = abc;
