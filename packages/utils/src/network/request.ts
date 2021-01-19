@@ -1,4 +1,4 @@
-import { history } from '../../../../src/.umi/core/history';
+import history from '../helper/history';
 import request from './baseRequest';
 import { RequestOptionsInit } from 'umi-request';
 import { refreshToken } from '../services/login';
