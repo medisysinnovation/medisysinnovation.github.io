@@ -3,7 +3,8 @@ import { Form, Input, Modal } from 'antd';
 import { useWhyDidYouUpdate } from 'ahooks';
 // import { Prompt, history } from 'umi';
 import { Prompt } from 'react-router-dom';
-import { history } from '@medisys/utils';
+// import { history } from '@medisys/utils';
+import { useHistory } from 'react-router-dom';
 import {
   FormInstance,
   FormProps,
@@ -15,7 +16,6 @@ import {
   FormListProps,
 } from 'antd/lib/Form';
 import MIFormContext, { MIFormContextPayload } from '../context/formContext';
-console.log(history);
 const showUnsavedPrompt = ({
   onOk,
   onCancel,
@@ -45,11 +45,11 @@ const showUnsavedPrompt = ({
 };
 
 export interface MIFormProps extends FormProps {
-  message: string | ((location: any, action: any) => string | boolean);
+  message?: string | ((location: any, action: any) => string | boolean);
 }
 const _MIForm: React.FC<MIFormProps> = props => {
   const [confirmPrompted, setConfirmPrompted] = useState(false);
-
+  const history = useHistory();
   const { form, children } = props;
   const {
     message = (currentLocation: any, action: any) => {
@@ -58,8 +58,6 @@ const _MIForm: React.FC<MIFormProps> = props => {
       showUnsavedPrompt({
         onOk: async () => {
           setConfirmPrompted(true);
-          console.log(123123, currentLocation.pathname);
-          history.push(currentLocation.pathname);
           setTimeout(() => {
             history.push(currentLocation.pathname);
           }, 1);

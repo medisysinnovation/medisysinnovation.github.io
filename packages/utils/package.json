@@ -35,7 +35,6 @@
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
   "dependencies": {
-    "history-with-query": "^4.10.4",
     "lodash": "4.17.20",
     "moment": "^2.29.1",
     "qs": "^6.9.6",

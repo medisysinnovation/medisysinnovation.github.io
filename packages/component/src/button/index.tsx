@@ -4,7 +4,7 @@ import { ButtonProps } from 'antd/lib/Button';
 import MIFormContext from '../context/formContext';
 
 export interface MIButtonProps extends ButtonProps {
-  triggerUnsavedChangesWarning: boolean;
+  triggerUnsavedChangesWarning?: boolean;
 }
 
 const MIButton: React.FC<MIButtonProps> = ({
