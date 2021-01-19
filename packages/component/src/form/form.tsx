@@ -45,7 +45,7 @@ const showUnsavedPrompt = ({
 };
 
 export interface MIFormProps extends FormProps {
-  message: string;
+  message: string | ((location: any, action: any) => string | boolean);
 }
 const _MIForm: React.FC<MIFormProps> = props => {
   const [confirmPrompted, setConfirmPrompted] = useState(false);

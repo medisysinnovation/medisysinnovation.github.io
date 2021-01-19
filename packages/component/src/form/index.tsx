@@ -29,7 +29,7 @@ export {
   RuleRender,
   FormListProps,
 };
-const MIForm: Partial<FormInterface> = _MIForm;
+const MIForm = _MIForm as FormInterface;
 MIForm.Item = Form.Item;
 MIForm.List = Form.List;
 MIForm.ErrorList = Form.ErrorList;
