@@ -1,6 +1,10 @@
 ---
-name: Button
-route: /button
+nav:
+  title: Components
+  path: /components
+group:
+  title: Button
+  path: /button
 ---
 
 # Button

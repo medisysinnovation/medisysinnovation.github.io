@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@medisys/utils": "^0.1.55",
+    "ahooks": "^2.9.4",
     "antd": "^4.10.2",
     "classnames": "^2.2.6",
     "lodash": "4.17.20",

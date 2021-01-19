@@ -1,6 +1,10 @@
 ---
-name: Job Status Tag
-route: /job-status-tag
+nav:
+  title: Components
+  path: /components
+group:
+  title: Job Status Tag
+  path: /job-status-tag
 ---
 
 # Job Status Tag

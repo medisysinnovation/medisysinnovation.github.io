@@ -51,7 +51,11 @@ export default defineConfig({
     '/component': [
       {
         title: 'General',
-        children: ['component/button', 'component/job-status-tag'],
+        children: [
+          'component/button',
+          'component/job-status-tag',
+          'component/form',
+        ],
       },
     ],
   },

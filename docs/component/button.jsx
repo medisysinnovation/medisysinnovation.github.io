@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { abc } from '@medisys/test';
+import { Button } from '@medisys/component';
+import { Input } from 'antd';
 
 export default function() {
   const btnConfig = {
@@ -9,14 +11,14 @@ export default function() {
   };
   return (
     <div>
-      <input id="input-test" type="text" />
-      <button
+      <Input id="input-test" />
+      <Button
         onClick={() => {
           abc(document.getElementById('input-test').value);
         }}
       >
         Test
-      </button>
+      </Button>
     </div>
   );
 }
