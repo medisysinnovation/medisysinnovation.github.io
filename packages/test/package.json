@@ -1,6 +1,6 @@
 {
   "name": "@medisys/test",
-  "version": "0.1.58",
+  "version": "0.1.60",
   "description": "> TODO: description",
   "author": "Medisys <medisysadmin@medinno.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -34,5 +34,4 @@
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
   "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac"
-
 }
