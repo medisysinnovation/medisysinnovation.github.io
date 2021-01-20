@@ -32,7 +32,7 @@
     "test:bak": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
-    "@medisys/utils": "^0.1.58",
+    "@medisys/utils": "^0.1.56",
     "ahooks": "^2.9.4",
     "antd": "^4.10.2",
     "classnames": "^2.2.6",

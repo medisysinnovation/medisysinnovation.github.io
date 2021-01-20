@@ -5,7 +5,7 @@ import UnauthorizedError from './UnauthorizedException';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { config } from '../config';
-import { history } from '@/.umi/core/history';
+import { history } from 'umi';
 //const useHistory = () => ({ replace: (a: string) => {} });
 
 export const refreshToken = async () => {

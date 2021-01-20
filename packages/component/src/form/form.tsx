@@ -3,7 +3,7 @@ import { Form, Input, Modal } from 'antd';
 import { useWhyDidYouUpdate } from 'ahooks';
 // import { Prompt, history } from 'umi';
 import { Prompt } from 'react-router-dom';
-import { history } from '@medisys/utils';
+import { history } from 'umi';
 
 import { useHistory } from 'react-router-dom';
 
