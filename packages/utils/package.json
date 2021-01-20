@@ -1,6 +1,6 @@
 {
   "name": "@medisys/utils",
-  "version": "0.1.58",
+  "version": "0.1.56",
   "description": "medisys/utils",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -39,11 +39,15 @@
     "hoist-non-react-statics": "^3.3.2",
     "lodash": "4.17.20",
     "moment": "^2.29.1",
+    "path-to-regexp": "^6.2.0",
+    "prop-types": "^15.7.2",
     "qs": "^6.9.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-is": "^17.0.1",
     "react-router-dom": "^5.2.0",
-    "umi-request": "^1.3.5"
+    "umi-request": "^1.3.5",
+    "use-subscription": "^1.5.1"
   },
   "gitHead": "c5830e5f75fe2869aa2f88463efe3ed31f773503"
 }

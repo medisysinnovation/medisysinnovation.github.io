@@ -1,6 +1,3 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { useHistory } from 'react-router-dom';
 import request from './baseRequest';
 import { RequestOptionsInit } from 'umi-request';
 import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
@@ -8,6 +5,7 @@ import UnauthorizedError from './UnauthorizedException';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { config } from '../config';
+import { history } from '@/.umi/core/history';
 //const useHistory = () => ({ replace: (a: string) => {} });
 
 export const refreshToken = async () => {
@@ -72,8 +70,6 @@ export const GET = async (
   payload?: any,
   overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
-  const history = useHistory();
-
   const options = {
     params: payload,
     headers: getHeaders(),
@@ -122,8 +118,6 @@ export const POST = async (
   payload: any,
   overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
-  const history = useHistory();
-
   const options = {
     data: payload,
     getResponse: false,
@@ -164,8 +158,6 @@ export const PUT = async (
   payload: any,
   overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
-  const history = useHistory();
-
   const options = {
     ...overrideOptions,
     data: { ...payload },
@@ -195,8 +187,6 @@ export const PUT = async (
 };
 
 export const DELETE = async (url: string, overrideOptions = {}) => {
-  const history = useHistory();
-
   const options = {
     ...overrideOptions,
     headers: getHeaders(),

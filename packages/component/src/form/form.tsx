@@ -3,7 +3,7 @@ import { Form, Input, Modal } from 'antd';
 import { useWhyDidYouUpdate } from 'ahooks';
 // import { Prompt, history } from 'umi';
 import { Prompt } from 'react-router-dom';
-// import { history } from '@medisys/utils';
+import { history } from '@medisys/utils';
 
 import { useHistory } from 'react-router-dom';
 
@@ -53,7 +53,7 @@ export interface MIFormProps extends FormProps {
 const _MIForm: React.FC<MIFormProps> = props => {
   const [confirmPrompted, setConfirmPrompted] = useState(false);
 
-  const history = useHistory();
+  // const history = useHistory();
   const { form, children } = props;
   const {
     message = (currentLocation: any, action: any) => {
