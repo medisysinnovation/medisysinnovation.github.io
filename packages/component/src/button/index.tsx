@@ -21,6 +21,7 @@ const MIButton: React.FC<MIButtonProps> = ({
             <Button
               {...restProps}
               onClick={e => {
+                console.log(payload, setPayload);
                 if (!payload?.discard && setPayload) {
                   setPayload({
                     discard: true,

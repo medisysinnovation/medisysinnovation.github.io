@@ -9,6 +9,10 @@ export interface MIFormContextType {
   setPayload?: (v: MIFormContextPayload) => void;
 }
 
-const MIFormContext = createContext<MIFormContextType>({});
+const MIFormContext = createContext<MIFormContextType>({
+  payload: {
+    discard: false,
+  },
+});
 
 export default MIFormContext;

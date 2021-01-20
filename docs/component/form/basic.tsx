@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Input, Select } from 'antd';
 import { Form, Button } from '@medisys/component';
-// import './basic.less';
-console.log(Button);
+import './basic.less';
+// console.log(Button);
 const { Option } = Select;
 
 const defaultFormConfig = {

@@ -92,21 +92,28 @@ const _MIForm: React.FC<MIFormProps> = props => {
     };
   }, []);
 
-  const [contextData, setContextData] = useState<MIFormContextPayload>();
+  const [contextData, setContextData] = useState<MIFormContextPayload>({
+    discard: false,
+  });
   useEffect(() => {
-    if (form?.isFieldsTouched() && contextData?.discard && !confirmPrompted) {
-      setConfirmPrompted(true);
-      showUnsavedPrompt({
-        onOk: () => {
-          if (contextData?.onClick !== undefined) contextData.onClick();
-        },
-        onCancel: () => {
-          setConfirmPrompted(false);
-          setContextData({
-            discard: false,
-          });
-        },
-      });
+    // if (form?.isFieldsTouched() && contextData?.discard && !confirmPrompted) {
+    if (contextData?.discard && !confirmPrompted) {
+      if (form?.isFieldsTouched()) {
+        setConfirmPrompted(true);
+        showUnsavedPrompt({
+          onOk: () => {
+            if (contextData?.onClick !== undefined) contextData.onClick();
+          },
+          onCancel: () => {
+            setConfirmPrompted(false);
+            setContextData({
+              discard: false,
+            });
+          },
+        });
+      } else {
+        if (contextData?.onClick !== undefined) contextData.onClick();
+      }
     }
   }, [contextData?.discard]);
   return (
@@ -115,7 +122,10 @@ const _MIForm: React.FC<MIFormProps> = props => {
         value={{
           payload: contextData,
           setPayload: (v: MIFormContextPayload) => {
-            if (v.discard && form?.isFieldsTouched()) setContextData(v);
+            console.log(v);
+            if (v.discard !== contextData.discard)
+              // if (v.discard && form?.isFieldsTouched()) setContextData(v);
+              setContextData(v);
           },
         }}
       >
@@ -129,7 +139,6 @@ const _MIForm: React.FC<MIFormProps> = props => {
               if (isDirty) {
                 window.addEventListener('beforeunload', beforeUnloadCheck);
               }
-              console.log(123);
               return <Prompt message={message} when={isDirty} />;
             }}
           </Form.Item>
