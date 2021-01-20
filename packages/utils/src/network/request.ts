@@ -5,6 +5,8 @@ import { refreshToken } from '../services/login';
 import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
 import UnauthorizedError from './UnauthorizedException';
 import { saveAuthToken } from '../helper/localStorage';
+import { useHistory } from 'react-router-dom';
+
 const getHeaders = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_KEY.accessTokenKey);
 
@@ -40,6 +42,8 @@ export const GET = async (
   payload?: any,
   overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
+  const history = useHistory();
+
   const options = {
     params: payload,
     headers: getHeaders(),
@@ -76,7 +80,6 @@ export const GET = async (
         return result && result.data;
       }
 
-      // @ts-ignore
       history.replace('/user/login');
     }
 
@@ -89,6 +92,8 @@ export const POST = async (
   payload: any,
   overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
+  const history = useHistory();
+
   const options = {
     data: payload,
     getResponse: false,
@@ -117,7 +122,6 @@ export const POST = async (
         });
         return result?.data ?? true;
       }
-      // @ts-ignore
       history.replace('/user/login');
     }
 
@@ -130,6 +134,8 @@ export const PUT = async (
   payload: any,
   overrideOptions: RequestOptionsInit | undefined = {},
 ) => {
+  const history = useHistory();
+
   const options = {
     ...overrideOptions,
     data: { ...payload },
@@ -151,7 +157,6 @@ export const PUT = async (
         });
         return (result && result.data) ?? true;
       }
-      // @ts-ignore
       history.replace('/user/login');
     }
 
@@ -160,6 +165,8 @@ export const PUT = async (
 };
 
 export const DELETE = async (url: string, overrideOptions = {}) => {
+  const history = useHistory();
+
   const options = {
     ...overrideOptions,
     headers: getHeaders(),
@@ -180,7 +187,6 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
         });
         return result?.data ?? true;
       }
-      // @ts-ignore
       history.replace('/user/login');
     }
 

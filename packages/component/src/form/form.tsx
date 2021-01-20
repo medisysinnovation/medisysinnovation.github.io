@@ -4,7 +4,9 @@ import { useWhyDidYouUpdate } from 'ahooks';
 // import { Prompt, history } from 'umi';
 import { Prompt } from 'react-router-dom';
 // import { history } from '@medisys/utils';
+
 import { useHistory } from 'react-router-dom';
+
 import {
   FormInstance,
   FormProps,
@@ -16,6 +18,7 @@ import {
   FormListProps,
 } from 'antd/lib/Form';
 import MIFormContext, { MIFormContextPayload } from '../context/formContext';
+
 const showUnsavedPrompt = ({
   onOk,
   onCancel,
@@ -49,6 +52,7 @@ export interface MIFormProps extends FormProps {
 }
 const _MIForm: React.FC<MIFormProps> = props => {
   const [confirmPrompted, setConfirmPrompted] = useState(false);
+
   const history = useHistory();
   const { form, children } = props;
   const {
