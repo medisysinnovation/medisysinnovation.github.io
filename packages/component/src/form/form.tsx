@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Form, Input, Modal } from 'antd';
 import { useWhyDidYouUpdate } from 'ahooks';
 // import { Prompt, history } from 'umi';
-import { Prompt } from 'react-router-dom';
+import { Prompt, PromptProps } from 'react-router-dom';
 // import { history } from 'umi';
 
 import { useHistory } from 'react-router-dom';
@@ -48,20 +48,20 @@ const showUnsavedPrompt = ({
 };
 
 export interface MIFormProps extends FormProps {
-  message?: string | ((location: any, action: any) => string | boolean);
-  dirtyCheck?: boolean;
+  enableDirtyCheck?: boolean;
+  onDirtyCheck?: PromptProps['message'];
 }
 const _MIForm: React.FC<MIFormProps> = ({
-  dirtyCheck = false,
+  enableDirtyCheck = false,
   ...restProps
 }) => {
   const { form, children } = restProps;
-  if (!dirtyCheck) return <Form {...restProps}>{children}</Form>;
+  if (!enableDirtyCheck) return <Form {...restProps}>{children}</Form>;
   const [confirmPrompted, setConfirmPrompted] = useState(false);
 
   const history = useHistory();
   const {
-    message = (currentLocation: any, action: any) => {
+    onDirtyCheck = (currentLocation: any, action: any) => {
       // console.log(currentLocation, window.location, history.location);
       if (currentLocation.pathname === history.location.pathname) return false;
       showUnsavedPrompt({
@@ -140,7 +140,7 @@ const _MIForm: React.FC<MIFormProps> = ({
               if (isDirty) {
                 window.addEventListener('beforeunload', beforeUnloadCheck);
               }
-              return <Prompt message={message} when={isDirty} />;
+              return <Prompt message={onDirtyCheck} when={isDirty} />;
             }}
           </Form.Item>
           {children}

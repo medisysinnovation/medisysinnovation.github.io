@@ -52,8 +52,7 @@ const Demo = () => {
       ) : (
         <Form
           {...defaultFormConfig}
-          dirtyCheck={true}
-          // message={false}
+          enableDirtyCheck={true}
           form={form}
           name="control-hooks"
           onFinish={onFinish}
@@ -93,7 +92,6 @@ const Demo = () => {
               }
             >
               {({ getFieldValue, ...rest }) => {
-                console.log(rest);
                 return getFieldValue('gender') === 'other' ? (
                   <Form.Item
                     name="customizeGender"

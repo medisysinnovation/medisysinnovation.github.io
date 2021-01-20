@@ -46,6 +46,7 @@
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.11"
+    "@types/classnames": "^2.2.11",
+    "@types/react-router-dom": "^5.1.7"
   }
 }
