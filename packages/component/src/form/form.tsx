@@ -49,12 +49,17 @@ const showUnsavedPrompt = ({
 
 export interface MIFormProps extends FormProps {
   message?: string | ((location: any, action: any) => string | boolean);
+  dirtyCheck?: boolean;
 }
-const _MIForm: React.FC<MIFormProps> = props => {
+const _MIForm: React.FC<MIFormProps> = ({
+  dirtyCheck = false,
+  ...restProps
+}) => {
+  const { form, children } = restProps;
+  if (!dirtyCheck) return <Form {...restProps}>{children}</Form>;
   const [confirmPrompted, setConfirmPrompted] = useState(false);
 
   const history = useHistory();
-  const { form, children } = props;
   const {
     message = (currentLocation: any, action: any) => {
       // console.log(currentLocation, window.location, history.location);
@@ -70,8 +75,7 @@ const _MIForm: React.FC<MIFormProps> = props => {
       });
       return false;
     },
-    ...restProps
-  } = props;
+  } = restProps;
 
   const beforeUnloadCheck = (event: BeforeUnloadEvent) => {
     // To show a native browser "Unsaved changes prompt"
@@ -82,11 +86,8 @@ const _MIForm: React.FC<MIFormProps> = props => {
     // eslint-disable-next-line no-param-reassign
     event.returnValue = '';
   };
-  useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...props });
+  useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...restProps });
   useEffect(() => {
-    // setTimeout(() => {
-    //   history.push('/guide');
-    // }, 2000);
     return () => {
       window.removeEventListener('beforeunload', beforeUnloadCheck);
     };

@@ -5,7 +5,7 @@ import UnauthorizedError from './UnauthorizedException';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { config } from '../config';
-import { history } from 'umi';
+// import { history } from '../helper';
 //const useHistory = () => ({ replace: (a: string) => {} });
 
 export const refreshToken = async () => {
@@ -105,8 +105,7 @@ export const GET = async (
 
         return result && result.data;
       }
-
-      history.replace('/user/login');
+      throw error;
     }
 
     return undefined;
@@ -146,7 +145,7 @@ export const POST = async (
         });
         return result?.data ?? true;
       }
-      history.replace('/user/login');
+      throw error;
     }
 
     return undefined;
@@ -179,7 +178,7 @@ export const PUT = async (
         });
         return (result && result.data) ?? true;
       }
-      history.replace('/user/login');
+      throw error;
     }
 
     return undefined;
@@ -207,7 +206,7 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
         });
         return result?.data ?? true;
       }
-      history.replace('/user/login');
+      throw error;
     }
 
     return undefined;

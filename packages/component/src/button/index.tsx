@@ -29,9 +29,12 @@ const MIButton: React.FC<MIButtonProps> = ({
                       if (onClick) onClick(e);
                     },
                   });
+                } else if (setPayload) {
+                  e.preventDefault();
+                  return false;
+                } else {
+                  if (onClick) onClick(e);
                 }
-                e.preventDefault();
-                return false;
               }}
             />
           );

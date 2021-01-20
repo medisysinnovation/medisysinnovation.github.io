@@ -45,7 +45,6 @@ const Demo = () => {
   };
 
   const [clear, setClear] = useState(false);
-  console.log(form.isFieldsTouched());
   return (
     <>
       {clear ? (
@@ -53,6 +52,7 @@ const Demo = () => {
       ) : (
         <Form
           {...defaultFormConfig}
+          dirtyCheck={true}
           // message={false}
           form={form}
           name="control-hooks"

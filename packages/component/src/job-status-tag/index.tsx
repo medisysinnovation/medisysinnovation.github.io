@@ -2,7 +2,6 @@ import React from 'react';
 import classnames from 'classnames';
 import styles from './index.module.less';
 import { jobStatusColorMapping } from '../constant/colorMap';
-console.log(styles);
 interface JobStatusTagProps {
   hidePrefix?: boolean;
   status: string;
