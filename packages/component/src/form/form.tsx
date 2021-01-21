@@ -1,10 +1,17 @@
-import React, { useEffect, useMemo, useState, useRef } from 'react';
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+  useRef,
+  MutableRefObject,
+  RefObject,
+} from 'react';
 import { Form, Input, Modal } from 'antd';
-import { useWhyDidYouUpdate } from 'ahooks';
+import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
 // import { Prompt, history } from 'umi';
 import { Prompt, PromptProps } from 'react-router-dom';
 // import { history } from 'umi';
-
+import { Button } from '../index';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -55,6 +62,8 @@ const _MIForm: React.FC<MIFormProps> = ({
   enableDirtyCheck = false,
   ...restProps
 }) => {
+  const ref = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
+
   const { form, children } = restProps;
   if (!enableDirtyCheck) return <Form {...restProps}>{children}</Form>;
   const [confirmPrompted, setConfirmPrompted] = useState(false);
@@ -86,24 +95,29 @@ const _MIForm: React.FC<MIFormProps> = ({
     // eslint-disable-next-line no-param-reassign
     event.returnValue = '';
   };
-  useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...restProps });
-  useEffect(() => {
-    return () => {
-      window.removeEventListener('beforeunload', beforeUnloadCheck);
-    };
-  }, []);
-
+  // useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...restProps });
   const [contextData, setContextData] = useState<MIFormContextPayload>({
     discard: false,
   });
+  const discardForm = () => {
+    if (ref.current)
+      ref.current.dispatchEvent(
+        new CustomEvent('discardform', { bubbles: true }),
+      );
+  };
   useEffect(() => {
-    // if (form?.isFieldsTouched() && contextData?.discard && !confirmPrompted) {
     if (contextData?.discard && !confirmPrompted) {
       if (form?.isFieldsTouched()) {
         setConfirmPrompted(true);
         showUnsavedPrompt({
           onOk: () => {
             if (contextData?.onClick !== undefined) contextData.onClick();
+            form.resetFields();
+            setConfirmPrompted(false);
+            setContextData({
+              discard: false,
+            });
+            discardForm();
           },
           onCancel: () => {
             setConfirmPrompted(false);
@@ -117,6 +131,19 @@ const _MIForm: React.FC<MIFormProps> = ({
       }
     }
   }, [contextData?.discard]);
+
+  const onMedisysDiscardForm = (e: FormEvent) => {
+    console.log(e);
+    if (form?.isFieldsTouched()) {
+      setContextData({
+        discard: true,
+      });
+    } else {
+      discardForm();
+    }
+  };
+  useEventListener('aboutdiscardform', onMedisysDiscardForm, { target: ref });
+
   return (
     <>
       <MIFormContext.Provider
@@ -130,21 +157,27 @@ const _MIForm: React.FC<MIFormProps> = ({
           },
         }}
       >
-        <Form {...restProps}>
-          <Form.Item
-            shouldUpdate={!confirmPrompted}
-            style={{ display: 'none' }}
-          >
-            {() => {
-              const isDirty = form?.isFieldsTouched();
-              if (isDirty) {
-                window.addEventListener('beforeunload', beforeUnloadCheck);
-              }
-              return <Prompt message={onDirtyCheck} when={isDirty} />;
-            }}
-          </Form.Item>
-          {children}
-        </Form>
+        <div ref={ref} className="medisys-form">
+          <Form {...restProps}>
+            <Form.Item
+              shouldUpdate={!confirmPrompted}
+              // style={{ display: 'none' }}
+            >
+              {() => {
+                const isTouched = form?.isFieldsTouched();
+                if (isTouched) {
+                  window.addEventListener('beforeunload', beforeUnloadCheck);
+                }
+                return (
+                  <>
+                    <Prompt message={onDirtyCheck} when={isTouched} />
+                  </>
+                );
+              }}
+            </Form.Item>
+            {children}
+          </Form>
+        </div>
       </MIFormContext.Provider>
     </>
   );

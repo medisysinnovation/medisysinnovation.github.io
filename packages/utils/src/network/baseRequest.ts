@@ -6,7 +6,7 @@ import { extend } from 'umi-request';
 // import { notification } from "antd";
 import APIResponse from './APIResponse';
 import Qs from 'qs';
-import UnauthorizedError from './UnauthorizedException';
+import { UnauthorizedError } from './exception';
 
 // const codeMessage = {
 //   200: '服务器成功返回请求的数据。',

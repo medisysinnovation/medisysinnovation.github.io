@@ -1,4 +1,10 @@
-import React, { ReactChild, ReactNode, createContext, useState } from 'react';
+import React, {
+  ReactChild,
+  ReactNode,
+  createContext,
+  useState,
+  useContext,
+} from 'react';
 import { Button, Select } from 'antd';
 import { ButtonProps } from 'antd/lib/Button';
 import MIFormContext from '../context/formContext';
@@ -11,35 +17,29 @@ const MIButton: React.FC<MIButtonProps> = ({
   triggerUnsavedChangesWarning,
   ...props
 }) => {
+  const context = useContext(MIFormContext);
   if (triggerUnsavedChangesWarning) {
     const { onClick, ...restProps } = props;
+    const { payload, setPayload } = context;
     return (
-      <MIFormContext.Consumer>
-        {props => {
-          const { payload, setPayload } = props;
-          return (
-            <Button
-              {...restProps}
-              onClick={e => {
-                console.log(payload, setPayload);
-                if (!payload?.discard && setPayload) {
-                  setPayload({
-                    discard: true,
-                    onClick: () => {
-                      if (onClick) onClick(e);
-                    },
-                  });
-                } else if (setPayload) {
-                  e.preventDefault();
-                  return false;
-                } else {
-                  if (onClick) onClick(e);
-                }
-              }}
-            />
-          );
+      <Button
+        {...restProps}
+        onClick={e => {
+          if (!payload?.discard && setPayload) {
+            setPayload({
+              discard: true,
+              onClick: () => {
+                if (onClick) onClick(e);
+              },
+            });
+          } else if (setPayload) {
+            e.preventDefault();
+            return false;
+          } else {
+            if (onClick) onClick(e);
+          }
         }}
-      </MIFormContext.Consumer>
+      />
     );
   }
   return <Button {...props} />;

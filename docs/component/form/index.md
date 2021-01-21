@@ -20,6 +20,18 @@ The form will prompt confirmation if any field has been touched when
 > Note that `Form` must be present inside [React Route](https://reactrouter.com/web/api/Route), if you are using umi, it already been included.
 
 
+## Modal Form
+
+<code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
+
+## Modal Form 2
+
+<code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
+
+## Modal Form 3
+
+<code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
+
 ### FormInstance
   
 | Property | Description | Type | Default | Version |

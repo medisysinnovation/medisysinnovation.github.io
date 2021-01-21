@@ -1,7 +1,7 @@
 import request from './baseRequest';
 import { RequestOptionsInit } from 'umi-request';
 import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
-import UnauthorizedError from './UnauthorizedException';
+import { UnauthorizedError } from './exception';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { config } from '../config';
