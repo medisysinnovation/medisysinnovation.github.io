@@ -5,6 +5,7 @@ import React, {
   createContext,
   useState,
   useRef,
+  MouseEvent,
 } from 'react';
 import { Modal, Select } from 'antd';
 import { useBoolean, useMouse, useEventListener } from 'ahooks';
@@ -32,7 +33,9 @@ const MIModal: React.FC<MIModalProps> = ({
   const [state, { toggle, setTrue, setFalse }] = useBoolean(visible);
   useEffect(() => {
     const onDiscardForm = (e: FormEvent) => {
-      if (onCancel) onCancel();
+      if (onCancel)
+        //@ts-ignore
+        onCancel(e);
     };
     if (visible === true) {
       setTrue();
