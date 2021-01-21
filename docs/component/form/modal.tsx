@@ -19,9 +19,19 @@ const tailLayout = {
 
 const ModalDemo = () => {
   const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
-  console.log('state', state);
+  // // console.log('state', state);
+
+  // const [modal, contextHolder] = Modal.useModal();
+
+  // React.useEffect(() => {
+  //   modal.confirm({
+  //     // ...
+  //   });
+  // }, []);
+  // console.log(modal, contextHolder);
   return (
     <>
+      {/* <div>{contextHolder}</div> */}
       <Button
         onClick={() => {
           setTrue();

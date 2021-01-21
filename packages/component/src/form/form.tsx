@@ -161,7 +161,7 @@ const _MIForm: React.FC<MIFormProps> = ({
           <Form {...restProps}>
             <Form.Item
               shouldUpdate={!confirmPrompted}
-              // style={{ display: 'none' }}
+              style={{ display: 'none' }}
             >
               {() => {
                 const isTouched = form?.isFieldsTouched();

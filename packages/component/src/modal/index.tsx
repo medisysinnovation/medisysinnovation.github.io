@@ -1,79 +1,36 @@
-import React, {
-  useEffect,
-  ReactChild,
-  ReactNode,
-  createContext,
-  useState,
-  useRef,
-  MouseEvent,
-} from 'react';
-import { Modal, Select } from 'antd';
-import { useBoolean, useMouse, useEventListener } from 'ahooks';
+import { Form, Input, Modal } from 'antd';
+import {
+  FormInstance,
+  FormProps,
+  FormItemProps,
+  ErrorListProps,
+  Rule,
+  RuleObject,
+  RuleRender,
+  FormListProps,
+} from 'antd/lib/Form';
+import _MIModal from './modal';
 
-import { ModalProps } from 'antd/lib/Modal';
-
-export interface MIModalProps extends ModalProps {
-  triggerUnsavedChangesWarning?: boolean;
-}
-const MIModal: React.FC<MIModalProps> = ({
-  triggerUnsavedChangesWarning,
-  ...props
-}) => {
-  const ref = useRef() as React.MutableRefObject<HTMLInputElement>;
-
-  const getClosetForm = (el: HTMLElement | null) => {
-    let f = el?.closest('.ant-modal-content')?.querySelector('.medisys-form');
-
-    if (!f) {
-      return el?.querySelector('.medisys-form');
-    }
-    return f;
-  };
-  const { onCancel, visible, children, ...restProps } = props;
-  const [state, { toggle, setTrue, setFalse }] = useBoolean(visible);
-  useEffect(() => {
-    const onDiscardForm = (e: FormEvent) => {
-      if (onCancel)
-        //@ts-ignore
-        onCancel(e);
-    };
-    if (visible === true) {
-      setTrue();
-
-      setTimeout(() => {
-        const form = getClosetForm(ref.current);
-        if (ref.current)
-          ref.current.addEventListener('discardform', onDiscardForm);
-      }, 1);
-    } else {
-      setFalse();
-    }
-
-    return () => {
-      if (ref.current)
-        ref.current.removeEventListener('discardform', onDiscardForm);
-    };
-  }, [visible]);
-
-  return (
-    <div>
-      <Modal
-        {...restProps}
-        visible={state}
-        onCancel={e => {
-          const form = getClosetForm(e.currentTarget);
-          if (form && triggerUnsavedChangesWarning) {
-            form.dispatchEvent(new CustomEvent('aboutdiscardform'));
-            return false;
-          } else {
-            if (onCancel) onCancel(e);
-          }
-        }}
-      >
-        <div ref={ref}>{children}</div>
-      </Modal>
-    </div>
-  );
-};
-
+// declare type InternalFormType = typeof _MIModal;
+// interface FormInterface extends InternalFormType {
+//   useForm: typeof Form.useForm;
+//   Item: typeof Form.Item;
+//   List: typeof Form.List;
+//   ErrorList: typeof Form.ErrorList;
+//   Provider: typeof Form.Provider;
+// }
+// export {
+//   FormInstance,
+//   FormProps,
+//   FormItemProps,
+//   ErrorListProps,
+//   Rule,
+//   RuleObject,
+//   RuleRender,
+//   FormListProps,
+// };
+let MIModal = _MIModal;
+MIModal = Object.assign(MIModal, Modal);
+// console.dir(MIModal);
+// console.dir(Modal);
 export default MIModal;

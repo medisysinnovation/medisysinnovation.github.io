@@ -32,7 +32,7 @@ The form will prompt confirmation if any field has been touched when
 
 <code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
 
-### FormInstance
+### API
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
