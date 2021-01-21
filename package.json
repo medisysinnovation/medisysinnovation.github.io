@@ -11,7 +11,8 @@
     "release": "lerna run build && lerna publish",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "commit": "git add -a & git commit -a"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
