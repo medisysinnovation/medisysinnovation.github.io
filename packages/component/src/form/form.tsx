@@ -6,12 +6,9 @@ import React, {
   MutableRefObject,
   RefObject,
 } from 'react';
-import { Form, Input, Modal } from 'antd';
+import { Form, Modal } from 'antd';
 import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
-// import { Prompt, history } from 'umi';
 import { Prompt, PromptProps } from 'react-router-dom';
-// import { history } from 'umi';
-import { Button } from '../index';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -62,12 +59,10 @@ const _MIForm: React.FC<MIFormProps> = ({
   enableDirtyCheck = false,
   ...restProps
 }) => {
-  const ref = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
-
   const { form, children } = restProps;
   if (!enableDirtyCheck) return <Form {...restProps}>{children}</Form>;
   const [confirmPrompted, setConfirmPrompted] = useState(false);
-
+  const ref = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
   const history = useHistory();
   const {
     onDirtyCheck = (currentLocation: any, action: any) => {
@@ -86,15 +81,6 @@ const _MIForm: React.FC<MIFormProps> = ({
     },
   } = restProps;
 
-  const beforeUnloadCheck = (event: BeforeUnloadEvent) => {
-    // To show a native browser "Unsaved changes prompt"
-
-    // Cancel the event as stated by the standard.
-    event.preventDefault();
-    // Older browsers supported custom message
-    // eslint-disable-next-line no-param-reassign
-    event.returnValue = '';
-  };
   // useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...restProps });
   const [contextData, setContextData] = useState<MIFormContextPayload>({
     discard: false,
@@ -105,6 +91,31 @@ const _MIForm: React.FC<MIFormProps> = ({
         new CustomEvent('discardform', { bubbles: true }),
       );
   };
+
+  const onMedisysDiscardForm = (e: FormEvent) => {
+    console.log(e);
+    if (form?.isFieldsTouched()) {
+      setContextData({
+        discard: true,
+      });
+    } else {
+      discardForm();
+    }
+  };
+  useEventListener('aboutdiscardform', onMedisysDiscardForm, { target: ref });
+
+  const onBeforeUnloadCheck = (event: BeforeUnloadEvent) => {
+    if (!form?.isFieldsTouched()) return true;
+    // To show a native browser "Unsaved changes prompt"
+
+    // Cancel the event as stated by the standard.
+    event.preventDefault();
+    // Older browsers supported custom message
+    // eslint-disable-next-line no-param-reassign
+    event.returnValue = '';
+  };
+  useEventListener('beforeunload', onBeforeUnloadCheck);
+
   useEffect(() => {
     if (contextData?.discard && !confirmPrompted) {
       if (form?.isFieldsTouched()) {
@@ -132,18 +143,6 @@ const _MIForm: React.FC<MIFormProps> = ({
     }
   }, [contextData?.discard]);
 
-  const onMedisysDiscardForm = (e: FormEvent) => {
-    console.log(e);
-    if (form?.isFieldsTouched()) {
-      setContextData({
-        discard: true,
-      });
-    } else {
-      discardForm();
-    }
-  };
-  useEventListener('aboutdiscardform', onMedisysDiscardForm, { target: ref });
-
   return (
     <>
       <MIFormContext.Provider
@@ -165,9 +164,9 @@ const _MIForm: React.FC<MIFormProps> = ({
             >
               {() => {
                 const isTouched = form?.isFieldsTouched();
-                if (isTouched) {
-                  window.addEventListener('beforeunload', beforeUnloadCheck);
-                }
+                // if (isTouched) {
+                //   window.addEventListener('beforeunload', onBeforeUnloadCheck);
+                // }
                 return (
                   <>
                     <Prompt message={onDirtyCheck} when={isTouched} />

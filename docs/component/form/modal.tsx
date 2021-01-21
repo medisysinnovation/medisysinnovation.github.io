@@ -1,37 +1,15 @@
 import React, { useState } from 'react';
 import { Input, Select } from 'antd';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal } from '@medisys/component';
 import { useBoolean } from 'ahooks';
 import Basic from './basic';
-// console.log(Button);
-const { Option } = Select;
-
-const defaultFormConfig = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-  initialValues: {
-    note: '',
-  },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
 
 const ModalDemo = () => {
   const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
-  // // console.log('state', state);
 
-  // const [modal, contextHolder] = Modal.useModal();
-
-  // React.useEffect(() => {
-  //   modal.confirm({
-  //     // ...
-  //   });
-  // }, []);
-  // console.log(modal, contextHolder);
   return (
-    <>
-      {/* <div>{contextHolder}</div> */}
+    <Router>
       <Button
         onClick={() => {
           setTrue();
@@ -47,11 +25,10 @@ const ModalDemo = () => {
         onOk={() => {
           setFalse();
         }}
-        triggerUnsavedChangesWarning
       >
         <Basic />
       </Modal>
-    </>
+    </Router>
   );
 };
 

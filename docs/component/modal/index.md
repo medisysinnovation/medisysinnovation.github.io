@@ -7,7 +7,7 @@ group:
   path: /modal
 ---
 
-### API
+## API
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |

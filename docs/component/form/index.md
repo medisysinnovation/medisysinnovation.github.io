@@ -22,19 +22,14 @@ The form will prompt confirmation if any field has been touched when
 
 ## Modal Form
 
-<code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
+<code src="./modal.tsx" title='Form inside Modal' desc='If there is a Form component inside Modal, auto dirty check when close Modal' />
 
-## Modal Form 2
+To disable check on modal close, check [Modal](/components/modal#api) API
 
-<code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
 
-## Modal Form 3
-
-<code src="./modal.tsx" title='Form inside Modal' desc='Dirty check when close Modal' />
-
-### API
+## API
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
 | enableDirtyCheck | Enable dirty form check | boolean | false |  |
-| onDirtyCheck | Listening for dirty check event | string | ((location: H.Location, action: H.Action) => string \| boolean) |  |
+| onDirtyCheck | Listening to dirty check event | string | ((location: H.Location, action: H.Action) => string \| boolean) |  |
