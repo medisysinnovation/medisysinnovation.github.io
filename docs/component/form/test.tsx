@@ -107,7 +107,10 @@ class ClassTest extends React.Component {
               });
             }}
           />
-          <Form.Item name="ddd" style={{ marginTop: 1000, marginBottom: 1000 }}>
+          <Form.Item
+            name="ddd"
+            // style={{ marginTop: 1000, marginBottom: 1000 }}
+          >
             <Input onChange={() => {}} />
           </Form.Item>
         </Form>
