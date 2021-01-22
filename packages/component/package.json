@@ -41,7 +41,8 @@
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "tiny-invariant": "^1.1.0"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
@@ -54,6 +55,8 @@
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
-    "react-test-renderer": "^17.0.1"
+    "mockdate": "^3.0.2",
+    "react-test-renderer": "^17.0.1",
+    "scroll-into-view-if-needed": "^2.2.26"
   }
 }

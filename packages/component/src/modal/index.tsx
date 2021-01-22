@@ -29,7 +29,7 @@ import _MIModal from './modal';
 //   RuleRender,
 //   FormListProps,
 // };
-let MIModal = _MIModal as typeof Modal;
+let MIModal = _MIModal;
 MIModal = Object.assign(MIModal, Modal);
 
 export default MIModal;

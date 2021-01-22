@@ -27,6 +27,10 @@
 /packages/*/lib
 /packages/*/dist
 /packages/*/node_modules
+/packages/**/__tests__/**/*.tsx.snap
+/packages/**/__tests__/**/*.js.snap
+
+
 /coverage
 /.nyc_output
 /.changelog

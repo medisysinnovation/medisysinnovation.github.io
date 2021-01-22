@@ -108,11 +108,7 @@ const Demo = () => {
                 Submit
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Button
-                type="danger"
-                triggerUnsavedChangesWarning
-                onClick={onRemove}
-              >
+              <Button danger triggerUnsavedChangesWarning onClick={onRemove}>
                 Remove form
               </Button>
             </Form.Item>
