@@ -104,7 +104,7 @@ const Demo = () => {
               }}
             </Form.Item>
             <Form.Item {...tailLayout}>
-              <Button type="primary" htmlType="submit">
+              <Button danger htmlType="submit">
                 Submit
               </Button>
               <Button onClick={onReset}>Reset</Button>

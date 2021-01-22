@@ -13,6 +13,7 @@ export default function() {
     <div>
       <Input id="input-test" />
       <Button
+        // size="who am I"
         onClick={() => {
           abc(document.getElementById('input-test').value);
         }}
