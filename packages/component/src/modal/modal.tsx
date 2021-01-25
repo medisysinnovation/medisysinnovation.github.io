@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 import { Modal, Select } from 'antd';
 import { useBoolean, useMouse, useEventListener } from 'ahooks';
-
+import { getStyle } from '@medisys/utils';
 import { ModalProps } from 'antd/lib/Modal';
 
 export interface MIModalProps extends ModalProps {
@@ -31,28 +31,44 @@ const MIModal: React.FC<MIModalProps> = ({
   };
   const { onCancel, visible, children, ...restProps } = props;
   const [state, { toggle, setTrue, setFalse }] = useBoolean(visible);
-  useEffect(() => {
-    const onDiscardForm = (e: FormEvent) => {
-      if (onCancel)
+  // console.log(state, visible);
+  // const onDiscardForm = (e: FormEvent) => {
+  //   if (onCancel)
+  //     //@ts-ignore
+  //     onCancel(e);
+  // };
+  useEventListener('discardform', (e: FormEvent) => {
+    if (onCancel && ref.current) {
+      const modalWrap = ref.current.closest('.ant-modal-wrap');
+      if (getStyle(modalWrap, 'display') !== 'none') {
         //@ts-ignore
         onCancel(e);
-    };
+      }
+    }
+  });
+  useEffect(() => {
+    // const onDiscardForm = (e: FormEvent) => {
+    //   if (onCancel)
+    //     //@ts-ignore
+    //     onCancel(e);
+    // };
+    // console.log(ref.current, onDiscardForm);
+
     if (visible === true) {
       setTrue();
 
-      setTimeout(() => {
-        const form = getClosetForm(ref.current);
-        if (ref.current)
-          ref.current.addEventListener('discardform', onDiscardForm);
-      }, 1);
+      // setTimeout(() => {
+      //   if (ref.current)
+      //     ref.current.addEventListener('discardform', onDiscardForm);
+      // }, 1);
     } else {
       setFalse();
     }
 
-    return () => {
-      if (ref.current)
-        ref.current.removeEventListener('discardform', onDiscardForm);
-    };
+    // return () => {
+    //   if (ref.current)
+    //     ref.current.removeEventListener('discardform', onDiscardForm);
+    // };
   }, [visible]);
 
   return (
@@ -62,8 +78,11 @@ const MIModal: React.FC<MIModalProps> = ({
         visible={state}
         onCancel={e => {
           const form = getClosetForm(e.currentTarget);
+          // console.log(123123, form);
+
           if (form && triggerDiscard) {
             form.dispatchEvent(new CustomEvent('aboutdiscardform'));
+
             return false;
           } else {
             if (onCancel) onCancel(e);

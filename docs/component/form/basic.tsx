@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Input, Select } from 'antd';
-import { Form, Button } from '@medisys/component';
+import { Form, Button, Modal } from '@medisys/component';
+import { useBoolean } from 'ahooks';
+
 import './basic.less';
 // console.log(Button);
 const { Option } = Select;
@@ -43,6 +45,7 @@ const Demo = () => {
   const onRemove = () => {
     setClear(true);
   };
+  const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
 
   const [clear, setClear] = useState(false);
   return (
@@ -115,6 +118,26 @@ const Demo = () => {
           </div>
         </Form>
       )}
+
+      <Button
+        onClick={() => {
+          setTrue();
+        }}
+      >
+        Show Modal
+      </Button>
+      <Modal
+        visible={state}
+        onCancel={() => {
+          console.log(322);
+          setFalse();
+        }}
+        onOk={() => {
+          setFalse();
+        }}
+      >
+        <div>tewtwe</div>
+      </Modal>
     </>
   );
 };

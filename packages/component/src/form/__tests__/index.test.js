@@ -1,13 +1,14 @@
 import React from 'react';
-import TestUtils from 'react-dom/test-utils';
-
 import { mount, render } from 'enzyme';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { Input, Form as AntdForm } from 'antd';
+import { useBoolean } from 'ahooks';
+import { getStyle } from '@medisys/utils';
 import { mountTest, click, sleep } from '../../../test/shared';
 import Form from '..';
 import Button from '../../button';
+import Modal from '../../modal';
 jest.mock('scroll-into-view-if-needed');
 
 describe('Form', () => {
@@ -138,6 +139,26 @@ describe('Form', () => {
     );
   });
 
+  const getForm = () => {
+    const [form] = Form.useForm();
+    return {
+      props: { form },
+      getForm: () => form,
+    };
+  };
+
+  const refForm = () => {
+    let form;
+    return {
+      props: {
+        ref: instance => {
+          form = instance;
+        },
+      },
+      getForm: () => form,
+    };
+  };
+
   describe('scrollToField', () => {
     function test(name, genForm) {
       it(name, () => {
@@ -175,37 +196,28 @@ describe('Form', () => {
     }
 
     // hooks
-    test('useForm', () => {
-      const [form] = Form.useForm();
-      return {
-        props: { form },
-        getForm: () => form,
-      };
-    });
+    test('useForm', getForm);
 
     // ref
-    test('ref', () => {
-      let form;
-      return {
-        props: {
-          ref: instance => {
-            form = instance;
-          },
-        },
-        getForm: () => form,
-      };
-    });
+    test('ref', refForm);
   });
+
+  const SampleForm = props => (
+    <Form discardCheck name="dirtyForm" {...props}>
+      <Form.Item name="field1">
+        <Input />
+      </Form.Item>
+      <Button triggerDiscard name="discard">
+        Discard
+      </Button>
+    </Form>
+  );
 
   describe('dirty check', () => {
     function test(name, genForm) {
       it(name, async () => {
-        let callGetForm;
-
         const Demo = () => {
-          const { props, getForm } = genForm();
-          callGetForm = getForm;
-
+          const { props } = genForm();
           return (
             <Router>
               <div id="test-root">
@@ -228,19 +240,7 @@ describe('Form', () => {
                   </Route>
 
                   <Route path="/">
-                    <Form
-                      discardCheck
-                      name="dirtyForm"
-                      // initialValues={{ field1: '2' }}
-                      {...props}
-                    >
-                      <Form.Item name="field1">
-                        <Input />
-                      </Form.Item>
-                      <Button triggerDiscard name="discard">
-                        Discard
-                      </Button>
-                    </Form>
+                    <SampleForm {...props} />
                   </Route>
                 </Switch>
               </div>
@@ -249,7 +249,6 @@ describe('Form', () => {
         };
 
         const wrapper = mount(<Demo />, { attachTo: document.body });
-        const form = callGetForm();
         wrapper.find('button').simulate('click');
         expect(document.querySelector('.ant-modal-wrap')).toBeNull();
         await change(wrapper, 0, 'updated');
@@ -276,25 +275,98 @@ describe('Form', () => {
     }
 
     // hooks
-    test('useForm', () => {
-      const [form] = Form.useForm();
-      return {
-        props: { form },
-        getForm: () => form,
-      };
-    });
+    test('useForm', getForm);
 
     // ref
-    test('ref', () => {
-      let form;
-      return {
-        props: {
-          ref: instance => {
-            form = instance;
-          },
-        },
-        getForm: () => form,
-      };
-    });
+    test('ref', refForm);
+  });
+
+  describe('dirty check modal', () => {
+    function test(name, genForm) {
+      it(name, async () => {
+        const Demo = () => {
+          const { props } = genForm();
+          const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
+
+          return (
+            <>
+              <Button
+                onClick={() => {
+                  setTrue();
+                }}
+              >
+                Show Modal
+              </Button>
+              <Modal
+                visible={state}
+                onCancel={() => {
+                  setFalse();
+                }}
+                onOk={() => {
+                  setFalse();
+                }}
+              >
+                <SampleForm {...props} />
+              </Modal>
+            </>
+          );
+        };
+
+        const wrapper = mount(<Demo />, { attachTo: document.body });
+        wrapper.find('button').simulate('click');
+        expect(document.querySelector('.ant-modal-wrap')).not.toBeNull();
+
+        click('.ant-modal-footer button:nth-child(1)');
+        await sleep(100);
+        expect(
+          getStyle(document.body.querySelector('.ant-modal-wrap'), 'display'),
+        ).toBe('none');
+
+        wrapper
+          .find('button')
+          .at(0)
+          .simulate('click');
+
+        await change(wrapper, 0, 'updated');
+        const inputNode = document.getElementById('dirtyForm_field1');
+        expect(inputNode.value).toBe('updated');
+
+        //Click cancel button
+        click('.ant-modal-footer button:nth-child(1)');
+        await sleep(100);
+        expect(
+          getStyle(document.body.querySelector('.ant-modal-wrap'), 'display'),
+        ).toBe('block');
+
+        expect(
+          getStyle(
+            document.body.querySelector('.ant-modal-confirm-body-wrapper'),
+            'display',
+          ),
+        ).toBe('block');
+        //Click confirm
+        click('.ant-modal-confirm-btns button:nth-child(2)');
+        await sleep(100);
+
+        expect(
+          getStyle(document.body.querySelector('.ant-modal-wrap'), 'display'),
+        ).not.toBe('block');
+
+        expect(
+          getStyle(
+            document.body.querySelector('.ant-modal-confirm-body-wrapper'),
+            'display',
+          ),
+        ).not.toBe('block');
+
+        wrapper.unmount();
+      });
+    }
+
+    // hooks
+    test('useForm', getForm);
+
+    // ref
+    test('ref', refForm);
   });
 });

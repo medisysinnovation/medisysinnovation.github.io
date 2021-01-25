@@ -4,10 +4,46 @@
 
 import React, { useState, useRef } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { useBoolean } from 'ahooks';
 
 import { Input, Select } from 'antd';
-import { Form, Button } from '@medisys/component';
+import { Form, Button, Modal } from '@medisys/component';
 import { FormInstance } from 'antd/lib/form';
+
+const Demo = () => {
+  const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
+
+  return (
+    <>
+      <Button
+        onClick={() => {
+          setTrue();
+        }}
+      >
+        Show Modal
+      </Button>
+      <Modal
+        visible={state}
+        onCancel={() => {
+          setFalse();
+        }}
+        onOk={() => {
+          setFalse();
+        }}
+      >
+        <Form discardCheck name="dirtyForm">
+          <Form.Item name="field1">
+            <Input />
+          </Form.Item>
+          <Button triggerDiscard name="discard">
+            Discard
+          </Button>
+        </Form>
+      </Modal>
+    </>
+  );
+};
+
 const Test = () => {
   const [form] = Form.useForm();
   return (
@@ -94,4 +130,4 @@ class ClassTest extends React.Component {
   }
 }
 
-export default Test;
+export default Demo;
