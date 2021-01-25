@@ -1,10 +1,13 @@
 import React from 'react';
+import TestUtils from 'react-dom/test-utils';
+
 import { mount, render } from 'enzyme';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { Input, Form as AntdForm } from 'antd';
-import mountTest from '../../../test/shared/mountTest';
-import { sleep } from '../../../test/utils';
+import { mountTest, click, sleep } from '../../../test/shared';
 import Form from '..';
+import Button from '../../button';
 jest.mock('scroll-into-view-if-needed');
 
 describe('Form', () => {
@@ -124,7 +127,7 @@ describe('Form', () => {
 
   it('`name` should not work with render props', () => {
     mount(
-      <Form enableDirtyCheck>
+      <Form discardCheck>
         <Form.Item name="test" shouldUpdate>
           {() => null}
         </Form.Item>
@@ -166,6 +169,107 @@ describe('Form', () => {
           block: 'start',
           scrollMode: 'if-needed',
         });
+
+        wrapper.unmount();
+      });
+    }
+
+    // hooks
+    test('useForm', () => {
+      const [form] = Form.useForm();
+      return {
+        props: { form },
+        getForm: () => form,
+      };
+    });
+
+    // ref
+    test('ref', () => {
+      let form;
+      return {
+        props: {
+          ref: instance => {
+            form = instance;
+          },
+        },
+        getForm: () => form,
+      };
+    });
+  });
+
+  describe('dirty check', () => {
+    function test(name, genForm) {
+      it(name, async () => {
+        let callGetForm;
+
+        const Demo = () => {
+          const { props, getForm } = genForm();
+          callGetForm = getForm;
+
+          return (
+            <Router>
+              <div id="test-root">
+                <nav>
+                  <ul>
+                    <li>
+                      <Link to="/">[Form]</Link>
+                    </li>
+                    <li>
+                      <Link id="linkAntherPage" to="/anotherpage">
+                        [Another page]
+                      </Link>
+                    </li>
+                  </ul>
+                </nav>
+
+                <Switch>
+                  <Route path="/anotherpage">
+                    <div>Another Page</div>
+                  </Route>
+
+                  <Route path="/">
+                    <Form
+                      discardCheck
+                      name="dirtyForm"
+                      // initialValues={{ field1: '2' }}
+                      {...props}
+                    >
+                      <Form.Item name="field1">
+                        <Input />
+                      </Form.Item>
+                      <Button triggerDiscard name="discard">
+                        Discard
+                      </Button>
+                    </Form>
+                  </Route>
+                </Switch>
+              </div>
+            </Router>
+          );
+        };
+
+        const wrapper = mount(<Demo />, { attachTo: document.body });
+        const form = callGetForm();
+        wrapper.find('button').simulate('click');
+        expect(document.querySelector('.ant-modal-wrap')).toBeNull();
+        await change(wrapper, 0, 'updated');
+        const inputNode = document.getElementById('dirtyForm_field1');
+        expect(inputNode.value).toBe('updated');
+
+        wrapper.find('button').simulate('click');
+
+        await sleep(100);
+        expect(document.querySelector('.ant-modal-wrap')).not.toBeNull();
+
+        click('.ant-modal-confirm-btns button:nth-child(1)');
+        await sleep(100);
+
+        expect(document.querySelector('.ant-modal-wrap')).toBeNull();
+
+        click('#linkAntherPage');
+        await sleep(100);
+
+        expect(document.querySelector('.ant-modal-wrap')).not.toBeNull();
 
         wrapper.unmount();
       });

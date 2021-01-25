@@ -13,10 +13,10 @@ import { useBoolean, useMouse, useEventListener } from 'ahooks';
 import { ModalProps } from 'antd/lib/Modal';
 
 export interface MIModalProps extends ModalProps {
-  triggerUnsavedChangesWarning?: boolean;
+  triggerDiscard?: boolean;
 }
 const MIModal: React.FC<MIModalProps> = ({
-  triggerUnsavedChangesWarning = true,
+  triggerDiscard = true,
   ...props
 }) => {
   const ref = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -62,7 +62,7 @@ const MIModal: React.FC<MIModalProps> = ({
         visible={state}
         onCancel={e => {
           const form = getClosetForm(e.currentTarget);
-          if (form && triggerUnsavedChangesWarning) {
+          if (form && triggerDiscard) {
             form.dispatchEvent(new CustomEvent('aboutdiscardform'));
             return false;
           } else {

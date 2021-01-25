@@ -3,70 +3,45 @@
  */
 
 import React, { useState, useRef } from 'react';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 import { Input, Select } from 'antd';
 import { Form, Button } from '@medisys/component';
 import { FormInstance } from 'antd/lib/form';
 const Test = () => {
   const [form] = Form.useForm();
   return (
-    <Form
-      form={form}
-      enableDirtyCheck
-      name="test_form"
-      initialValues={{ aaa: '2' }}
-    >
-      <Button
-        onClick={() => {
-          form.scrollToField('ddd', {
-            // block: 'nearest',
-          });
-        }}
-      >
-        Scroll
-      </Button>
-      <Form.Item name="aaa">
-        <Input
-          onChange={() => {
-            setTimeout(form.validateFields, 0);
-          }}
-        />
-      </Form.Item>
-      <Form.Item shouldUpdate noStyle>
-        {() => {
-          const aaa = form.getFieldValue('aaa');
-          console.log(aaa);
-          if (aaa === '1') {
-            return (
-              <Form.Item
-                name="bbb"
-                rules={[{ required: true, message: 'aaa' }]}
-              >
-                <Input />
-              </Form.Item>
-            );
-          }
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">[Form]</Link>
+            </li>
+            <li>
+              <Link to="/anotherpage">[Another page]</Link>
+            </li>
+          </ul>
+        </nav>
 
-          return (
-            <Form.Item>
-              <Form.Item
-                name="ccc"
-                rules={[{ required: true, message: 'ccc' }]}
-                noStyle
-              >
+        <Switch>
+          <Route path="/anotherpage">
+            <div>Another Page</div>
+          </Route>
+
+          <Route path="/">
+            <Form discardCheck name="dirtyForm">
+              <Form.Item name="field1">
                 <Input />
               </Form.Item>
-            </Form.Item>
-          );
-        }}
-      </Form.Item>
-      <Form.Item name="ddd" style={{ marginTop: 1000, marginBottom: 1000 }}>
-        <Input
-          onChange={() => {
-            setTimeout(form.validateFields, 0);
-          }}
-        />
-      </Form.Item>
-    </Form>
+              <Button triggerDiscard name="discard">
+                Discard
+              </Button>
+            </Form>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
@@ -93,7 +68,7 @@ class ClassTest extends React.Component {
     return (
       <div ref={this.divRef}>
         <Form
-          enableDirtyCheck
+          discardCheck
           ref={this.formRef}
           name="test_form"
           // initialValues={{ aaa: '2' }}
@@ -119,4 +94,4 @@ class ClassTest extends React.Component {
   }
 }
 
-export default ClassTest;
+export default Test;

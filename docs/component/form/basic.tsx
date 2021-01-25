@@ -52,7 +52,7 @@ const Demo = () => {
       ) : (
         <Form
           {...defaultFormConfig}
-          enableDirtyCheck={true}
+          discardCheck={true}
           form={form}
           name="control-hooks"
           onFinish={onFinish}
@@ -108,7 +108,7 @@ const Demo = () => {
                 Submit
               </Button>
               <Button onClick={onReset}>Reset</Button>
-              <Button danger triggerUnsavedChangesWarning onClick={onRemove}>
+              <Button danger triggerDiscard onClick={onRemove}>
                 Remove form
               </Button>
             </Form.Item>

@@ -4,39 +4,38 @@ import React, {
   createContext,
   useState,
   useContext,
+  useRef,
 } from 'react';
+import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
+
 import { Button, Select } from 'antd';
 import { ButtonProps } from 'antd/lib/Button';
 import MIFormContext from '../context/formContext';
 
 export interface MIButtonProps extends ButtonProps {
-  triggerUnsavedChangesWarning?: boolean;
+  triggerDiscard?: boolean;
 }
 
-const MIButton: React.FC<MIButtonProps> = ({
-  triggerUnsavedChangesWarning,
-  ...props
-}) => {
+const MIButton: React.FC<MIButtonProps> = ({ triggerDiscard, ...props }) => {
   const context = useContext(MIFormContext);
-  if (triggerUnsavedChangesWarning) {
+
+  if (triggerDiscard) {
     const { onClick, ...restProps } = props;
-    const { payload, setPayload } = context;
+    const { payload, setPayload, form } = context;
     return (
       <Button
         {...restProps}
         onClick={e => {
-          if (!payload?.discard && setPayload) {
-            setPayload({
-              discard: true,
-              onClick: () => {
-                if (onClick) onClick(e);
-              },
+          const form = e.currentTarget.closest('.medisys-form');
+          if (form) {
+            e.currentTarget.dispatchEvent(
+              new CustomEvent('aboutdiscardform', { bubbles: true }),
+            );
+            form.addEventListener('discardform', () => {
+              if (onClick) onClick(e);
             });
-          } else if (setPayload) {
-            e.preventDefault();
-            return false;
-          } else {
-            if (onClick) onClick(e);
+          } else if (onClick) {
+            onClick(e);
           }
         }}
       />

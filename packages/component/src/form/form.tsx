@@ -21,7 +21,7 @@ import {
   RuleRender,
   FormListProps,
 } from 'antd/lib/Form';
-import MIFormContext, { MIFormContextPayload } from '../context/formContext';
+// import MIFormContext, { MIFormContextPayload } from '../context/formContext';
 
 const showUnsavedPrompt = ({
   onOk,
@@ -52,7 +52,7 @@ const showUnsavedPrompt = ({
 };
 
 export interface MIFormProps<Values = any> extends FormProps<Values> {
-  enableDirtyCheck?: boolean;
+  discardCheck?: boolean;
   onDirtyCheck?: PromptProps['message'];
 }
 // const _MIForm: React.FC<MIFormProps> = ({
@@ -60,7 +60,7 @@ const _MIForm: React.ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
 > = (props, ref) => {
-  const { enableDirtyCheck = false, ...restProps } = props;
+  const { discardCheck = false, ...restProps } = props;
   const { form, children } = restProps;
 
   const [wrapForm] = useForm(form);
@@ -68,16 +68,17 @@ const _MIForm: React.ForwardRefRenderFunction<
     return wrapForm;
   });
 
-  const [confirmPrompted, setConfirmPrompted] = useState(false);
   const divRef = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
   const history = useHistory();
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const {
     onDirtyCheck = (currentLocation: any, action: any) => {
-      console.log(currentLocation, window.location, history.location);
+      console.log(currentLocation.pathname, history.location.pathname);
       if (currentLocation.pathname === history.location.pathname) return false;
       showUnsavedPrompt({
         onOk: async () => {
-          setConfirmPrompted(true);
+          wrapForm.resetFields();
           setTimeout(() => {
             history.push(currentLocation.pathname);
           }, 1);
@@ -89,26 +90,23 @@ const _MIForm: React.ForwardRefRenderFunction<
   } = restProps;
 
   // useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...restProps });
-  const [contextData, setContextData] = useState<MIFormContextPayload>({
-    discard: false,
-  });
   const discardForm = () => {
+    setShowConfirm(false);
+    wrapForm.resetFields();
     if (divRef.current)
       divRef.current.dispatchEvent(
         new CustomEvent('discardform', { bubbles: true }),
       );
   };
 
-  const onMedisysDiscardForm = (e: FormEvent) => {
-    if (wrapForm?.isFieldsTouched() && enableDirtyCheck) {
-      setContextData({
-        discard: true,
-      });
+  const tryDiscardForm = (e: FormEvent) => {
+    if (wrapForm?.isFieldsTouched() && discardCheck) {
+      setShowConfirm(true);
     } else {
       discardForm();
     }
   };
-  useEventListener('aboutdiscardform', onMedisysDiscardForm, {
+  useEventListener('aboutdiscardform', tryDiscardForm, {
     target: divRef,
   });
 
@@ -125,67 +123,41 @@ const _MIForm: React.ForwardRefRenderFunction<
   useEventListener('beforeunload', onBeforeUnloadCheck);
 
   useEffect(() => {
-    if (contextData?.discard && !confirmPrompted) {
+    if (showConfirm) {
       if (wrapForm?.isFieldsTouched()) {
-        setConfirmPrompted(true);
         showUnsavedPrompt({
           onOk: () => {
-            if (contextData?.onClick !== undefined) contextData.onClick();
-            wrapForm.resetFields();
-            setConfirmPrompted(false);
-            setContextData({
-              discard: false,
-            });
             discardForm();
           },
           onCancel: () => {
-            setConfirmPrompted(false);
-            setContextData({
-              discard: false,
-            });
+            setShowConfirm(false);
           },
         });
-      } else {
-        if (contextData?.onClick !== undefined) contextData.onClick();
       }
     }
-  }, [contextData?.discard]);
+  }, [showConfirm]);
   const element = (
-    <MIFormContext.Provider
-      value={{
-        payload: contextData,
-        setPayload: (v: MIFormContextPayload) => {
-          console.log(v);
-          if (v.discard !== contextData.discard)
-            // if (v.discard && wrapForm?.isFieldsTouched()) setContextData(v);
-            setContextData(v);
-        },
-      }}
-    >
-      <div ref={divRef} className="medisys-form">
-        <Form {...restProps} form={wrapForm}>
-          {enableDirtyCheck && (
-            <Form.Item
-              shouldUpdate={!confirmPrompted}
-              style={{ display: 'none' }}
-            >
-              {() => {
-                const isTouched = wrapForm?.isFieldsTouched() ?? false;
-                // if (isTouched) {
-                //   window.addEventListener('beforeunload', onBeforeUnloadCheck);
-                // }
-                return (
-                  <>
-                    <Prompt message={onDirtyCheck} when={isTouched} />
-                  </>
-                );
-              }}
-            </Form.Item>
-          )}
-          {children}
-        </Form>
-      </div>
-    </MIFormContext.Provider>
+    <div ref={divRef} className="medisys-form">
+      <Form {...restProps} form={wrapForm}>
+        {discardCheck && (
+          <Form.Item shouldUpdate={!showConfirm} style={{ display: 'none' }}>
+            {() => {
+              const isTouched = wrapForm?.isFieldsTouched() ?? false;
+
+              // if (isTouched) {
+              //   window.addEventListener('beforeunload', onBeforeUnloadCheck);
+              // }
+              return (
+                <>
+                  <Prompt message={onDirtyCheck} when={isTouched} />
+                </>
+              );
+            }}
+          </Form.Item>
+        )}
+        {children}
+      </Form>
+    </div>
   );
   if (!history) return <Router>{element}</Router>;
   return <>{element}</>;

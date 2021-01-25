@@ -11,4 +11,4 @@ group:
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| triggerUnsavedChangesWarning | Enable dirty form check | boolean | true |  |
+| triggerDiscard | Enable dirty form check | boolean | true |  |

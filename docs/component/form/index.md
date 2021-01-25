@@ -17,7 +17,7 @@ The form will prompt confirmation if any field has been touched when
 
 - Navigate to other page with react router
 - Refresh on current page
-- Click Button with `triggerUnsavedChangesWarning` props
+- Click Button with `triggerDiscard` props
 
 
 ## Modal Form
@@ -31,5 +31,5 @@ To disable check on modal close, check [Modal](/components/modal#api) API
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| enableDirtyCheck | Enable dirty form check | boolean | false |  |
+| discardCheck | Enable dirty form check | boolean | false |  |
 | onDirtyCheck | Listening to dirty check event | string | ((location: H.Location, action: H.Action) => string \| boolean) |  |
