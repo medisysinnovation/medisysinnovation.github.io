@@ -6,6 +6,8 @@ Install dependencies,
 
 ```bash
 $ npm i
+
+& lerna bootstrap
 ```
 
 Start the dev server,
@@ -24,6 +26,18 @@ Build library via `father-build`,
 
 ```bash
 $ npm run build
+```
+
+Release package to npm
+
+```bash
+$ npm run release
+```
+
+Deploy documentation
+
+```bash
+$ npm run deploy
 ```
 
 ### TypeScript

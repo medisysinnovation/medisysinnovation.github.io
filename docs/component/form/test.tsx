@@ -36,7 +36,7 @@ const Demo = () => {
             <Input />
           </Form.Item>
           <Button triggerDiscard name="discard">
-            Discard
+            Discardasdf
           </Button>
         </Form>
       </Modal>
