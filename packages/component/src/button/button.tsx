@@ -10,18 +10,14 @@ import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
 
 import { Button, Select } from 'antd';
 import { ButtonProps } from 'antd/lib/Button';
-import MIFormContext from '../context/formContext';
 
 export interface MIButtonProps extends ButtonProps {
   triggerDiscard?: boolean;
 }
 
 const MIButton: React.FC<MIButtonProps> = ({ triggerDiscard, ...props }) => {
-  const context = useContext(MIFormContext);
-
   if (triggerDiscard) {
     const { onClick, ...restProps } = props;
-    const { payload, setPayload, form } = context;
     return (
       <Button
         {...restProps}
