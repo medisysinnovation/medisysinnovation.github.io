@@ -93,10 +93,12 @@ const _MIForm: React.ForwardRefRenderFunction<
   const discardForm = () => {
     setShowConfirm(false);
     wrapForm.resetFields();
-    if (divRef.current)
+    if (divRef.current) {
+      //@ts-ignore
       divRef.current.dispatchEvent(
         new CustomEvent('discardform', { bubbles: true }),
       );
+    }
   };
 
   const tryDiscardForm = (e: FormEvent) => {
@@ -137,6 +139,7 @@ const _MIForm: React.ForwardRefRenderFunction<
     }
   }, [showConfirm]);
   const element = (
+    //@ts-ignore
     <div ref={divRef} className="medisys-form">
       <Form {...restProps} form={wrapForm}>
         {discardCheck && (
