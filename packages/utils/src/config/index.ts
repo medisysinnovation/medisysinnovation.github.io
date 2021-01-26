@@ -19,8 +19,8 @@ let config: MedisysConfig = {
 const initilaze = (_config: MedisysConfig) => {
   config = _.merge(config, _config);
 };
-// setInterval(() => {
-//   console.log(config);
-// }, 10000);
+setInterval(() => {
+  console.log(config);
+}, 10000);
 
 export { initilaze, config };

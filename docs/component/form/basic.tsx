@@ -118,26 +118,6 @@ const Demo = () => {
           </div>
         </Form>
       )}
-
-      <Button
-        onClick={() => {
-          setTrue();
-        }}
-      >
-        Show Modal
-      </Button>
-      <Modal
-        visible={state}
-        onCancel={() => {
-          console.log(322);
-          setFalse();
-        }}
-        onOk={() => {
-          setFalse();
-        }}
-      >
-        <div>tewtwe</div>
-      </Modal>
     </>
   );
 };

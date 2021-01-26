@@ -55,6 +55,17 @@ describe('Form', () => {
       expect(onChange).toHaveBeenCalled();
     });
 
+    it('noStyle should not work when hidden', () => {
+      const wrapper = mount(
+        <Form>
+          <Form.Item name="light" hidden noStyle>
+            <Input />
+          </Form.Item>
+        </Form>,
+      );
+      expect(wrapper).toMatchRenderedSnapshot();
+    });
+
     it('should clean up', async () => {
       const Demo = () => {
         const [form] = Form.useForm();
@@ -281,7 +292,7 @@ describe('Form', () => {
     test('ref', refForm);
   });
 
-  describe('dirty check modal', () => {
+  describe('dirty check form inside modal', () => {
     function test(name, genForm) {
       it(name, async () => {
         const Demo = () => {
@@ -344,6 +355,7 @@ describe('Form', () => {
             'display',
           ),
         ).toBe('block');
+
         //Click confirm
         click('.ant-modal-confirm-btns button:nth-child(2)');
         await sleep(100);
