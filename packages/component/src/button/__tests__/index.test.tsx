@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount, render } from 'enzyme';
-import mountTest from '../../../test/shared/mountTest';
+import { mountTest } from '../../test/shared';
 import Button from '..';
 import { SizeType } from '../../config';
 

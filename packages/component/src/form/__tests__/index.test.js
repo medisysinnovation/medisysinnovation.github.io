@@ -5,7 +5,7 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { Input, Form as AntdForm } from 'antd';
 import { useBoolean } from 'ahooks';
 import { getStyle } from '@medisys/utils';
-import { mountTest, click, sleep } from '../../../test/shared';
+import { mountTest, click, sleep } from '../../test/shared';
 import Form from '..';
 import Button from '../../button';
 import Modal from '../../modal';
