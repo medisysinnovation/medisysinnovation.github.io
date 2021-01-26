@@ -25,14 +25,9 @@ footer: Open-source MIT Licensed | Copyright © 2020-present<br />Powered by Med
 ## Getting Started
 
 ```bash
-// Install Material-UI
-$ npm install @material-ui/core
+// Install Medisys Component
+$ npm install @material/component
 
-// Install Antd-Design
-$ npm install antd
-
-// Install Medisys-UI
-$ npm install @medisys/medisys-ui
 ```
 
 ### TypeScript
