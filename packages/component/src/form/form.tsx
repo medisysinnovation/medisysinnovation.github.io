@@ -64,9 +64,9 @@ const _MIForm: React.ForwardRefRenderFunction<
   const { form, children } = restProps;
 
   const [wrapForm] = useForm(form);
-  React.useImperativeHandle(ref, () => {
-    return wrapForm;
-  });
+  // React.useImperativeHandle(ref, () => {
+  //   return wrapForm;
+  // });
 
   const divRef = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
   const history = useHistory();
