@@ -68,7 +68,7 @@ const _MIForm: React.ForwardRefRenderFunction<
   //   return wrapForm;
   // });
 
-  const divRef = useRef(); // as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
+  // const divRef = useRef(); // as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
   const history = useHistory();
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -93,12 +93,12 @@ const _MIForm: React.ForwardRefRenderFunction<
   const discardForm = () => {
     setShowConfirm(false);
     wrapForm.resetFields();
-    if (divRef.current) {
-      //@ts-ignore
-      divRef.current.dispatchEvent(
-        new CustomEvent('discardform', { bubbles: true }),
-      );
-    }
+    // if (divRef.current) {
+    //   //@ts-ignore
+    //   divRef.current.dispatchEvent(
+    //     new CustomEvent('discardform', { bubbles: true }),
+    //   );
+    // }
   };
 
   const tryDiscardForm = (e: FormEvent) => {
@@ -109,7 +109,7 @@ const _MIForm: React.ForwardRefRenderFunction<
     }
   };
   useEventListener('aboutdiscardform', tryDiscardForm, {
-    target: divRef,
+    // target: divRef,
   });
 
   const onBeforeUnloadCheck = (event: BeforeUnloadEvent) => {
@@ -140,7 +140,7 @@ const _MIForm: React.ForwardRefRenderFunction<
   }, [showConfirm]);
   const element = (
     //@ts-ignore
-    <div ref={divRef} className="medisys-form">
+    <div className="medisys-form">
       <Form {...restProps} form={wrapForm}>
         {discardCheck && (
           <Form.Item shouldUpdate={!showConfirm} style={{ display: 'none' }}>
