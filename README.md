@@ -46,4 +46,8 @@ $ npm run deploy
 
 ## 🔗 Links
 
+- [Dumi](https://d.umijs.org/)
+
+- [Lerna](https://github.com/lerna/lerna/)
+
 - [Ant Design](https://ant.design/)
