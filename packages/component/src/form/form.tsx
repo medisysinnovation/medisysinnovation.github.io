@@ -68,7 +68,7 @@ const _MIForm: React.ForwardRefRenderFunction<
   //   return wrapForm;
   // });
 
-  const divRef = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
+  const divRef = useRef(); // as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
   const history = useHistory();
   const [showConfirm, setShowConfirm] = useState(false);
 
