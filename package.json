@@ -31,7 +31,8 @@
   "dependencies": {
     "ahooks": "^2.9.4",
     "antd": "^4.10.3",
-    "react": "^17.0.1"
+    "react": "16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
     "@umijs/test": "^3.0.5",

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Select } from 'antd';
 import { Form, Button, Modal } from '@medisys/component';
-import { useBoolean } from 'ahooks';
+// import { useBoolean } from 'ahooks';
 
 import './basic.less';
 // console.log(Button);
@@ -45,7 +45,6 @@ const Demo = () => {
   const onRemove = () => {
     setClear(true);
   };
-  const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
 
   const [clear, setClear] = useState(false);
   return (
