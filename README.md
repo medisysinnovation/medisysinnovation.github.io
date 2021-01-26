@@ -7,7 +7,7 @@ Install dependencies,
 ```bash
 $ npm i
 
-& lerna bootstrap
+$ lerna bootstrap
 ```
 
 Start the dev server,
