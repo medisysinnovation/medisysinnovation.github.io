@@ -31,7 +31,7 @@
   "dependencies": {
     "ahooks": "^2.9.4",
     "antd": "^4.10.3",
-    "react": "16.8.6",
+    "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
