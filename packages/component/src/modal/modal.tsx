@@ -14,16 +14,24 @@ import { ModalProps } from 'antd/lib/Modal';
 
 export interface MIModalProps extends ModalProps {
   triggerDiscard?: boolean;
+  model?: string;
 }
 
 // class Spin extends React.Component<MIModalProps, MIModalState> {
 
 // }
+
+const isVisible = (element: HTMLDivElement) => {
+  if (!element) return false;
+  const modalWrap = element.closest('.ant-modal-wrap');
+  return getStyle(modalWrap, 'display') !== 'none';
+};
 const MIModal: React.FC<MIModalProps> = ({
   triggerDiscard = true,
+  model,
   ...props
 }) => {
-  const ref = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const ref = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   const getClosetForm = (el: HTMLElement | null) => {
     let f = el?.closest('.ant-modal-content')?.querySelector('.medisys-form');
@@ -35,6 +43,8 @@ const MIModal: React.FC<MIModalProps> = ({
   };
   const { onCancel, visible, children, ...restProps } = props;
   const [state, { toggle, setTrue, setFalse }] = useBoolean(visible);
+  const [spinning, setSpinning] = useState(false);
+
   // console.log(state, visible);
   // const onDiscardForm = (e: FormEvent) => {
   //   if (onCancel)
@@ -42,20 +52,15 @@ const MIModal: React.FC<MIModalProps> = ({
   //     onCancel(e);
   // };
   useEventListener('discardform', (e: FormEvent) => {
-    if (onCancel && ref.current) {
-      const modalWrap = ref.current.closest('.ant-modal-wrap');
-      if (getStyle(modalWrap, 'display') !== 'none') {
-        //@ts-ignore
-        onCancel(e);
-      }
+    if (onCancel && isVisible(ref?.current)) {
+      //@ts-ignore
+      onCancel(e);
     }
   });
   useEventListener('loadingstatechanged', (e: FormEvent) => {
-    if (onCancel && ref.current) {
-      const modalWrap = ref.current.closest('.ant-modal-wrap');
-      if (getStyle(modalWrap, 'display') !== 'none') {
-        console.log(ref.current, e);
-      }
+    if (model && isVisible(ref?.current)) {
+      const models = e.detail?.models ?? {};
+      setSpinning(models[model]);
     }
   });
   useEffect(() => {
@@ -101,7 +106,7 @@ const MIModal: React.FC<MIModalProps> = ({
           }
         }}
       >
-        <Spin spinning={false}>
+        <Spin spinning={spinning}>
           <div ref={ref}>{children}</div>
         </Spin>
       </Modal>

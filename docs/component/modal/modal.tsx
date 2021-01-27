@@ -4,7 +4,15 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal } from '@medisys/component';
 import { useBoolean } from 'ahooks';
 
-Modal.updateState({ a: 123 });
+setInterval(() => {
+  Modal.updateState({
+    loading: {
+      models: {
+        abc: true,
+      },
+    },
+  });
+}, 5000);
 
 const ModalDemo = () => {
   const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
@@ -20,6 +28,7 @@ const ModalDemo = () => {
       </Button>
       <Modal
         visible={state}
+        model="abc"
         onCancel={() => {
           setFalse();
         }}

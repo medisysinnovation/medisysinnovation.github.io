@@ -1,4 +1,4 @@
-interface FormEvent extends Event {}
+interface FormEvent extends CustomEvent {}
 
 interface MedisysDocumentEvent {
   createEvent(eventInterface: 'FormEvent'): FormEvent;
