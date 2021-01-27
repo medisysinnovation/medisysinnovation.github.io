@@ -6,7 +6,7 @@ console.log('Current React Version:', React.version);
 
 const Enzyme = require('enzyme');
 
-const Adapter = require('@wojtekmaj/enzyme-adapter-react-17'); //require('enzyme-adapter-react-16');
+const Adapter = require('enzyme-adapter-react-16'); //require('@wojtekmaj/enzyme-adapter-react-17'); //
 Enzyme.configure({ adapter: new Adapter() });
 
 Object.defineProperty(window, 'matchMedia', {

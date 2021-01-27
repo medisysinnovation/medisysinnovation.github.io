@@ -11,6 +11,9 @@ group:
 
 <code src="./button.jsx" />
 
+<code src="./progress-button.jsx" />
+
+
 ```jsx
 import React from 'react';
 

@@ -2,7 +2,7 @@
 
 const authorization = require('..');
 const { checkAuthority, setAuthority } = authorization;
-console.dir(authorization);
+// console.dir(authorization);
 describe('authorization', () => {
   it('basic check test', () => {
     setAuthority(['demo.read']);
