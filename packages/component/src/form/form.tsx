@@ -138,7 +138,6 @@ const _MIForm: React.ForwardRefRenderFunction<
   const element = (
     <div ref={divRef} className="medisys-form">
       <Form {...restProps} form={wrapForm}>
-        <p>123123</p>
         {discardCheck && (
           <Form.Item shouldUpdate={!showConfirm} style={{ display: 'none' }}>
             {() => {

@@ -50,6 +50,14 @@ const MIModal: React.FC<MIModalProps> = ({
       }
     }
   });
+  useEventListener('loadingstatechanged', (e: FormEvent) => {
+    if (onCancel && ref.current) {
+      const modalWrap = ref.current.closest('.ant-modal-wrap');
+      if (getStyle(modalWrap, 'display') !== 'none') {
+        console.log(ref.current, e);
+      }
+    }
+  });
   useEffect(() => {
     // const onDiscardForm = (e: FormEvent) => {
     //   if (onCancel)
@@ -93,7 +101,7 @@ const MIModal: React.FC<MIModalProps> = ({
           }
         }}
       >
-        <Spin>
+        <Spin spinning={false}>
           <div ref={ref}>{children}</div>
         </Spin>
       </Modal>

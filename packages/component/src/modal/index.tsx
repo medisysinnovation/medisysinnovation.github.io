@@ -46,8 +46,22 @@ type ModalType = typeof _MIModal & ModalStaticFunctions;
 let MIModal = _MIModal as ModalType;
 MIModal = Object.assign(MIModal, Modal);
 
-MIModal.updateState = (abc: any) => {
-  console.log(abc);
+export interface StateProps {
+  loading: Object;
+}
+
+MIModal.updateState = (newState: StateProps) => {
+  const modalRoot = document.querySelector('.ant-modal-root');
+  if (modalRoot) {
+    const { loading } = newState;
+    console.log(loading);
+    modalRoot.dispatchEvent(
+      new CustomEvent('loadingstatechanged', {
+        bubbles: true,
+        detail: loading,
+      }),
+    );
+  }
 };
 
 export default MIModal;
