@@ -62,8 +62,7 @@ const _MIForm: React.ForwardRefRenderFunction<
 > = (props, ref) => {
   const { discardCheck = false, ...restProps } = props;
   const { form, children } = restProps;
-
-  const [wrapForm] = useForm(form);
+  const [wrapForm] = Form.useForm(form);
   React.useImperativeHandle(ref, () => {
     return wrapForm;
   });
@@ -139,6 +138,7 @@ const _MIForm: React.ForwardRefRenderFunction<
   const element = (
     <div ref={divRef} className="medisys-form">
       <Form {...restProps} form={wrapForm}>
+        <p>123123</p>
         {discardCheck && (
           <Form.Item shouldUpdate={!showConfirm} style={{ display: 'none' }}>
             {() => {
@@ -170,7 +170,7 @@ const MIForm = React.forwardRef<FormInstance | undefined, MIFormProps>(
   },
 ) => React.ReactElement;
 
-const { useForm, List } = Form;
-export { useForm, List };
+// const { useForm, List } = Form;
+// export { useForm, List };
 
 export default MIForm;

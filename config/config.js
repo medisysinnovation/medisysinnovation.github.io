@@ -11,10 +11,19 @@ export default defineConfig({
   // hash: true,
   title: 'Medisys Lab',
   mode: 'site',
-  base: '/medisys',
+  base: '/',
   publicPath: '/medisys/',
   // exportStatic: {}, // 将所有路由输出为 HTML 目录结构，以免刷新页面时 404
-  // dynamicImport: {},
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        style: true, // or 'css'
+      },
+    ],
+  ],
+  dynamicImport: {},
   locales: [['en-US', 'English']],
   menus: {
     '/guide': [

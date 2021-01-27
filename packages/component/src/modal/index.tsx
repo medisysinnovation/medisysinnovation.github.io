@@ -11,6 +11,17 @@ import {
 } from 'antd/lib/Form';
 import _MIModal from './modal';
 
+export type ModalFunc = (
+  props: any,
+) => {
+  // destroy: () => void;
+  // update: (configUpdate: any) => void;
+};
+
+export interface ModalStaticFunctions {
+  updateState: any;
+}
+
 // declare type InternalFormType = typeof _MIModal;
 // interface FormInterface extends InternalFormType {
 //   useForm: typeof Form.useForm;
@@ -29,7 +40,14 @@ import _MIModal from './modal';
 //   RuleRender,
 //   FormListProps,
 // };
-let MIModal = _MIModal;
+
+type ModalType = typeof _MIModal & ModalStaticFunctions;
+
+let MIModal = _MIModal as ModalType;
 MIModal = Object.assign(MIModal, Modal);
+
+MIModal.updateState = (abc: any) => {
+  console.log(abc);
+};
 
 export default MIModal;

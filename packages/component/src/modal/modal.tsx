@@ -7,7 +7,7 @@ import React, {
   useRef,
   MouseEvent,
 } from 'react';
-import { Modal, Select } from 'antd';
+import { Modal, Select, Spin } from 'antd';
 import { useBoolean, useMouse, useEventListener } from 'ahooks';
 import { getStyle } from '@medisys/utils';
 import { ModalProps } from 'antd/lib/Modal';
@@ -15,6 +15,10 @@ import { ModalProps } from 'antd/lib/Modal';
 export interface MIModalProps extends ModalProps {
   triggerDiscard?: boolean;
 }
+
+// class Spin extends React.Component<MIModalProps, MIModalState> {
+
+// }
 const MIModal: React.FC<MIModalProps> = ({
   triggerDiscard = true,
   ...props
@@ -89,7 +93,9 @@ const MIModal: React.FC<MIModalProps> = ({
           }
         }}
       >
-        <div ref={ref}>{children}</div>
+        <Spin>
+          <div ref={ref}>{children}</div>
+        </Spin>
       </Modal>
     </div>
   );

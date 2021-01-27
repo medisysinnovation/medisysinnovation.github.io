@@ -7,6 +7,9 @@ group:
   path: /modal
 ---
 
+<code src="./modal.tsx" title='Playground' desc='For Dev & Test only' />
+
+
 ## API
   
 | Property | Description | Type | Default | Version |

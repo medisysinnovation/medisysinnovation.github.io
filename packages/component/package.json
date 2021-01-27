@@ -42,6 +42,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.2.0",
+    "react-spinners": "^0.10.4",
     "tiny-invariant": "^1.1.0"
   },
   "bugs": {
