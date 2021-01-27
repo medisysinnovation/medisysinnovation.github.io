@@ -6,5 +6,6 @@ export * from './component';
 export * from './network';
 export * from './image';
 export * from './html';
+export * from './async';
 
 export * from './test';
