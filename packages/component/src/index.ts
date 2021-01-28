@@ -1,4 +1,4 @@
-import 'antd/dist/antd.less';
+// import 'antd/dist/antd.less';
 
 export * from './grid';
 export { default as Form } from './form';
