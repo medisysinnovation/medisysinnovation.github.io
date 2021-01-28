@@ -7,15 +7,27 @@ group:
   path: /button
 ---
 
-# Button
+## Button
 
-<code src="./button.jsx" />
-
-<code src="./progress-button.jsx" />
+<code src="./button" title='Basic usage' desc='Basic usage example.'/>
 
 
-```jsx
-import React from 'react';
+## Progress Button
 
-export default () => <h2>test</h2>;
-```
+<code src="./progress-button" title='Auto disable on async call' desc='To auto enable/disable button, subscribe to model by setting the `mode` property on the Button.'/>
+<embed src="../shared/utils.global.updateState.md"></embed>
+
+## API
+
+### Button
+  
+| Property | Description | Type | Default | Version |
+| --- | --- | --- | --- | --- |
+| triggerDiscard | Enable dirty form check if inside `Form` component | boolean | false |  |
+  
+### Progress Button
+
+| Property | Description | Type | Default | Version |
+| --- | --- | --- | --- | --- |
+| model | Dva model namespace | string |  |  |
+

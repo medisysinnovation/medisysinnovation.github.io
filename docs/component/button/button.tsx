@@ -5,15 +5,10 @@ import { Button } from '@medisys/component';
 import { Input } from 'antd';
 
 export default function() {
-  const btnConfig = {
-    variant: 'contained',
-    color: 'secondary',
-  };
   return (
     <div>
-      <Input id="input-test" />
+      <Input id="input-test" style={{ width: 300, marginRight: 10 }} />
       <Button
-        // size="who am I"
         onClick={() => {
           abc(document.getElementById('input-test').value);
         }}

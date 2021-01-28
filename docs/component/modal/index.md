@@ -7,7 +7,10 @@ group:
   path: /modal
 ---
 
-<code src="./modal.tsx" title='Playground' desc='For Dev & Test only' />
+<code src="./modal.tsx" title='Toggle loading based on state update' desc='use `model` to auto trigger loading block' />
+
+<embed src="../shared/utils.global.updateState.md"></embed>
+
 
 
 ## API
@@ -15,3 +18,5 @@ group:
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
 | triggerDiscard | Enable dirty form check | boolean | true |  |
+| model | Dva model namespace | string |  |  |
+

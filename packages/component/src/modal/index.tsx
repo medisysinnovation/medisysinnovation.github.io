@@ -18,9 +18,9 @@ export type ModalFunc = (
   // update: (configUpdate: any) => void;
 };
 
-export interface ModalStaticFunctions {
-  updateState: any;
-}
+// export interface ModalStaticFunctions {
+//   updateState: any;
+// }
 
 // declare type InternalFormType = typeof _MIModal;
 // interface FormInterface extends InternalFormType {
@@ -41,27 +41,27 @@ export interface ModalStaticFunctions {
 //   FormListProps,
 // };
 
-type ModalType = typeof _MIModal & ModalStaticFunctions;
+type ModalType = typeof _MIModal; //& ModalStaticFunctions;
 
 let MIModal = _MIModal as ModalType;
 MIModal = Object.assign(MIModal, Modal);
 
-export interface StateProps {
-  loading: Object;
-}
+// export interface StateProps {
+//   loading: Object;
+// }
 
-MIModal.updateState = (newState: StateProps) => {
-  const modalRoot = document.querySelector('.ant-modal-root');
-  if (modalRoot) {
-    const { loading } = newState;
-    console.log(loading);
-    modalRoot.dispatchEvent(
-      new CustomEvent('loadingstatechanged', {
-        bubbles: true,
-        detail: loading,
-      }),
-    );
-  }
-};
+// MIModal.updateState = (newState: StateProps) => {
+//   const modalRoot = document.querySelector('.ant-modal-root');
+//   if (modalRoot) {
+//     const { loading } = newState;
+//     console.log(loading);
+//     document.dispatchEvent(
+//       new CustomEvent('loadingstatechanged', {
+//         bubbles: true,
+//         detail: loading,
+//       }),
+//     );
+//   }
+// };
 
 export default MIModal;

@@ -1,4 +1,5 @@
 import _ from 'lodash';
+export { default as global } from './global';
 export function defineConfig(config: Object) {
   return config;
 }

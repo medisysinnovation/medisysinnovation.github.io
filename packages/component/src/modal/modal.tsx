@@ -11,6 +11,15 @@ import { Modal, Select, Spin } from 'antd';
 import { useBoolean, useMouse, useEventListener } from 'ahooks';
 import { getStyle } from '@medisys/utils';
 import { ModalProps } from 'antd/lib/Modal';
+import Button from '../button';
+
+const { ProgressButton } = Button;
+
+export interface ModalLocale {
+  okText: string;
+  cancelText: string;
+  justOkText: string;
+}
 
 export interface MIModalProps extends ModalProps {
   triggerDiscard?: boolean;
@@ -60,7 +69,8 @@ const MIModal: React.FC<MIModalProps> = ({
   useEventListener('loadingstatechanged', (e: FormEvent) => {
     if (model && isVisible(ref?.current)) {
       const models = e.detail?.models ?? {};
-      setSpinning(models[model]);
+      console.log(model, models[model]);
+      setSpinning(!!models[model]);
     }
   });
   useEffect(() => {
@@ -88,10 +98,37 @@ const MIModal: React.FC<MIModalProps> = ({
     // };
   }, [visible]);
 
+  const renderFooter = () => {
+    const {
+      okText,
+      okType,
+      cancelText,
+      onCancel,
+      onOk,
+      confirmLoading,
+    } = props;
+    return (
+      <>
+        <Button onClick={onCancel} {...props.cancelButtonProps}>
+          {cancelText}1
+        </Button>
+        <ProgressButton
+          loading={confirmLoading}
+          onClick={onOk}
+          model={model}
+          {...props.okButtonProps}
+        >
+          {okText}2
+        </ProgressButton>
+      </>
+    );
+  };
   return (
     <div>
       <Modal
+        // footer={renderFooter()}
         {...restProps}
+        confirmLoading={spinning}
         visible={state}
         onCancel={e => {
           const form = getClosetForm(e.currentTarget);
