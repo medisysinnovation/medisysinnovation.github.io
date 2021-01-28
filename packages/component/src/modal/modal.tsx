@@ -98,31 +98,6 @@ const MIModal: React.FC<MIModalProps> = ({
     // };
   }, [visible]);
 
-  const renderFooter = () => {
-    const {
-      okText,
-      okType,
-      cancelText,
-      onCancel,
-      onOk,
-      confirmLoading,
-    } = props;
-    return (
-      <>
-        <Button onClick={onCancel} {...props.cancelButtonProps}>
-          {cancelText}1
-        </Button>
-        <ProgressButton
-          loading={confirmLoading}
-          onClick={onOk}
-          model={model}
-          {...props.okButtonProps}
-        >
-          {okText}2
-        </ProgressButton>
-      </>
-    );
-  };
   return (
     <div>
       <Modal
