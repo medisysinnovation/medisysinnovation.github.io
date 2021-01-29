@@ -88,5 +88,6 @@
       "path": "./dist/antd.min.css",
       "maxSize": "65 kB"
     }
-  ]
+  ],
+  "gitHead": "3e6952d8917601ca6e0b886a712436daa06a1a41"
 }

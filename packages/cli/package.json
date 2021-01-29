@@ -19,6 +19,9 @@
     "type": "git",
     "url": "git+https://github.com/medisysinnovation/medisys.git"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
@@ -30,5 +33,6 @@
     "colorful": "^2.1.0",
     "commander": "^7.0.0",
     "minimist": "^1.2.5"
-  }
+  },
+  "gitHead": "3e6952d8917601ca6e0b886a712436daa06a1a41"
 }
