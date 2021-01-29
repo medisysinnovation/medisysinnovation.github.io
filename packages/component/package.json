@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.81",
+  "version": "0.1.82",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@ant-design/tools": "^13.3.3",
-    "@medisys/cli": "^0.1.81",
+    "@medisys/cli": "^0.1.82",
     "@types/classnames": "^2.2.11",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
