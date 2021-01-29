@@ -26,6 +26,8 @@
 
 /packages/*/lib
 /packages/*/dist
+/packages/*/lib
+/packages/*/es
 /packages/*/node_modules
 /packages/**/__tests__/**/*.tsx.snap
 /packages/**/__tests__/**/*.js.snap
