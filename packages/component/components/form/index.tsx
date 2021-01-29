@@ -1,14 +1,5 @@
-import { Form, Input, Modal } from 'antd';
-import {
-  FormInstance,
-  FormProps,
-  FormItemProps,
-  ErrorListProps,
-  Rule,
-  RuleObject,
-  RuleRender,
-  FormListProps,
-} from 'antd/lib/Form';
+import { Form } from 'antd';
+
 import _MIForm from './form';
 
 // declare type InternalFormType = typeof _MIForm;

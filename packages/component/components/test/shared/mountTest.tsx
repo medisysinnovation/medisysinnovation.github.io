@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount, render } from 'enzyme';
+import { mount } from 'enzyme';
 
 export function mountTest(Component: React.ComponentType) {
   describe(`mount and unmount`, () => {

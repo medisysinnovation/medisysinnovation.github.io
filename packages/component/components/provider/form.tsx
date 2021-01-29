@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useRef, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 
 import MIFormContext, { MIFormContextPayload } from '../context/formContext';
 
@@ -21,7 +21,7 @@ const FormProvider: React.FC<FormProviderProps> = ({
 
   useEffect(() => {
     if (onFormStateChange) {
-      const newContextData = onFormStateChange({
+      onFormStateChange({
         contextData,
         onContextDataChange: (newContextData: MIFormContextPayload) => {
           if (newContextData) {

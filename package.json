@@ -14,8 +14,8 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage",
     "commit": "git add --all & git commit -a",
-    "compile": "antd-tools run compile"
-
+    "compile": "antd-tools run compile",
+    "build:component":"lerna run build --scope @medisys/component"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -34,8 +34,8 @@
   "dependencies": {
     "ahooks": "^2.9.4",
     "antd": "^4.10.3",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0"
   },
   "devDependencies": {
     "@umijs/test": "^3.0.5",

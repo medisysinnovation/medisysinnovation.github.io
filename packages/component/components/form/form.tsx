@@ -1,26 +1,15 @@
 import React, {
   useEffect,
-  useMemo,
   useState,
   useRef,
-  MutableRefObject,
-  RefObject,
+  ForwardRefRenderFunction,
 } from 'react';
 import { Form, Modal } from 'antd';
-import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
+import { useEventListener } from 'ahooks';
 import { Prompt, PromptProps } from 'react-router-dom';
 import { useHistory, BrowserRouter as Router } from 'react-router-dom';
 
-import {
-  FormInstance,
-  FormProps,
-  FormItemProps,
-  ErrorListProps,
-  Rule,
-  RuleObject,
-  RuleRender,
-  FormListProps,
-} from 'antd/lib/Form';
+import { FormInstance, FormProps } from 'antd/lib/Form';
 // import MIFormContext, { MIFormContextPayload } from '../context/formContext';
 
 const showUnsavedPrompt = ({
@@ -56,7 +45,7 @@ export interface MIFormProps<Values = any> extends FormProps<Values> {
   onDirtyCheck?: PromptProps['message'];
 }
 // const _MIForm: React.FC<MIFormProps> = ({
-const _MIForm: React.ForwardRefRenderFunction<
+const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
 > = (props, ref) => {
@@ -72,7 +61,7 @@ const _MIForm: React.ForwardRefRenderFunction<
   const [showConfirm, setShowConfirm] = useState(false);
 
   const {
-    onDirtyCheck = (currentLocation: any, action: any) => {
+    onDirtyCheck = (currentLocation: any) => {
       console.log(currentLocation.pathname, history.location.pathname);
       if (currentLocation.pathname === history.location.pathname) return false;
       showUnsavedPrompt({
@@ -98,7 +87,7 @@ const _MIForm: React.ForwardRefRenderFunction<
       );
   };
 
-  const tryDiscardForm = (e: FormEvent) => {
+  const tryDiscardForm = () => {
     if (wrapForm?.isFieldsTouched() && discardCheck) {
       setShowConfirm(true);
     } else {

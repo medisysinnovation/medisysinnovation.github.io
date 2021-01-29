@@ -1,19 +1,8 @@
-import React, {
-  useEffect,
-  ReactChild,
-  ReactNode,
-  createContext,
-  useState,
-  useRef,
-  MouseEvent,
-} from 'react';
-import { Modal, Select, Spin } from 'antd';
-import { useBoolean, useMouse, useEventListener } from 'ahooks';
+import React, { useEffect, useState, useRef } from 'react';
+import { Modal, Spin } from 'antd';
+import { useBoolean, useEventListener } from 'ahooks';
 import { getStyle } from '@medisys/utils';
 import { ModalProps } from 'antd/lib/Modal';
-import Button from '../button';
-
-const { ProgressButton } = Button;
 
 export interface ModalLocale {
   okText: string;
@@ -51,7 +40,7 @@ const MIModal: React.FC<MIModalProps> = ({
     return f;
   };
   const { onCancel, visible, children, ...restProps } = props;
-  const [state, { toggle, setTrue, setFalse }] = useBoolean(visible);
+  const [state, { setTrue, setFalse }] = useBoolean(visible);
   const [spinning, setSpinning] = useState(false);
 
   // console.log(state, visible);

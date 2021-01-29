@@ -7,7 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const lessToJs = require('less-vars-to-js');
 
-const stylePath = path.join(__dirname, '..', 'src', 'style');
+const stylePath = path.join(__dirname, '..', 'components', 'style');
 const colorLess = fs.readFileSync(
   path.join(stylePath, 'color', 'colors.less'),
   'utf8',

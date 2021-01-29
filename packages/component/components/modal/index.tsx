@@ -1,14 +1,5 @@
-import { Form, Input, Modal } from 'antd';
-import {
-  FormInstance,
-  FormProps,
-  FormItemProps,
-  ErrorListProps,
-  Rule,
-  RuleObject,
-  RuleRender,
-  FormListProps,
-} from 'antd/lib/Form';
+import { Modal } from 'antd';
+
 import _MIModal from './modal';
 
 export type ModalFunc = (
