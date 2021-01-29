@@ -1,6 +1,6 @@
 {
   "name": "@medisys/authorization",
-  "version": "0.1.75",
+  "version": "0.1.81",
   "description": "Medisys UI Access Control Package",
   "keywords": [
     "medisys"

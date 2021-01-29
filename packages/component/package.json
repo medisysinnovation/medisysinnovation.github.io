@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.80",
+  "version": "0.1.81",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -40,12 +40,11 @@
   },
   "dependencies": {
     "@medisys/utils": "^0.1.79",
-    "ignore-emit-webpack-plugin": "^2.0.6",
-    "esbuild-webpack-plugin": "^1.0.0",
-
     "ahooks": "^2.9.4",
     "antd": "^4.10.2",
     "classnames": "^2.2.6",
+    "esbuild-webpack-plugin": "^1.0.0",
+    "ignore-emit-webpack-plugin": "^2.0.6",
     "less-vars-to-js": "^1.3.0",
     "lodash": "4.17.20",
     "moment": "^2.29.1",
@@ -60,7 +59,7 @@
   },
   "devDependencies": {
     "@ant-design/tools": "^13.3.3",
-    "@medisys/cli": "^0.1.80",
+    "@medisys/cli": "^0.1.81",
     "@types/classnames": "^2.2.11",
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.20",
@@ -68,13 +67,13 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.7",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
-    "string-replace-loader": "^2.3.0",
     "bundlesize": "^0.18.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "mockdate": "^3.0.2",
     "react-test-renderer": "^16.9.0",
-    "scroll-into-view-if-needed": "^2.2.26"
+    "scroll-into-view-if-needed": "^2.2.26",
+    "string-replace-loader": "^2.3.0"
   },
   "peerDependencies": {
     "react": ">=16.9.0",
