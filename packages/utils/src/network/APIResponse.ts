@@ -1,4 +1,4 @@
-export default interface APIException {
+export default interface APIResponse {
   data: string;
   detailsErrorMessage: string;
   message: string;

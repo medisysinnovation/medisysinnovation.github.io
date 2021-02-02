@@ -84,9 +84,7 @@ export const GET = async (
       overrideOptions.responseType &&
       streamTypeList.indexOf(overrideOptions.responseType) > -1
     )
-      return result;
-
-    return result?.data ?? result;
+      return result?.data ?? result;
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
@@ -101,14 +99,10 @@ export const GET = async (
           overrideOptions.responseType &&
           streamTypeList.indexOf(overrideOptions.responseType) > -1
         )
-          return result;
-
-        return result?.data ?? result;
+          return result?.data ?? result;
       }
-      throw error;
     }
-
-    return undefined;
+    throw error;
   }
 };
 
@@ -145,10 +139,8 @@ export const POST = async (
         });
         return result?.data ?? result ?? true;
       }
-      throw error;
     }
-
-    return undefined;
+    throw error;
   }
 };
 
@@ -178,10 +170,8 @@ export const PUT = async (
         });
         return result?.data ?? result ?? true;
       }
-      throw error;
     }
-
-    return undefined;
+    throw error;
   }
 };
 
@@ -206,9 +196,7 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
         });
         return result?.data ?? result ?? true;
       }
-      throw error;
     }
-
-    return undefined;
+    throw error;
   }
 };
