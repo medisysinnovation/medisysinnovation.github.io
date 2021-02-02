@@ -1,5 +1,5 @@
 {
-  "private": true,
+  "private": false,
   "name": "medisys",
   "version": "1.0.0",
   "scripts": {
@@ -15,7 +15,7 @@
     "test:coverage": "umi-test --coverage",
     "commit": "git add --all & git commit -a",
     "compile": "antd-tools run compile",
-    "build:component":"lerna run build --scope @medisys/component"
+    "build:component": "lerna run build --scope @medisys/component"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
