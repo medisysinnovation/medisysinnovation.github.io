@@ -5,8 +5,6 @@ import { UnauthorizedError } from './exception';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { config } from '../config';
-// import { history } from '../helper';
-//const useHistory = () => ({ replace: (a: string) => {} });
 
 export const refreshToken = async () => {
   const FORM_DATA = {
