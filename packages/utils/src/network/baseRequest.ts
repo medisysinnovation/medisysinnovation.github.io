@@ -48,11 +48,6 @@ const errorHandler = (error: {
     const { status } = response;
     errorMessage = `${status}: ${errorText}`;
   }
-
-  // if (errorMessage)
-  //   notification.error({
-  //     message: errorMessage,
-  //   });
   throw Error(errorMessage);
 };
 
