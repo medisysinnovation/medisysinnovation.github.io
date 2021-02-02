@@ -81,8 +81,10 @@ export const GET = async (
     if (
       overrideOptions.responseType &&
       streamTypeList.indexOf(overrideOptions.responseType) > -1
-    )
-      return result?.data ?? result;
+    ) {
+      return result;
+    }
+    return result?.data ?? result;
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
@@ -96,8 +98,10 @@ export const GET = async (
         if (
           overrideOptions.responseType &&
           streamTypeList.indexOf(overrideOptions.responseType) > -1
-        )
-          return result?.data ?? result;
+        ) {
+          return result;
+        }
+        return result?.data ?? result;
       }
     }
     throw error;
