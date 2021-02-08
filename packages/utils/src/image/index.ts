@@ -122,7 +122,7 @@ export async function compressImage(file: File | Blob) {
       );
       fileSize = compressedFile.size;
       cleanupCanvasMemory(canvas);
-      console.log(fileSize);
+      // console.log(fileSize);
       if (fileSize < maxSizeByte) {
         return compressedFile;
       }

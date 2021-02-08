@@ -11,7 +11,7 @@ const global = {
   updateState: (newState: StateProps) => {
     localStore = newState;
     const { loading } = newState;
-    console.log(loading);
+    // console.log(loading);
     document.dispatchEvent(
       new CustomEvent('loadingstatechanged', {
         bubbles: true,
