@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.89",
+  "version": "0.1.90",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -39,7 +39,7 @@
     "test:bak": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
-    "@medisys/utils": "^0.1.89",
+    "@medisys/utils": "^0.1.90",
     "ahooks": "^2.9.4",
     "antd": "^4.10.2",
     "classnames": "^2.2.6",
