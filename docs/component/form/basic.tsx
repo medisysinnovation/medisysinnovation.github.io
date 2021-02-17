@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Select } from 'antd';
+import { Input, Select, Form as AntdForm } from 'antd';
 import { Form, Button, Modal } from '@medisys/component';
 // import { useBoolean } from 'ahooks';
 
@@ -20,6 +20,7 @@ const tailLayout = {
 
 const Demo = () => {
   const [form] = Form.useForm();
+  // const a =AntdForm.useForm();
   const onGenderChange = (value: any) => {
     switch (value) {
       case 'male':

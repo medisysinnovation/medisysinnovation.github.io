@@ -29,11 +29,12 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
   const classes = classnames(
     prefixCls,
     {
-      [`${prefixCls}-tag1`]: true,
+      [`${prefixCls}-tag`]: true,
       [`${prefixCls}-floatLeft`]: float === 'left',
       [`${prefixCls}-floatRight`]: float === 'right',
     },
     className,
+    'testabc',
   );
   console.log(classes);
   const attnReqText = 'Attn. Required';
@@ -48,7 +49,7 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
         color: textColor[status.toLowerCase()] ?? '#fff',
       }}
     >
-      {hidePrefix ? '' : 'Job St1atus:'}
+      {hidePrefix ? '' : 'Job Status:'}
       {statusText}
     </div>
   );

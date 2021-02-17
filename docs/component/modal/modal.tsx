@@ -46,6 +46,7 @@ const ModalDemo = () => {
   //   autoInsertSpaceInButton,
   //   direction,
   // );
+  // Modal.warning
   console.log(global);
   return (
     <>
