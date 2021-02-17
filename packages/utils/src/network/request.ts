@@ -84,7 +84,10 @@ export const GET = async (
     ) {
       return result;
     }
-    return result?.data ?? result;
+    if (result?.status === 0) {
+      return result.data;
+    }
+    return result;
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
@@ -101,7 +104,10 @@ export const GET = async (
         ) {
           return result;
         }
-        return result?.data ?? result;
+        if (result?.status === 0) {
+          return result.data;
+        }
+        return result;
       }
     }
     throw error;
@@ -125,10 +131,14 @@ export const POST = async (
     if (
       overrideOptions.responseType &&
       streamTypeList.indexOf(overrideOptions.responseType) > -1
-    )
+    ) {
       return result;
+    }
 
-    return result?.data ?? result ?? true;
+    if (result?.status === 0) {
+      return result.data;
+    }
+    return result || true;
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
@@ -139,7 +149,10 @@ export const POST = async (
           ...options,
           headers: getHeaders(),
         });
-        return result?.data ?? result ?? true;
+        if (result?.status === 0) {
+          return result.data;
+        }
+        return result || true;
       }
     }
     throw error;
@@ -159,7 +172,10 @@ export const PUT = async (
   };
   try {
     const result = await request.put(url, options);
-    return result?.data ?? result ?? true;
+    if (result?.status === 0) {
+      return result.data;
+    }
+    return result || true;
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
@@ -170,7 +186,10 @@ export const PUT = async (
           ...options,
           headers: getHeaders(),
         });
-        return result?.data ?? result ?? true;
+        if (result?.status === 0) {
+          return result.data;
+        }
+        return result || true;
       }
     }
     throw error;
@@ -185,7 +204,10 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
   };
   try {
     const result = await request.delete(url, options);
-    return result?.data ?? true;
+    if (result?.status === 0) {
+      return result.data;
+    }
+    return result || true;
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
@@ -196,7 +218,10 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
           ...options,
           headers: getHeaders(),
         });
-        return result?.data ?? result ?? true;
+        if (result?.status === 0) {
+          return result.data;
+        }
+        return result || true;
       }
     }
     throw error;
