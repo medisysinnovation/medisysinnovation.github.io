@@ -10,3 +10,4 @@ export { default as Button } from './button';
 export { JobCounter } from './job-counter';
 
 export { JobStatusTag } from './job-status-tag';
+export { JobStatusTag as JobStatusTag2 } from './job-status-tag';

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Input, Select } from 'antd';
+import { Input, Select, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal } from '@medisys/component';
 import { global } from '@medisys/utils';
 import { useBoolean } from 'ahooks';
 let testLoadingState = false;
+// console.dir(ConfigProvider);
+// console.dir(ConfigProvider.ConfigContext.Consumer);
 
 const ModalDemo = () => {
   const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
@@ -34,7 +36,17 @@ const ModalDemo = () => {
       clearInterval(interval);
     };
   }, []);
-
+  const { getPrefixCls, autoInsertSpaceInButton, direction } = React.useContext(
+    ConfigProvider.ConfigContext,
+  );
+  // console.log(
+  //   getPrefixCls(),
+  //   getPrefixCls('affix', '123'),
+  //   getPrefixCls,
+  //   autoInsertSpaceInButton,
+  //   direction,
+  // );
+  console.log(global);
   return (
     <>
       <Button
@@ -44,7 +56,13 @@ const ModalDemo = () => {
       >
         Show Modal
       </Button>
-
+      <ConfigProvider.ConfigContext.Consumer>
+        {context => {
+          const { getPrefixCls } = context;
+          console.log(context, getPrefixCls(), getPrefixCls('affix', '123'));
+          return <div>tet</div>;
+        }}
+      </ConfigProvider.ConfigContext.Consumer>
       <Modal
         visible={state}
         model="somename"

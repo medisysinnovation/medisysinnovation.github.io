@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
-import styles from './index.module.less';
+import { ConfigProvider } from 'antd';
+// import styles from './index.module.less';
 import { jobStatusColorMapping } from '../constant/colorMap';
 interface JobStatusTagProps {
   hidePrefix?: boolean;
@@ -8,6 +9,7 @@ interface JobStatusTagProps {
   isAttentionRequired?: boolean;
   className?: any;
   float?: 'left' | 'right';
+  prefixCls: string;
 }
 
 const textColor = {
@@ -22,14 +24,18 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
     className,
     float = 'left',
   } = props;
+  const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
+  const prefixCls = getPrefixCls('', 'mi-ant-jst');
   const classes = classnames(
-    styles.tag,
+    prefixCls,
     {
-      [styles.floatLeft]: float === 'left',
-      [styles.floatRight]: float === 'right',
+      [`${prefixCls}-tag1`]: true,
+      [`${prefixCls}-floatLeft`]: float === 'left',
+      [`${prefixCls}-floatRight`]: float === 'right',
     },
     className,
   );
+  console.log(classes);
   const attnReqText = 'Attn. Required';
   const statusText = isAttentionRequired ? `${status}(${attnReqText})` : status;
   return (
@@ -42,7 +48,7 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
         color: textColor[status.toLowerCase()] ?? '#fff',
       }}
     >
-      {hidePrefix ? '' : 'Job Status:'}
+      {hidePrefix ? '' : 'Job St1atus:'}
       {statusText}
     </div>
   );
