@@ -4,10 +4,21 @@ import _MIModal from './modal';
 
 type ModalType = typeof Modal;
 
-const MIModal = _MIModal as ModalType;
+interface MIModalType extends ModalType {
+  info: typeof Modal.info;
+  success: typeof Modal.success;
+  error: typeof Modal.error;
+  warning: typeof Modal.warning;
+  warn: typeof Modal.warning;
+  confirm: typeof Modal.confirm;
+  destroyAll: typeof Modal.destroyAll;
+  config: typeof Modal.config;
+}
+
+const MIModal = _MIModal as MIModalType;
 MIModal.info = Modal.info;
 
-MIModal.success = Modal.info;
+MIModal.success = Modal.success;
 
 MIModal.error = Modal.error;
 
