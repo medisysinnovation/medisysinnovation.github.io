@@ -48,7 +48,7 @@ export const lotTypeColorMap = {
 };
 
 export const jobStatusColorMapping = {
-  new: '#ffec3d',
+  open: '#ffec3d',
   pending: '#E5AC00',
   'in progress': '#E50000',
   completed: '#8098C5',
