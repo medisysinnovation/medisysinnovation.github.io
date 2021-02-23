@@ -15,7 +15,7 @@ module.exports = {
 // We need compile additional content for antd user
 function finalizeCompile() {
   if (fs.existsSync(path.join(__dirname, './lib'))) {
-    // Build a entry less file to dist/antd.less
+    // Build a entry less file to dist/mi-antd.less
     const componentsPath = path.join(process.cwd(), 'components');
     let componentsLessContent = '';
     // Build components in one file: lib/style/components.less
@@ -77,9 +77,9 @@ function buildThemeFile(theme, vars) {
 
 function finalizeDist() {
   if (fs.existsSync(path.join(__dirname, './dist'))) {
-    // Build less entry file: dist/antd.less
+    // Build less entry file: dist/mi-antd.less
     fs.writeFileSync(
-      path.join(process.cwd(), 'dist', 'antd.less'),
+      path.join(process.cwd(), 'dist', 'mi-antd.less'),
       '@import "../lib/style/index.less";\n@import "../lib/style/components.less";',
     );
     // eslint-disable-next-line no-console
@@ -88,7 +88,7 @@ function finalizeDist() {
       `const defaultTheme = require('./default-theme.js');\n`,
     );
     // eslint-disable-next-line no-console
-    console.log('Built a entry less file to dist/antd.less');
+    console.log('Built a entry less file to dist/mi-antd.less');
     buildThemeFile('default', defaultVars);
     // buildThemeFile('dark', darkVars);
     // buildThemeFile('compact', compactVars);

@@ -34,9 +34,7 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
       [`${prefixCls}-floatRight`]: float === 'right',
     },
     className,
-    'testabc',
   );
-  console.log(classes);
   const attnReqText = 'Attn. Required';
   const statusText = isAttentionRequired ? `${status}(${attnReqText})` : status;
   return (
