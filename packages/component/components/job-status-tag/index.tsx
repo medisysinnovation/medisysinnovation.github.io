@@ -37,6 +37,7 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
   );
   const attnReqText = 'Attn. Required';
   const statusText = isAttentionRequired ? `${status}(${attnReqText})` : status;
+
   return (
     <div
       className={classes}
