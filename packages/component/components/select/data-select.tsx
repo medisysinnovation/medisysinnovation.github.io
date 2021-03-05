@@ -1,12 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener } from 'ahooks';
 import { Select } from 'antd';
-import {
-  SelectProps,
-  RefSelectProps,
-  SelectValue,
-  OptionType,
-} from 'antd/es/select';
+import { SelectProps, RefSelectProps, SelectValue } from 'antd/es/select';
 import { MIConfig, GET } from '@medisys/utils';
 
 export interface MIDataSelectProps<VT> extends SelectProps<VT> {
