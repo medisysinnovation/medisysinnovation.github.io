@@ -12,8 +12,8 @@ export interface StateProps {
 }
 
 export interface MedisysConfigProps {
-  dataLoader: ({ code, ...props }: { code: string }) => Promise<[]>;
-  urls: { [key: string]: string };
+  dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
+  urls?: { [key: string]: string };
 }
 
 let localStore: StateProps = {
@@ -45,14 +45,13 @@ class MIConfig {
   }
 
   static async loadData(code: string, params?: any) {
-    console.log(code);
+    // console.log(code);
     if (!this.dataLoader) {
       throw 'No default loader configed, please use `config` function set default dataLoader';
     }
 
     //@ts-ignore
     const data = await this.dataLoader({ code, ...params });
-    console.log(data);
     if (data) {
       this.updateState({
         dataSource: {
@@ -69,7 +68,7 @@ class MIConfig {
     const imt_data = immutable.fromJS(newState) as Map<string, any>;
     if (loading && imt_data.get('loading') !== imt_current.get('loading')) {
       // console.log(loading);
-      console.log('loading state changed', loading, localStore.loading);
+      // console.log('loading state changed', loading, localStore.loading);
       document.dispatchEvent(
         new CustomEvent('loadingstatechanged', {
           bubbles: true,
@@ -91,7 +90,7 @@ class MIConfig {
             detail: imt_dataSource.get(code).toJS(),
           }),
         );
-        console.log(code);
+        // console.log(code);
       });
     }
 
