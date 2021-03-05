@@ -119,7 +119,12 @@ const DataSelectDemo = () => {
         >
           Load Data
         </Button>
-        <Select code="roles" url={'test/weree'} mode="tags" value={123} />
+        <Select
+          code="roles"
+          // url={'test/weree'}
+          mode="tags"
+          value={123}
+        />
       </div>
     </>
   );

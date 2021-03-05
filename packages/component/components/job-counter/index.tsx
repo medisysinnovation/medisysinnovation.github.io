@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, ConfigProvider } from 'antd';
 import styles from './index.module.less';
-console.log(ConfigProvider);
+// console.log(ConfigProvider);
 const JobCounter = (props: any) => {
   const { title, count, color, titleColor } = props;
   return (

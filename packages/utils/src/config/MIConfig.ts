@@ -18,10 +18,8 @@ export interface MedisysConfigProps {
 
 let localStore: StateProps = {
   loading: {},
-  dataSource: {},
+  dataSource: JSON.parse(sessionStorage.getItem('mi_ds') || '{}'),
 };
-
-let imt_current = immutable.fromJS(localStore);
 
 class MIConfig {
   static dataLoader = undefined;
@@ -34,6 +32,7 @@ class MIConfig {
     role: '/api/role',
     tenant: '/api/tenant',
   };
+  static imt_current = immutable.fromJS(localStore);
 
   static config({ dataLoader, urls }: MedisysConfigProps) {
     //@ts-ignore
@@ -42,6 +41,20 @@ class MIConfig {
     if (urls) {
       this.urls = { ...this.urls, ...urls };
     }
+  }
+
+  static initialization() {
+    var ds = this.imt_current.get('dataSource');
+
+    ds.keySeq().forEach((code: string) => {
+      console.log(ds.get(code)?.toJS(), code);
+      document.dispatchEvent(
+        new CustomEvent('mi_datasourcechanged_' + code, {
+          bubbles: true,
+          detail: ds.get(code)?.toJS() ?? [],
+        }),
+      );
+    });
   }
 
   static async loadData(code: string, params?: any) {
@@ -65,8 +78,11 @@ class MIConfig {
 
   static updateState(newState: StateProps = {}) {
     const { loading, dataSource } = newState;
-    const imt_data = immutable.fromJS(newState) as Map<string, any>;
-    if (loading && imt_data.get('loading') !== imt_current.get('loading')) {
+    let imt_data = immutable.fromJS(newState) as Map<string, any>;
+    if (
+      loading &&
+      imt_data.get('loading') !== this.imt_current.get('loading')
+    ) {
       // console.log(loading);
       // console.log('loading state changed', loading, localStore.loading);
       document.dispatchEvent(
@@ -76,12 +92,19 @@ class MIConfig {
         }),
       );
     }
-    if (
-      dataSource &&
+    const dataSourceChanged =
       immutable.getIn(imt_data, ['dataSource'], Map()) !==
-        immutable.getIn(imt_current, ['dataSource'], Map())
-    ) {
-      const imt_dataSource = imt_data.get('dataSource');
+      immutable.getIn(this.imt_current, ['dataSource'], Map());
+    // console.log(
+    //   dataSourceChanged,
+    //   immutable.getIn(imt_data, ['dataSource'], Map()).toJS(),
+    //   immutable.getIn(this.imt_current, ['dataSource'], Map()).toJS(),
+    //   immutable
+    //     .merge(imt_data.get('dataSource'), this.imt_current.get('dataSource'))
+    //     .toJS(),
+    // );
+    if (dataSource && dataSourceChanged) {
+      let imt_dataSource = imt_data.get('dataSource');
 
       imt_dataSource.keySeq().forEach((code: string) => {
         document.dispatchEvent(
@@ -92,56 +115,39 @@ class MIConfig {
         );
         // console.log(code);
       });
+
+      imt_data = imt_data.set(
+        'dataSource',
+        immutable.merge(
+          this.imt_current.get('dataSource'),
+          imt_data.get('dataSource'),
+        ),
+      );
+      // console.log(imt_data);
+      // // imt_data.get('dataSource').merge(imt_current.get('dataSource')),
+
+      // console.log(
+      //   imt_data.toJS(),
+      //   immutable
+      //     .merge(imt_data.get('dataSource'), imt_current.get('dataSource'))
+      //     .toJS(),
+      // );
     }
 
-    imt_current = immutable.merge(imt_current, imt_data);
+    this.imt_current = immutable.merge(this.imt_current, imt_data);
+    // console.log(imt_current.toJS());
+    if (dataSourceChanged) {
+      // console.log('set', imt_current.get('dataSource').toJS());
+      sessionStorage.setItem(
+        'mi_ds',
+        JSON.stringify(this.imt_current.get('dataSource').toJS()),
+      );
+    }
   }
 }
 
-// const MIConfig = {
-//   config: () => {},
-//   loadData: () => {},
-//   updateState: (newState: StateProps = {}) => {
-//     const { loading, dataSource } = newState;
-//     const imt_data = immutable.fromJS(newState) as Map<string, any>;
-//     if (loading && imt_data.get('loading') !== imt_current.get('loading')) {
-//       // console.log(loading);
-//       console.log('loading state changed', loading, localStore.loading);
-//       document.dispatchEvent(
-//         new CustomEvent('loadingstatechanged', {
-//           bubbles: true,
-//           detail: loading,
-//         }),
-//       );
-//     }
-//     // console.log(
-//     //   dataSource &&
-//     //     immutable.getIn(imt_data, ['dataSource', 'users'], List()) !==
-//     //       immutable.getIn(imt_current, ['dataSource', 'users'], List()),
-//     //   immutable.getIn(imt_data, ['dataSource', 'users'], List()).toJS(),
-//     //   immutable.getIn(imt_current, ['dataSource', 'users'], List()).toJS(),
-//     // );
-//     if (
-//       dataSource &&
-//       immutable.getIn(imt_data, ['dataSource'], Map()) !==
-//         immutable.getIn(imt_current, ['dataSource'], Map())
-//     ) {
-//       const imt_dataSource = imt_data.get('dataSource');
-
-//       imt_dataSource.keySeq().forEach((code: string) => {
-//         document.dispatchEvent(
-//           new CustomEvent('mi_datasourcechanged_' + code, {
-//             bubbles: true,
-//             detail: imt_dataSource.get(code).toJS(),
-//           }),
-//         );
-//         console.log(code);
-//       });
-//     }
-
-//     imt_current = immutable.merge(imt_current, imt_data);
-//   },
-//   test: 1,
-// };
+setTimeout(() => {
+  MIConfig.initialization();
+}, 0);
 
 export default MIConfig;

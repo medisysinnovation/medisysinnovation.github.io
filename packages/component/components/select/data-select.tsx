@@ -12,6 +12,7 @@ export interface MIDataSelectProps<VT> extends SelectProps<VT> {
   valueField?: string;
   displayField?: string;
   dataSource?: object[];
+  cache?: boolean;
   dataSourceLoader?: (code: string, params?: any) => Promise<object[]>;
   filter?: (options: object[]) => object[];
   filterRule?: CodeTableSelectFilterRule | CodeTableSelectFilterRule.Contains;
@@ -39,6 +40,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     filterRule,
     url,
     text,
+    cache = true,
     onChange,
     ...restProps
   }: MIDataSelectProps<VT>,
@@ -60,6 +62,9 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
   useEffect(() => {
     if (!url && code) {
       // MIConfig.
+      if (cache && list.length) {
+        return;
+      }
       if (dataSourceLoader) {
         dataSourceLoader(code).then(newData => {
           setList(newData);
@@ -73,18 +78,22 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
   }, []);
 
   useEffect(() => {
-    if (url && code) {
+    if (url) {
       setDataSourceLoading(true);
-      if (!codeLoading[code]) {
-        codeLoading[code] = true;
+      if (!code || !codeLoading[code]) {
+        if (code) codeLoading[code] = true;
         GET(url, { pageSize: 9999 }).then((result: any) => {
-          const data = result && result.data ? result.data : [];
-          delete codeLoading[code];
-          MIConfig.updateState({
-            dataSource: {
-              [code]: data,
-            },
-          });
+          const data = result?.data;
+          if (code) {
+            delete codeLoading[code];
+            MIConfig.updateState({
+              dataSource: {
+                [code]: data ?? [],
+              },
+            });
+          } else {
+            setList(data);
+          }
         });
       }
     }
