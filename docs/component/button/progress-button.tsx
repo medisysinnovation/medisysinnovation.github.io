@@ -1,12 +1,12 @@
 import React from 'react';
-import { global } from '@medisys/utils';
+import { MedisysConfig } from '@medisys/utils';
 import { Button } from '@medisys/component';
 
 const { ProgressButton } = Button;
 
 export default function() {
   const updateLoading = status => {
-    global.updateState({
+    MedisysConfig.updateState({
       loading: {
         models: {
           somename: status,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useEventListener } from 'ahooks';
 import { Select } from 'antd';
-import { global } from '@medisys/utils';
+import { MedisysConfig } from '@medisys/utils';
 import config from './config';
 
 type SelectType = typeof Select;
@@ -36,14 +36,14 @@ const MIDataSelect: React.FC<MIDataSelectProps> = ({
 
   useEffect(() => {
     if (code) {
-      // global.
+      // MedisysConfig.
       if (dataSourceLoader) {
         dataSourceLoader(code).then(newData => {
           setList(newData);
         });
       } else {
         setDataSourceLoading(true);
-        global.loadData(code);
+        MedisysConfig.loadData(code);
       }
       // config.load({ code });
     }

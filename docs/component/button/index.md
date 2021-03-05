@@ -15,7 +15,7 @@ group:
 ## Progress Button
 
 <code src="./progress-button" title='Auto disable on async call' desc='To auto enable/disable button, subscribe to model by setting the `mode` property on the Button.'/>
-<embed src="../_shared/utils.global.updateState.md"></embed>
+<embed src="../_shared/utils.MedisysConfig.updateState.md"></embed>
 
 ## API
 

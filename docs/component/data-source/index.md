@@ -7,7 +7,7 @@ group:
   path: /datasource
 ---
 
-<code src="./data-source.tsx" title='Update DataSource' desc='use `global` to update dataSource' />
+<code src="./data-source.tsx" title='Update DataSource' desc='use `MedisysConfig` to update dataSource' />
 
 
 

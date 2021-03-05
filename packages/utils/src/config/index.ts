@@ -1,5 +1,5 @@
 import _ from 'lodash';
-export { default as global } from './global';
+export { default as MedisysConfig } from './MedisysConfig';
 export function defineConfig(config: Object) {
   return config;
 }
