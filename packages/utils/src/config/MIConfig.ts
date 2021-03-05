@@ -131,15 +131,6 @@ class MIConfig {
           imt_data.get('dataSource'),
         ),
       );
-      // console.log(imt_data);
-      // // imt_data.get('dataSource').merge(imt_current.get('dataSource')),
-
-      // console.log(
-      //   imt_data.toJS(),
-      //   immutable
-      //     .merge(imt_data.get('dataSource'), imt_current.get('dataSource'))
-      //     .toJS(),
-      // );
     }
 
     this.imt_current = immutable.merge(this.imt_current, imt_data);
