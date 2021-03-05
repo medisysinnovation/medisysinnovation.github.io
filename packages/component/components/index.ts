@@ -4,7 +4,7 @@
 export * from './grid';
 export { default as Form } from './form';
 export { default as Modal } from './modal';
-
+export { default as Select } from './select';
 export { default as Button } from './button';
 
 export { JobCounter } from './job-counter';

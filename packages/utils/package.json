@@ -35,6 +35,7 @@
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
     "lodash": "4.17.20",
     "moment": "^2.29.1",
     "qs": "^6.9.6",

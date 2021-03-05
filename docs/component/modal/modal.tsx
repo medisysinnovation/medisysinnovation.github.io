@@ -20,6 +20,12 @@ const ModalDemo = () => {
   //     toggle2();
   //   }, 3000);
   // }, []);
+  // const codeset = {
+  //   users: [
+  //     { id: 1, name: 'ABC' },
+  //     { id: 2, name: 'CDE' },
+  //   ],
+  // };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -29,6 +35,12 @@ const ModalDemo = () => {
           models: {
             somename: testLoadingState,
           },
+        },
+        codeset: {
+          users: [
+            { id: 1, name: 'ABC' },
+            { id: 2, name: 'CDE' },
+          ],
         },
       });
     }, 5000);
@@ -57,13 +69,13 @@ const ModalDemo = () => {
       >
         Show Modal
       </Button>
-      <ConfigProvider.ConfigContext.Consumer>
+      {/* <ConfigProvider.ConfigContext.Consumer>
         {context => {
           const { getPrefixCls } = context;
           console.log(context, getPrefixCls(), getPrefixCls('affix', '123'));
           return <div>tet</div>;
         }}
-      </ConfigProvider.ConfigContext.Consumer>
+      </ConfigProvider.ConfigContext.Consumer> */}
       <Modal
         visible={state}
         model="somename"

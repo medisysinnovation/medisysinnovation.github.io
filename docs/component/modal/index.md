@@ -9,7 +9,7 @@ group:
 
 <code src="./modal.tsx" title='Toggle loading based on state update' desc='use `model` to auto trigger loading block' />
 
-<embed src="../shared/utils.global.updateState.md"></embed>
+<embed src="../_shared/utils.global.updateState.md"></embed>
 
 
 
