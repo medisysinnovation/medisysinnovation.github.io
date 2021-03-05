@@ -120,7 +120,7 @@ const DataSelectDemo = () => {
         >
           Load Data
         </Button>
-        <Select code="roles" mode="tags" />
+        <Select code="roles" mode="tags" value={123} />
       </div>
     </>
   );
