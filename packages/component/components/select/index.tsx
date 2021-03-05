@@ -1,7 +1,7 @@
 import { Select } from 'antd';
 import MIDataSelect from './data-select';
 import config, { ConfigParamter } from './config';
-type SelectType = typeof MIDataSelect;
+type SelectType = typeof Select;
 type MISelectType = SelectType & {
   config: (payload: ConfigParamter) => void;
   Option: typeof Select.Option;

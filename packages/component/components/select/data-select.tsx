@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener } from 'ahooks';
 import { Select } from 'antd';
+import { SelectProps } from 'antd/es/select';
+
 import { MIConfig, GET } from '@medisys/utils';
 
-type SelectType = typeof Select;
-export interface MIDataSelectProps extends SelectType {
+export interface MIDataSelectProps<VT> extends SelectProps<VT> {
   code?: string;
   url?: string;
   model?: string;
@@ -16,15 +17,17 @@ export interface MIDataSelectProps extends SelectType {
   filter?: (options: object[]) => object[];
   filterRule?: CodeTableSelectFilterRule | CodeTableSelectFilterRule.Contains;
 }
+
 export enum CodeTableSelectFilterRule {
   StartsWidth,
   Contains,
 }
+export declare type ValueType = string | number;
 
 const { Option } = Select;
 const codeLoading: { [key: string]: boolean } = {};
 
-const MIDataSelect: React.FC<MIDataSelectProps> = ({
+const MIDataSelect: React.FC<MIDataSelectProps<ValueType>> = ({
   model,
   code,
   valueField = 'id',
