@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener } from 'ahooks';
 import { Select } from 'antd';
-import { SelectProps } from 'antd/es/select';
+import { SelectProps, RefSelectProps } from 'antd/es/select';
 import { MIConfig, GET } from '@medisys/utils';
 
 export interface MIDataSelectProps<VT> extends SelectProps<VT> {
@@ -21,25 +21,28 @@ export enum CodeTableSelectFilterRule {
   StartsWidth,
   Contains,
 }
-export declare type ValueType = string | number;
+export declare type SelectValue = string | number;
 
 const { Option } = Select;
 const codeLoading: { [key: string]: boolean } = {};
 
-const MIDataSelect: React.FC<MIDataSelectProps<ValueType>> = ({
-  model,
-  code,
-  valueField = 'id',
-  displayField = 'text',
-  children,
-  dataSource,
-  dataSourceLoader,
-  filter,
-  filterRule,
-  url,
-  text,
-  ...restProps
-}) => {
+const MIDataSelect = <VT extends SelectValue = SelectValue>(
+  {
+    model,
+    code,
+    valueField = 'id',
+    displayField = 'text',
+    children,
+    dataSource,
+    dataSourceLoader,
+    filter,
+    filterRule,
+    url,
+    text,
+    ...restProps
+  }: MIDataSelectProps<VT>,
+  ref: React.Ref<RefSelectProps>,
+) => {
   const [list, setList] = useState<object[]>([]);
   const [filteredList, setFilteredList] = useState<object[]>([]);
 
@@ -73,7 +76,7 @@ const MIDataSelect: React.FC<MIDataSelectProps<ValueType>> = ({
       setDataSourceLoading(true);
       if (!codeLoading[code]) {
         codeLoading[code] = true;
-        GET(url, { pageSize: 9999 }).then(result => {
+        GET(url, { pageSize: 9999 }).then((result: any) => {
           const data = result && result.data ? result.data : [];
           delete codeLoading[code];
           MIConfig.updateState({
@@ -132,6 +135,7 @@ const MIDataSelect: React.FC<MIDataSelectProps<ValueType>> = ({
   console.log(list);
   return (
     <Select
+      ref={ref}
       loading={dataSourceLoading}
       // showSearch
       style={{ minWidth: 100 }}
