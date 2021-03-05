@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    // "paths": {
-    //   "antd": ["components/index.tsx"],
-    //   "antd/es/*": ["components/*"]
-    // },
     "strictNullChecks": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
