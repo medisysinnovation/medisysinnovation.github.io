@@ -27,5 +27,4 @@ MISelect.SECRET_COMBOBOX_MODE_DO_NOT_USE =
 type MIDataSelectType<VT> = MIDataSelectProps<VT>;
 
 export { MIDataSelectType };
-2;
 export default MISelect;
