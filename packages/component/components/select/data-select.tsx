@@ -92,6 +92,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
               },
             });
           } else {
+            setDataSourceLoading(false);
             setList(data);
           }
         });
