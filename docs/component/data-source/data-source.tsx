@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal, Select } from '@medisys/component';
-import { MedisysConfig } from '@medisys/utils';
+import { MIConfig } from '@medisys/utils';
 // console.dir(ConfigProvider);
 // console.dir(ConfigProvider.ConfigContext.Consumer);
 import { sleep } from '@medisys/utils';
 
 const codeLoading = {};
 
-MedisysConfig.config({
+MIConfig.config({
   dataLoader: async ({ code }) => {
     console.log(code);
 
@@ -35,7 +35,7 @@ MedisysConfig.config({
 //     console.log(code + ' end');
 //     delete codeLoading[code];
 
-//     MedisysConfig.updateState({
+//     MIConfig.updateState({
 //       dataSource: {
 //         [code]: users,
 //       },
@@ -77,7 +77,7 @@ const DataSelectDemo = () => {
           onClick={() => {
             const start = getRandomInt(test_data.users.length - 1);
             const end = start + getRandomInt(test_data.users.length - start);
-            MedisysConfig.updateState({
+            MIConfig.updateState({
               dataSource: {
                 users: test_data.users.slice(start, end),
               },
@@ -94,7 +94,7 @@ const DataSelectDemo = () => {
           onClick={() => {
             const start = getRandomInt(test_data.roles.length - 1);
             const end = start + getRandomInt(test_data.roles.length - start);
-            MedisysConfig.updateState({
+            MIConfig.updateState({
               dataSource: {
                 roles: test_data.roles.slice(start, end),
               },
@@ -111,7 +111,7 @@ const DataSelectDemo = () => {
           onClick={() => {
             const start = getRandomInt(test_data.roles.length - 1);
             const end = start + getRandomInt(test_data.roles.length - start);
-            MedisysConfig.updateState({
+            MIConfig.updateState({
               dataSource: {
                 roles: test_data.roles.slice(start, end),
               },

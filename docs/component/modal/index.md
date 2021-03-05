@@ -9,7 +9,7 @@ group:
 
 <code src="./modal.tsx" title='Toggle loading based on state update' desc='use `model` to auto trigger loading block' />
 
-<embed src="../_shared/utils.MedisysConfig.updateState.md"></embed>
+<embed src="../_shared/utils.MIConfig.updateState.md"></embed>
 
 
 

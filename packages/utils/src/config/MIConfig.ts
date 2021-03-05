@@ -85,7 +85,7 @@ class MIConfig {
   }
 }
 
-// const MedisysConfig = {
+// const MIConfig = {
 //   config: () => {},
 //   loadData: () => {},
 //   updateState: (newState: StateProps = {}) => {

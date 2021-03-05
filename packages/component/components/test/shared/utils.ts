@@ -9,7 +9,7 @@ export function resetMockDate() {
   MockDate.reset();
 }
 
-const globalTimeout = MedisysConfig.setTimeout;
+const globalTimeout = MIConfig.setTimeout;
 
 export const sleep = async (timeout = 0) => {
   await act(async () => {

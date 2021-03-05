@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Input, Select, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal } from '@medisys/component';
-import { MedisysConfig } from '@medisys/utils';
+import { MIConfig } from '@medisys/utils';
 import { useBoolean } from 'ahooks';
 let testLoadingState = false;
 // console.dir(ConfigProvider);
@@ -30,7 +30,7 @@ const ModalDemo = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       testLoadingState = !testLoadingState;
-      MedisysConfig.updateState({
+      MIConfig.updateState({
         loading: {
           models: {
             somename: testLoadingState,
@@ -59,7 +59,7 @@ const ModalDemo = () => {
   //   direction,
   // );
   // Modal.warning
-  console.log(MedisysConfig);
+  console.log(MIConfig);
   return (
     <>
       <Button

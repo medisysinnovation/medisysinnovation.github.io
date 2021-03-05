@@ -32,7 +32,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
     'caller,delete,die,do,dump,elsif,eval,exit,foreach,for,goto,if,import,last,local,my,next,no,our,print,package,redo,require,sub,undef,unless,until,use,wantarray,while,BEGIN,END';
   var I = [
     h,
-    'and,as,assert,class,def,del,elif,except,exec,finally,from,MedisysConfig,import,in,is,lambda,nonlocal,not,or,pass,print,raise,try,with,yield,False,True,None',
+    'and,as,assert,class,def,del,elif,except,exec,finally,from,MIConfig,import,in,is,lambda,nonlocal,not,or,pass,print,raise,try,with,yield,False,True,None',
   ];
   var f = [
     h,
@@ -244,7 +244,7 @@ window.PR_SHOULD_USE_CONTINUATION = true;
     var aa = [];
     for (var V = 0, U = Z.length; V < U; ++V) {
       var ae = Z[V];
-      if (ae.MedisysConfig || ae.multiline) {
+      if (ae.MIConfig || ae.multiline) {
         throw new Error('' + ae);
       }
       aa.push('(?:' + W(ae) + ')');
