@@ -24,7 +24,5 @@ MISelect.OptGroup = Select.OptGroup;
 MISelect.SECRET_COMBOBOX_MODE_DO_NOT_USE =
   Select.SECRET_COMBOBOX_MODE_DO_NOT_USE;
 
-type MIDataSelectType<VT> = MIDataSelectProps<VT>;
-
-export { MIDataSelectType };
+export { MIDataSelectProps };
 export default MISelect;
