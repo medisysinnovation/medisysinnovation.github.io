@@ -121,7 +121,7 @@ const MIDataSelect: React.FC<MIDataSelectProps> = ({
       (opt: { [key: string]: string }) =>
         opt[valueField || 'id'] === restProps.value,
     );
-    if (option) return <span>{option[displayMember || 'name']}</span>;
+    if (option) return <span>{option[displayField || 'name']}</span>;
     return null;
   }
 
