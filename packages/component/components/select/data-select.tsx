@@ -56,7 +56,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
   });
 
   useEffect(() => {
-    if (code) {
+    if (!url && code) {
       // MIConfig.
       if (dataSourceLoader) {
         dataSourceLoader(code).then(newData => {
@@ -131,7 +131,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     return null;
   }
 
-  console.log(list);
+  // console.log(list);
   return (
     <Select
       ref={ref}
