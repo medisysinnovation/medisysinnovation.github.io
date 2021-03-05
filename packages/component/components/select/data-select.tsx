@@ -1,7 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener } from 'ahooks';
 import { Select } from 'antd';
-import { SelectProps, RefSelectProps, SelectValue } from 'antd/es/select';
+import {
+  SelectProps,
+  RefSelectProps,
+  SelectValue,
+  OptionType,
+} from 'antd/es/select';
 import { MIConfig, GET } from '@medisys/utils';
 
 export interface MIDataSelectProps<VT> extends SelectProps<VT> {
@@ -15,6 +20,7 @@ export interface MIDataSelectProps<VT> extends SelectProps<VT> {
   dataSourceLoader?: (code: string, params?: any) => Promise<object[]>;
   filter?: (options: object[]) => object[];
   filterRule?: CodeTableSelectFilterRule | CodeTableSelectFilterRule.Contains;
+  onChange?: (value: VT, option: object) => void;
 }
 
 export enum CodeTableSelectFilterRule {
@@ -38,6 +44,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     filterRule,
     url,
     text,
+    onChange,
     ...restProps
   }: MIDataSelectProps<VT>,
   ref: React.Ref<RefSelectProps>,
@@ -112,13 +119,10 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     };
   }, [filterRule]);
 
-  // const handleOnChange = (value: ValueType, option: any) => {
-  //   const { onChange } = restProps;
-  //   const sourceOption = options.find(
-  //     (opt: any) => opt[valueMember || 'id'] === value,
-  //   );
-  //   onChange && onChange(value, { ...option, data: sourceOption });
-  // };
+  const handleOnChange = (value: VT, option: Object) => {
+    const opt = filteredList.find((opt: any) => opt[valueField] === value);
+    onChange && onChange(value, { ...option, data: opt });
+  };
 
   if (text) {
     const option = filteredList.find(
@@ -142,7 +146,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
       // placeholder="Select a person"
       // optionFilterProp="children"
       {...restProps}
-      // onChange={handleOnChange}
+      onChange={handleOnChange}
     >
       {children
         ? children
