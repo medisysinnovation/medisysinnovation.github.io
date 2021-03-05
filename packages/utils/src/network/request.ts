@@ -4,7 +4,7 @@ import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
 import { UnauthorizedError } from './exception';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
-import { config } from '../config';
+import { MIConfig } from '../config';
 
 export const refreshToken = async () => {
   const FORM_DATA = {
@@ -20,7 +20,7 @@ export const refreshToken = async () => {
   };
 
   const result = await POST(
-    config.network.endpoint.login,
+    MIConfig.urls.login,
     {},
     {
       data: stringify(requestBody),

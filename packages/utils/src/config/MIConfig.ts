@@ -13,6 +13,7 @@ export interface StateProps {
 
 export interface MedisysConfigProps {
   dataLoader: ({ code, ...props }: { code: string }) => Promise<[]>;
+  urls: { [key: string]: string };
 }
 
 let localStore: StateProps = {
@@ -24,10 +25,23 @@ let imt_current = immutable.fromJS(localStore);
 
 class MIConfig {
   static dataLoader = undefined;
+  static urls = {
+    login: '/connect/token',
+    codetable: '/api/CodeTable',
+    currentUser: '/api/User/Current',
+    changePassword: '/api/User/ChangePassword',
+    user: '/api/user',
+    role: '/api/role',
+    tenant: '/api/tenant',
+  };
 
-  static config({ dataLoader }: MedisysConfigProps) {
+  static config({ dataLoader, urls }: MedisysConfigProps) {
     //@ts-ignore
     if (dataLoader) this.dataLoader = dataLoader;
+
+    if (urls) {
+      this.urls = { ...this.urls, ...urls };
+    }
   }
 
   static async loadData(code: string, params?: any) {

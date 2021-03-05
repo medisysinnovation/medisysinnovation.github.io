@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useEventListener } from 'ahooks';
 import { Select } from 'antd';
 import { MIConfig } from '@medisys/utils';
-import config from './config';
 
 type SelectType = typeof Select;
 export interface MIDataSelectProps extends SelectType {
