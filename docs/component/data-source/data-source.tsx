@@ -2,10 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal, Select } from '@medisys/component';
-import { MIConfig } from '@medisys/utils';
+import { MIConfig, sleep } from '@medisys/utils';
 // console.dir(ConfigProvider);
 // console.dir(ConfigProvider.ConfigContext.Consumer);
-import { sleep } from '@medisys/utils';
 
 const codeLoading = {};
 
