@@ -67,7 +67,7 @@ export const GET = async (
   url: string,
   payload?: any,
   overrideOptions: RequestOptionsInit | undefined = {},
-) => {
+): Promise<any> => {
   const options = {
     params: payload,
     headers: getHeaders(),
@@ -93,21 +93,23 @@ export const GET = async (
       const isTokenRefresh = await doRefreshTokenFirst();
 
       if (isTokenRefresh) {
+        return await GET(url, payload, overrideOptions);
+
         /* call getHeaders() again to use latest access token */
-        const result = await request.get(url, {
-          ...options,
-          headers: getHeaders(),
-        });
-        if (
-          overrideOptions.responseType &&
-          streamTypeList.indexOf(overrideOptions.responseType) > -1
-        ) {
-          return result;
-        }
-        if (result?.status === 0) {
-          return result.data;
-        }
-        return result;
+        // const result = await request.get(url, {
+        //   ...options,
+        //   headers: getHeaders(),
+        // });
+        // if (
+        //   overrideOptions.responseType &&
+        //   streamTypeList.indexOf(overrideOptions.responseType) > -1
+        // ) {
+        //   return result;
+        // }
+        // if (result?.status === 0) {
+        //   return result.data;
+        // }
+        // return result;
       }
     }
     throw error;
@@ -118,7 +120,7 @@ export const POST = async (
   url: string,
   payload: any,
   overrideOptions: RequestOptionsInit | undefined = {},
-) => {
+): Promise<any> => {
   const options = {
     data: payload,
     getResponse: false,
@@ -144,15 +146,17 @@ export const POST = async (
       const isTokenRefresh = await doRefreshTokenFirst();
 
       if (isTokenRefresh) {
+        return await POST(url, payload, overrideOptions);
         /* call getHeaders() again to use latest access token */
-        const result = await request.post(url, {
-          ...options,
-          headers: getHeaders(),
-        });
-        if (result?.status === 0) {
-          return result.data;
-        }
-        return result || true;
+        //   const result = await request.post(url, {
+        //     ...options,
+        //     headers: getHeaders(),
+        //   });
+        //   if (result?.status === 0) {
+        //     return result.data;
+        //   }
+        //   return result || true;
+        // }
       }
     }
     throw error;
@@ -163,7 +167,7 @@ export const PUT = async (
   url: string,
   payload: any,
   overrideOptions: RequestOptionsInit | undefined = {},
-) => {
+): Promise<any> => {
   const options = {
     ...overrideOptions,
     data: { ...payload },
@@ -181,22 +185,26 @@ export const PUT = async (
       const isTokenRefresh = await doRefreshTokenFirst();
 
       if (isTokenRefresh) {
+        return await PUT(url, payload, overrideOptions);
         /* call getHeaders() again to use latest access token */
-        const result = await request.put(url, {
-          ...options,
-          headers: getHeaders(),
-        });
-        if (result?.status === 0) {
-          return result.data;
-        }
-        return result || true;
+        //   const result = await request.put(url, {
+        //     ...options,
+        //     headers: getHeaders(),
+        //   });
+        //   if (result?.status === 0) {
+        //     return result.data;
+        //   }
+        //   return result || true;
       }
     }
     throw error;
   }
 };
 
-export const DELETE = async (url: string, overrideOptions = {}) => {
+export const DELETE = async (
+  url: string,
+  overrideOptions = {},
+): Promise<any> => {
   const options = {
     ...overrideOptions,
     headers: getHeaders(),
@@ -213,15 +221,16 @@ export const DELETE = async (url: string, overrideOptions = {}) => {
       const isTokenRefresh = await doRefreshTokenFirst();
 
       if (isTokenRefresh) {
+        return await DELETE(url, overrideOptions);
         /* call getHeaders() again to use latest access token */
-        const result = await request.put(url, {
-          ...options,
-          headers: getHeaders(),
-        });
-        if (result?.status === 0) {
-          return result.data;
-        }
-        return result || true;
+        // const result = await request.put(url, {
+        //   ...options,
+        //   headers: getHeaders(),
+        // });
+        // if (result?.status === 0) {
+        //   return result.data;
+        // }
+        // return result || true;
       }
     }
     throw error;
