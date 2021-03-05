@@ -119,8 +119,10 @@ const MIDataSelect: React.FC<MIDataSelectProps> = ({
   if (text) {
     const option = filteredList.find(
       (opt: { [key: string]: string }) =>
+        //@ts-ignore
         opt[valueField || 'id'] === restProps.value,
     );
+    //@ts-ignore
     if (option) return <span>{option[displayField || 'name']}</span>;
     return null;
   }
