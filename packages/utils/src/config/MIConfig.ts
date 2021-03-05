@@ -55,6 +55,14 @@ class MIConfig {
         }),
       );
     });
+
+    window.addEventListener('keydown', event => {
+      if (event.ctrlKey && event.key === 'F5') {
+        sessionStorage.removeItem('mi_ds');
+        event.preventDefault();
+        window.location.reload();
+      }
+    });
   }
 
   static async loadData(code: string, params?: any) {
