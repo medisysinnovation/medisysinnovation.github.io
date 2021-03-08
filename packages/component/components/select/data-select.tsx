@@ -52,7 +52,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
 
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
-    console.log(e);
+    // console.log(e);
     setList(e.detail ?? []);
     setDataSourceLoading(false);
     // const list = e.detail[code] ?? [];
