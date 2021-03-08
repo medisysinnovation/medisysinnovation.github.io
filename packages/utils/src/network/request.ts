@@ -20,7 +20,7 @@ export const refreshToken = async () => {
   };
 
   const result = await POST(
-    MIConfig.urls.login,
+    MIConfig.getConfig('urls').login,
     {},
     {
       data: stringify(requestBody),

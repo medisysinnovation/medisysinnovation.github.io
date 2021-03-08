@@ -11,7 +11,8 @@ export interface StateProps {
   dataSource?: Object;
 }
 
-export interface MedisysConfigProps {
+type KeyValuePair = { [key: string]: any };
+export interface MedisysConfigProps extends KeyValuePair {
   dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
   urls?: { [key: string]: string };
   cache?: boolean;
@@ -40,7 +41,7 @@ const _confg: MedisysConfigProps = {
 };
 
 class MIConfig {
-  static config({ dataLoader, urls, cache }: MedisysConfigProps) {
+  static setConfig({ dataLoader, urls, cache }: MedisysConfigProps) {
     //@ts-ignore
     if (dataLoader) _confg.dataLoader = dataLoader;
 
@@ -49,6 +50,10 @@ class MIConfig {
     }
 
     _confg.cache = cache ?? true;
+  }
+
+  static getConfig(key: string) {
+    return _confg[key];
   }
 
   static initialization() {
