@@ -60,25 +60,28 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
   });
 
   useEffect(() => {
-    if (!url && code) {
-      // MIConfig.
-      if (cache && list.length) {
-        return;
-      }
+    if (code) {
       const existList = MIConfig.getData(code);
       if (existList.length > 0) {
         setList(existList);
         return;
       }
-      if (dataSourceLoader) {
-        dataSourceLoader(code).then(newData => {
-          setList(newData);
-        });
-      } else {
-        setDataSourceLoading(true);
-        MIConfig.loadData(code);
+      if (!url) {
+        // MIConfig.
+        if (cache && list.length) {
+          return;
+        }
+
+        if (dataSourceLoader) {
+          dataSourceLoader(code).then(newData => {
+            setList(newData);
+          });
+        } else {
+          setDataSourceLoading(true);
+          MIConfig.loadData(code);
+        }
+        // config.load({ code });
       }
-      // config.load({ code });
     }
   }, []);
 
