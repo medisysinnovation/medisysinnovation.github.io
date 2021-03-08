@@ -47,7 +47,7 @@ class MIConfig {
     var ds = this.imt_current.get('dataSource');
 
     ds.keySeq().forEach((code: string) => {
-      console.log(ds.get(code)?.toJS(), code);
+      // console.log(ds.get(code)?.toJS(), code);
       document.dispatchEvent(
         new CustomEvent('mi_datasourcechanged_' + code, {
           bubbles: true,
@@ -63,6 +63,11 @@ class MIConfig {
         window.location.reload();
       }
     });
+  }
+
+  static async getData(code: string) {
+    if (!code) throw 'Must pass in `code`';
+    return immutable.getIn(this.imt_current, ['dataSource', code], []);
   }
 
   static async loadData(code: string, params?: any) {
