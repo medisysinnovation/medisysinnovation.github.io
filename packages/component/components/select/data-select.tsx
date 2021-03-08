@@ -7,12 +7,10 @@ import { MIConfig, GET } from '@medisys/utils';
 export interface MIDataSelectProps<VT> extends SelectProps<VT> {
   code?: string;
   url?: string;
-  model?: string;
   text?: boolean;
   valueField?: string;
   displayField?: string;
   dataSource?: object[];
-  cache?: boolean;
   dataSourceLoader?: (code: string, params?: any) => Promise<object[]>;
   filter?: (options: object[]) => object[];
   filterRule?: CodeTableSelectFilterRule | CodeTableSelectFilterRule.Contains;
@@ -29,7 +27,6 @@ const codeLoading: { [key: string]: boolean } = {};
 
 const MIDataSelect = <VT extends SelectValue = SelectValue>(
   {
-    model,
     code,
     valueField = 'id',
     displayField = 'text',
@@ -40,7 +37,6 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     filterRule,
     url,
     text,
-    cache = true,
     onChange,
     ...restProps
   }: MIDataSelectProps<VT>,
@@ -52,23 +48,21 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
 
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
-    // console.log(e);
     setList(e.detail ?? []);
     setDataSourceLoading(false);
-    // const list = e.detail[code] ?? [];
-    // if (model) setSpinning(!!models[model]);
   });
 
   useEffect(() => {
     if (code) {
       const existList = MIConfig.getData(code);
+
       if (existList.length > 0) {
         setList(existList);
         return;
       }
       if (!url) {
         // MIConfig.
-        if (cache && list.length) {
+        if (list.length) {
           return;
         }
 
@@ -87,9 +81,21 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
 
   useEffect(() => {
     if (url) {
+      if (code) {
+        const existList = MIConfig.getData(code);
+
+        if (existList.length > 0) {
+          setList(existList);
+          return;
+        }
+      }
+
       setDataSourceLoading(true);
       if (!code || !codeLoading[code]) {
-        if (code) codeLoading[code] = true;
+        if (code) {
+          codeLoading[code] = true;
+        }
+
         GET(url, { pageSize: 9999 }).then((result: any) => {
           const data = result?.data;
           if (code) {
