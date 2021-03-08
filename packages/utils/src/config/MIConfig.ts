@@ -1,5 +1,5 @@
 import immutable from 'immutable';
-console.log(immutable);
+// console.log(immutable);
 const { Map, List } = immutable;
 export interface ModalStaticFunctions {
   updateState: (newState: StateProps) => void;
@@ -14,16 +14,20 @@ export interface StateProps {
 export interface MedisysConfigProps {
   dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
   urls?: { [key: string]: string };
+  cache?: boolean;
 }
-
+const loadingStates: { [key: string]: boolean } = {};
 let localStore: StateProps = {
   loading: {},
   dataSource: JSON.parse(sessionStorage.getItem('mi_ds') || '{}'),
 };
 
-class MIConfig {
-  static dataLoader = undefined;
-  static urls = {
+const _me = {
+  imt_current: immutable.fromJS(localStore),
+};
+const _confg: MedisysConfigProps = {
+  cache: false,
+  urls: {
     login: '/connect/token',
     codetable: '/api/CodeTable',
     currentUser: '/api/User/Current',
@@ -31,20 +35,24 @@ class MIConfig {
     user: '/api/user',
     role: '/api/role',
     tenant: '/api/tenant',
-  };
-  static imt_current = immutable.fromJS(localStore);
+  },
+  dataLoader: undefined,
+};
 
-  static config({ dataLoader, urls }: MedisysConfigProps) {
+class MIConfig {
+  static config({ dataLoader, urls, cache }: MedisysConfigProps) {
     //@ts-ignore
-    if (dataLoader) this.dataLoader = dataLoader;
+    if (dataLoader) _confg.dataLoader = dataLoader;
 
     if (urls) {
-      this.urls = { ...this.urls, ...urls };
+      _confg.urls = { ..._confg.urls, ...urls };
     }
+
+    _confg.cache = cache ?? true;
   }
 
   static initialization() {
-    var ds = this.imt_current.get('dataSource');
+    var ds = _me.imt_current.get('dataSource');
 
     ds.keySeq().forEach((code: string) => {
       // console.log(ds.get(code)?.toJS(), code);
@@ -67,19 +75,29 @@ class MIConfig {
 
   static getData(code: string) {
     if (!code) throw 'Must pass in `code`';
-    return immutable
-      .getIn(this.imt_current, ['dataSource', code], [])
-      .toJS() as [];
+
+    const existingData = immutable.getIn(
+      _me.imt_current,
+      ['dataSource', code],
+      undefined,
+    );
+    if (!existingData) return [];
+    return existingData.toJS() as [];
   }
 
   static async loadData(code: string, params?: any) {
-    // console.log(code);
-    if (!this.dataLoader) {
+    // console.log(code, _confg.dataLoader);
+    if (!_confg.dataLoader) {
       throw 'No default loader configed, please use `config` function set default dataLoader';
     }
 
+    if (loadingStates[code]) {
+      return;
+    }
+    loadingStates[code] = true;
     //@ts-ignore
-    const data = await this.dataLoader({ code, ...params });
+    const data = await _confg.dataLoader({ code, ...params });
+    delete loadingStates[code];
     if (data) {
       this.updateState({
         dataSource: {
@@ -94,10 +112,7 @@ class MIConfig {
   static updateState(newState: StateProps = {}) {
     const { loading, dataSource } = newState;
     let imt_data = immutable.fromJS(newState) as Map<string, any>;
-    if (
-      loading &&
-      imt_data.get('loading') !== this.imt_current.get('loading')
-    ) {
+    if (loading && imt_data.get('loading') !== _me.imt_current.get('loading')) {
       // console.log(loading);
       // console.log('loading state changed', loading, localStore.loading);
       document.dispatchEvent(
@@ -109,7 +124,7 @@ class MIConfig {
     }
     const dataSourceChanged =
       immutable.getIn(imt_data, ['dataSource'], Map()) !==
-      immutable.getIn(this.imt_current, ['dataSource'], Map());
+      immutable.getIn(_me.imt_current, ['dataSource'], Map());
     // console.log(
     //   dataSourceChanged,
     //   immutable.getIn(imt_data, ['dataSource'], Map()).toJS(),
@@ -134,19 +149,19 @@ class MIConfig {
       imt_data = imt_data.set(
         'dataSource',
         immutable.merge(
-          this.imt_current.get('dataSource'),
+          _me.imt_current.get('dataSource'),
           imt_data.get('dataSource'),
         ),
       );
     }
 
-    this.imt_current = immutable.merge(this.imt_current, imt_data);
+    _me.imt_current = immutable.merge(_me.imt_current, imt_data);
     // console.log(imt_current.toJS());
-    if (dataSourceChanged) {
+    if (_confg.cache && dataSourceChanged) {
       // console.log('set', imt_current.get('dataSource').toJS());
       sessionStorage.setItem(
         'mi_ds',
-        JSON.stringify(this.imt_current.get('dataSource').toJS()),
+        JSON.stringify(_me.imt_current.get('dataSource').toJS()),
       );
     }
   }

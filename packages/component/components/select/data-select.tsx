@@ -65,6 +65,11 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
       if (cache && list.length) {
         return;
       }
+      const existList = MIConfig.getData(code);
+      if (existList.length > 0) {
+        setList(existList);
+        return;
+      }
       if (dataSourceLoader) {
         dataSourceLoader(code).then(newData => {
           setList(newData);

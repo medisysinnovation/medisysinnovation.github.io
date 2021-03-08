@@ -9,6 +9,7 @@ import { MIConfig, sleep } from '@medisys/utils';
 const codeLoading = {};
 
 MIConfig.config({
+  cache: false,
   dataLoader: async ({ code }) => {
     console.log(code);
 
