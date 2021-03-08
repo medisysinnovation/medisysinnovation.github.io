@@ -67,7 +67,7 @@ class MIConfig {
 
   static getData(code: string) {
     if (!code) throw 'Must pass in `code`';
-    return immutable.getIn(this.imt_current, ['dataSource', code], []);
+    return immutable.getIn(this.imt_current, ['dataSource', code], []).toJS();
   }
 
   static async loadData(code: string, params?: any) {
