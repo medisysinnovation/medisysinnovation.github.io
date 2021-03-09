@@ -52,7 +52,14 @@ const _MIForm: ForwardRefRenderFunction<
   const { discardCheck = false, ...restProps } = props;
   const { form, children } = restProps;
   const [wrapForm] = Form.useForm(form);
+  const [submitting, setSubmitting] = useState(false);
   React.useImperativeHandle(ref, () => {
+    const orgSubmit = wrapForm.submit;
+    wrapForm.submit = () => {
+      console.log(1, wrapForm);
+      setSubmitting(true);
+      orgSubmit();
+    };
     return wrapForm;
   });
 
@@ -88,7 +95,7 @@ const _MIForm: ForwardRefRenderFunction<
   };
 
   const tryDiscardForm = () => {
-    if (wrapForm?.isFieldsTouched() && discardCheck) {
+    if (wrapForm?.isFieldsTouched() && discardCheck && !submitting) {
       setShowConfirm(true);
     } else {
       discardForm();

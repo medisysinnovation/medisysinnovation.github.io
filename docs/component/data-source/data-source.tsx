@@ -103,7 +103,15 @@ const DataSelectDemo = () => {
         >
           Load Data
         </Button>
-        <Select code="roles" mode="tags" value={1} />
+        <Select
+          code="roles"
+          // filter={r => {
+          //   console.log(r);
+          //   return r.id === 7;
+          // }}
+          mode="tags"
+          value={1}
+        />
       </div>
 
       <div>
