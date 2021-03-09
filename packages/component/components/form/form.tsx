@@ -45,7 +45,6 @@ export interface MIFormProps<Values = any> extends FormProps<Values> {
   onDirtyCheck?: PromptProps['message'];
 }
 // const _MIForm: React.FC<MIFormProps> = ({
-let shouldWarn = true;
 const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
@@ -60,12 +59,11 @@ const _MIForm: ForwardRefRenderFunction<
   const divRef = useRef() as React.MutableRefObject<HTMLInputElement>; //useRef<HTMLElement>();
   const history = useHistory();
   const [showConfirm, setShowConfirm] = useState(false);
-
+  const [shouldWarn, setShouldWarn] = useState(true);
   const {
     onDirtyCheck = (currentLocation: any) => {
       // console.log(currentLocation.pathname, history.location.pathname);
-      if (!shouldWarn || currentLocation.pathname === history.location.pathname)
-        return false;
+      if (currentLocation.pathname === history.location.pathname) return false;
       showUnsavedPrompt({
         onOk: async () => {
           wrapForm.resetFields();
@@ -127,10 +125,6 @@ const _MIForm: ForwardRefRenderFunction<
     }
   }, [showConfirm]);
 
-  useEffect(() => {
-    shouldWarn = true;
-  }, []);
-
   const element = (
     <div ref={divRef} className="medisys-form">
       <Form
@@ -139,10 +133,10 @@ const _MIForm: ForwardRefRenderFunction<
         onFinish={(values: any) => {
           //@ts-ignore
           onFinish(values);
-          shouldWarn = false;
+          setShouldWarn(false);
         }}
       >
-        {discardCheck && (
+        {discardCheck && shouldWarn && (
           <Form.Item shouldUpdate={!showConfirm} style={{ display: 'none' }}>
             {() => {
               const isTouched = wrapForm?.isFieldsTouched() ?? false;
