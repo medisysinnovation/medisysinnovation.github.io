@@ -8,7 +8,7 @@ import { Form, Modal } from 'antd';
 import { useEventListener } from 'ahooks';
 import { Prompt, PromptProps } from 'react-router-dom';
 import { useHistory, BrowserRouter as Router } from 'react-router-dom';
-
+import useForm from './useForm';
 import { FormInstance, FormProps } from 'antd/lib/Form';
 // import MIFormContext, { MIFormContextPayload } from '../context/formContext';
 
@@ -45,21 +45,15 @@ export interface MIFormProps<Values = any> extends FormProps<Values> {
   onDirtyCheck?: PromptProps['message'];
 }
 // const _MIForm: React.FC<MIFormProps> = ({
+let shouldWarn = true;
 const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
 > = (props, ref) => {
   const { discardCheck = false, ...restProps } = props;
-  const { form, children } = restProps;
-  const [wrapForm] = Form.useForm(form);
-  const [submitting, setSubmitting] = useState(false);
+  const { form, children, onFinish } = restProps;
+  const [wrapForm] = useForm(form);
   React.useImperativeHandle(ref, () => {
-    const orgSubmit = wrapForm.submit;
-    wrapForm.submit = () => {
-      console.log(1, wrapForm);
-      setSubmitting(true);
-      orgSubmit();
-    };
     return wrapForm;
   });
 
@@ -69,8 +63,9 @@ const _MIForm: ForwardRefRenderFunction<
 
   const {
     onDirtyCheck = (currentLocation: any) => {
-      console.log(currentLocation.pathname, history.location.pathname);
-      if (currentLocation.pathname === history.location.pathname) return false;
+      // console.log(currentLocation.pathname, history.location.pathname);
+      if (shouldWarn && currentLocation.pathname === history.location.pathname)
+        return false;
       showUnsavedPrompt({
         onOk: async () => {
           wrapForm.resetFields();
@@ -95,7 +90,7 @@ const _MIForm: ForwardRefRenderFunction<
   };
 
   const tryDiscardForm = () => {
-    if (wrapForm?.isFieldsTouched() && discardCheck && !submitting) {
+    if (wrapForm?.isFieldsTouched() && discardCheck) {
       setShowConfirm(true);
     } else {
       discardForm();
@@ -131,9 +126,22 @@ const _MIForm: ForwardRefRenderFunction<
       }
     }
   }, [showConfirm]);
+
+  useEffect(() => {
+    shouldWarn = true;
+  }, []);
+
   const element = (
     <div ref={divRef} className="medisys-form">
-      <Form {...restProps} form={wrapForm}>
+      <Form
+        {...restProps}
+        form={wrapForm}
+        onFinish={(values: any) => {
+          //@ts-ignore
+          onFinish(values);
+          shouldWarn = false;
+        }}
+      >
         {discardCheck && (
           <Form.Item shouldUpdate={!showConfirm} style={{ display: 'none' }}>
             {() => {
