@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, InputProps } from 'antd';
 
 export interface MIInputProps extends InputProps {
@@ -13,28 +13,43 @@ export interface MIInputProps extends InputProps {
   // filter?: (options: object[]) => object[];
 }
 
-export type InputType = Input;
-export interface RefInputProps {
-  focus: () => void;
-  blur: () => void;
+export interface _RefInputProps {
+  focus?: () => void;
+  blur?: () => void;
 }
 
-const MIInput: React.ForwardRefRenderFunction<RefInputProps, MIInputProps> = (
-  props,
-  ref,
-) => {
+type RefInputProps = Input & _RefInputProps;
+
+let a = 0;
+const MIInput: React.ForwardRefRenderFunction<
+  RefInputProps | undefined,
+  MIInputProps
+> = (props, ref) => {
   const { trim = true, onBlur, onChange, value, ...restProps } = props;
-  console.log(ref);
+
+  const myRef = React.useRef<RefInputProps>();
+  React.useImperativeHandle(ref, () => {
+    if (!myRef.current) {
+      return undefined;
+    }
+    myRef.current.focus = () => {
+      return a++;
+    };
+    return myRef.current;
+  });
+
+  useEffect(() => {
+    // console.log(ref);
+    // console.log(myRef);
+  }, []);
 
   return (
     <Input
       {...restProps}
       onBlur={e => {
-        if (trim) {
-          //@ts-ignore
-          ref.current.input.value = e.target.value?.trim();
-          //@ts-ignore
-          ref.current.handleChange(e);
+        if (trim && myRef.current) {
+          myRef.current.input.value = e.target.value?.trim();
+          myRef.current.handleChange(e);
         }
         if (onBlur) onBlur(e);
       }}
@@ -42,7 +57,7 @@ const MIInput: React.ForwardRefRenderFunction<RefInputProps, MIInputProps> = (
         // setLocalValue(e.target.value);
         if (onChange) onChange(e);
       }}
-      ref={ref as any}
+      ref={myRef as any}
     />
   );
 };

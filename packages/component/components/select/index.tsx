@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useEventListener } from 'ahooks';
+import { useEventListener, useWhyDidYouUpdate } from 'ahooks';
 import { Select } from 'antd';
 import { RefSelectProps, SelectValue } from 'antd/es/select';
-import { MIConfig, GET } from '@medisys/utils';
+import { MIConfig, GET, usePrevious } from '@medisys/utils';
 
 import { SelectProps } from 'antd/es/select';
 
@@ -17,6 +17,7 @@ export interface MIDataSelectProps<VT> extends SelectProps<VT> {
   text?: boolean;
   valueField?: string;
   displayField?: string;
+  dependencies?: any[];
   dataSource?: object[];
   dataSourceLoader?: (code: string, params?: any) => Promise<object[]>;
   filter?: (options: object[]) => object[];
@@ -26,9 +27,12 @@ export interface MIDataSelectProps<VT> extends SelectProps<VT> {
 
 const { Option } = Select;
 const codeLoading: { [key: string]: boolean } = {};
-
+const defaultDependencies: any[] = [];
 const MIDataSelect = <VT extends SelectValue = SelectValue>(
-  {
+  props: MIDataSelectProps<VT>,
+  ref: React.Ref<RefSelectProps>,
+) => {
+  const {
     code,
     valueField = 'id',
     displayField = 'text',
@@ -40,19 +44,37 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     url,
     text,
     onChange,
+    dependencies = defaultDependencies,
     ...restProps
-  }: MIDataSelectProps<VT>,
-  ref: React.Ref<RefSelectProps>,
-) => {
+  } = props;
   const [list, setList] = useState<object[]>([]);
   const [filteredList, setFilteredList] = useState<object[]>([]);
 
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
-
+  // console.log(usePrevious);
+  const prevDependency = usePrevious(dependencies) || defaultDependencies;
+  // console.log(
+  //   prevDependency,
+  //   dependencies,
+  //   prevDependency === dependencies,
+  //   dependencies.length === prevDependency.length,
+  //   dependencies.every((v, p) => {
+  //     console.log(
+  //       dependencies[p] === prevDependency[p],
+  //       dependencies[p],
+  //       prevDependency[p],
+  //       p,
+  //       v,
+  //     );
+  //     return dependencies[p] === prevDependency[p];
+  //   }),
+  // );
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
     setList(e.detail ?? []);
     setDataSourceLoading(false);
   });
+
+  useWhyDidYouUpdate('Data Select', { ...props });
 
   useEffect(() => {
     if (code) {
@@ -129,6 +151,18 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
       setFilteredList(list);
     }
   }, [list]);
+
+  useEffect(() => {
+    if (typeof filter === 'function') {
+      if (
+        dependencies.length !== prevDependency.length ||
+        !dependencies.every((v, p) => {
+          return dependencies[p] === prevDependency[p];
+        })
+      )
+        setFilteredList(list.filter(filter));
+    }
+  }, [dependencies]);
 
   const handleFilter = useMemo(() => {
     return (input: string, option: any) => {

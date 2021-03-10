@@ -12,13 +12,13 @@ import _MIInput from './input';
 // export { TextAreaProps } from './TextArea';
 // export { PasswordProps } from './Password';
 
-export {
-  InputProps,
-  PasswordProps,
-  GroupProps,
-  SearchProps,
-  TextAreaProps,
-} from 'antd/es/input';
+// export {
+//   InputProps,
+//   PasswordProps,
+//   GroupProps,
+//   SearchProps,
+//   TextAreaProps,
+// } from 'antd/es/input';
 
 type InternalInputType = typeof _MIInput;
 

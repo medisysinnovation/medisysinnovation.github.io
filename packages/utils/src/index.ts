@@ -7,5 +7,6 @@ export * from './network';
 export * from './image';
 export * from './html';
 export * from './async';
+export * from './hook';
 
 export * from './test';

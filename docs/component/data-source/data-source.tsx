@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Form, Button, Modal, Select } from '@medisys/component';
@@ -70,6 +70,14 @@ function getRandomInt(max) {
 }
 
 const DataSelectDemo = () => {
+  const [v, setV] = useState(0);
+
+  const changeVal = useMemo(() => {
+    return val => {
+      console.log(val);
+      setV(val);
+    };
+  }, []);
   return (
     <>
       <div>
@@ -111,6 +119,7 @@ const DataSelectDemo = () => {
           // }}
           mode="tags"
           value={1}
+          onChange={changeVal}
         />
       </div>
 
@@ -128,7 +137,16 @@ const DataSelectDemo = () => {
         >
           Load Data
         </Button>
-        <Select code="roles" url={'test/weree'} mode="tags" value={123} />
+        <Select
+          code="roles"
+          // url={'test/weree'}
+          // mode="tags"
+          // filter={r => {
+          //   return r.id === 7;
+          // }}
+          dependencies={[v]}
+          value={123}
+        />
       </div>
     </>
   );
