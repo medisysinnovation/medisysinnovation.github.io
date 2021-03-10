@@ -29,14 +29,14 @@ const MIInput: React.ForwardRefRenderFunction<RefInputProps, MIInputProps> = (
   return (
     <Input
       {...restProps}
-      // value={localValue}
       onBlur={e => {
-        //@ts-ignore
-        ref.current.input.value = e.target.value?.trim();
-        //@ts-ignore
-        ref.current.handleChange(e);
-        // // setLocalValue(e.target.value?.trim());
-        // if (onBlur) onBlur(e);
+        if (trim) {
+          //@ts-ignore
+          ref.current.input.value = e.target.value?.trim();
+          //@ts-ignore
+          ref.current.handleChange(e);
+        }
+        if (onBlur) onBlur(e);
       }}
       onChange={e => {
         // setLocalValue(e.target.value);

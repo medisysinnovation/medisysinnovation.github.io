@@ -12,7 +12,7 @@ const InputBasicDemo = () => {
   // console.log(myRef);
   useEffect(() => {
     // myRef.current.focus()
-    console.log(myRef);
+    // console.log(myRef.current.);
   }, []);
   return (
     <>
