@@ -2,7 +2,8 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener, useWhyDidYouUpdate } from 'ahooks';
 import { Select } from 'antd';
 import { RefSelectProps, SelectValue } from 'antd/es/select';
-import { MIConfig, GET, usePrevious } from '@medisys/utils';
+import { MIConfig, GET } from '@medisys/utils';
+import { usePrevious } from '../hook';
 
 import { SelectProps } from 'antd/es/select';
 
