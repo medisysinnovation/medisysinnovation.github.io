@@ -14,7 +14,6 @@ export default function useMIForm<Values = any>(
 ): [FormInstance<Values>] {
   const [rcForm] = useForm();
   // const itemsRef = React.useRef<Record<string, React.ReactElement>>({});
-  console.log(rcForm);
   const wrapForm: FormInstance<Values> = React.useMemo(
     () =>
       form || {
