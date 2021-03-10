@@ -157,7 +157,7 @@ const MIDataSelect = <VT extends SelectValue = SelectValue>(
     if (typeof filter === 'function') {
       if (
         dependencies.length !== prevDependency.length ||
-        !dependencies.every((v, p) => {
+        !dependencies.every((...[, p]) => {
           return dependencies[p] === prevDependency[p];
         })
       )
