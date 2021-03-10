@@ -58,7 +58,7 @@ const MIModal: React.FC<MIModalProps> = ({
   useEventListener('loadingstatechanged', (e: FormEvent) => {
     if (model && isVisible(ref?.current)) {
       const models = e.detail?.models ?? {};
-      console.log(model, models[model]);
+      // console.log(model, models[model]);
       setSpinning(!!models[model]);
     }
   });
