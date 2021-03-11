@@ -43,13 +43,14 @@ const showUnsavedPrompt = ({
 export interface MIFormProps<Values = any> extends FormProps<Values> {
   discardCheck?: boolean;
   onDirtyCheck?: PromptProps['message'];
+  resetOnSubmit: boolean;
 }
 // const _MIForm: React.FC<MIFormProps> = ({
 const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
 > = (props, ref) => {
-  const { discardCheck = false, ...restProps } = props;
+  const { discardCheck = false, resetOnSubmit, ...restProps } = props;
   const { form, children, onFinish } = restProps;
   const [wrapForm] = useForm(form);
   React.useImperativeHandle(ref, () => {
@@ -99,7 +100,7 @@ const _MIForm: ForwardRefRenderFunction<
   });
 
   const onBeforeUnloadCheck = (event: BeforeUnloadEvent) => {
-    if (!wrapForm?.isFieldsTouched()) return true;
+    if (!shouldWarn || !wrapForm?.isFieldsTouched()) return true;
     // To show a native browser "Unsaved changes prompt"
 
     // Cancel the event as stated by the standard.
@@ -133,7 +134,7 @@ const _MIForm: ForwardRefRenderFunction<
         onFinish={(values: any) => {
           //@ts-ignore
           onFinish(values);
-          setShouldWarn(false);
+          if (resetOnSubmit) setShouldWarn(false);
         }}
       >
         {discardCheck && shouldWarn && (

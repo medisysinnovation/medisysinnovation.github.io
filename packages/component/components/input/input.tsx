@@ -25,7 +25,7 @@ const MIInput: React.ForwardRefRenderFunction<
   RefInputProps | undefined,
   MIInputProps
 > = (props, ref) => {
-  const { trim = true, onBlur, onChange, value, ...restProps } = props;
+  const { trim = true, onBlur, ...restProps } = props;
 
   const myRef = React.useRef<RefInputProps>();
   React.useImperativeHandle(ref, () => {
@@ -53,10 +53,10 @@ const MIInput: React.ForwardRefRenderFunction<
         }
         if (onBlur) onBlur(e);
       }}
-      onChange={e => {
-        // setLocalValue(e.target.value);
-        if (onChange) onChange(e);
-      }}
+      // onChange={e => {
+      //   // setLocalValue(e.target.value);
+      //   if (onChange) onChange(e);
+      // }}
       ref={myRef as any}
     />
   );
