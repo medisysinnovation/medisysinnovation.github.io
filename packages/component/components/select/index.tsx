@@ -21,7 +21,7 @@ export interface MIDataSelectProps<VT> extends SelectProps<VT> {
   dependencies?: any[];
   dataSource?: object[];
   dataSourceLoader?: (code: string, params?: any) => Promise<object[]>;
-  filter?: (options: object[]) => object[];
+  filter?: (currentValue: object, index: number, array: object[]) => object[];
   filterRule?: CodeTableSelectFilterRule | CodeTableSelectFilterRule.Contains;
   onChange?: (value: VT, option: object) => void;
 }
