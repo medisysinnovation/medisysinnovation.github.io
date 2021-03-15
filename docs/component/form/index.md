@@ -34,3 +34,4 @@ To disable check on modal close, check [Modal](/components/modal#api) API
 | --- | --- | --- | --- | --- |
 | discardCheck | Enable dirty form check | boolean | false |  |
 | onDirtyCheck | Listening to dirty check event | string | ((location: H.Location, action: H.Action) => string \| boolean) |  |
+| resetOnSubmit | disable warning once form.submit called | boolean | true |  |

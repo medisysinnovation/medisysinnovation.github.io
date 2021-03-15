@@ -43,14 +43,14 @@ const showUnsavedPrompt = ({
 export interface MIFormProps<Values = any> extends FormProps<Values> {
   discardCheck?: boolean;
   onDirtyCheck?: PromptProps['message'];
-  resetOnSubmit: boolean;
+  resetOnSubmit?: boolean;
 }
 // const _MIForm: React.FC<MIFormProps> = ({
 const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
 > = (props, ref) => {
-  const { discardCheck = false, resetOnSubmit, ...restProps } = props;
+  const { discardCheck = false, resetOnSubmit = true, ...restProps } = props;
   const { form, children, onFinish } = restProps;
   const [wrapForm] = useForm(form);
   React.useImperativeHandle(ref, () => {
