@@ -44,7 +44,7 @@ const MIInput: React.ForwardRefRenderFunction<
     // console.log(myRef);
   }, []);
 
-  if (text) return <span>restProps.value</span>;
+  if (text) return <span>{restProps.value || ''}</span>;
 
   return (
     <Input
