@@ -1,14 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener, useWhyDidYouUpdate } from 'ahooks';
-import isReact from 'is-react';
-// import { Source } from 'antd';
-// import { RefSourceProps, SourceValue } from 'antd/es/select';
 import { SelectProps, SelectValue } from 'antd/es/select';
 
 import { MIConfig, GET } from '@medisys/utils';
 import { usePrevious } from '../hook';
-
-// import { SourceProps } from 'antd/es/select';
 
 export enum CodeTableSourceFilterRule {
   StartsWidth,

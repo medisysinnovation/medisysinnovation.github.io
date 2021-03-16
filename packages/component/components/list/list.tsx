@@ -1,7 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { List } from 'antd';
-import { useBoolean, useEventListener } from 'ahooks';
-import { getStyle } from '@medisys/utils';
 import { ListProps } from 'antd/lib/list';
 import DataSource from '../data-source';
 
@@ -16,11 +14,6 @@ export interface MIListProps<T> extends ListProps<T> {
   model?: string;
 }
 
-const isVisible = (element: HTMLDivElement) => {
-  if (!element) return false;
-  const modalWrap = element.closest('.ant-modal-wrap');
-  return getStyle(modalWrap, 'display') !== 'none';
-};
 function MIList<T>({ ...props }: MIListProps<T>) {
   return (
     <DataSource>
