@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Input, Select, Form as AntdForm } from 'antd';
-import { Form, Button, Modal } from '@medisys/component';
+import { Select, Form as AntdForm } from 'antd';
+import { Input, Form, Button, Modal } from '@medisys/component';
 // import { useBoolean } from 'ahooks';
 
 import './basic.less';

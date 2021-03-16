@@ -24,7 +24,7 @@ const InputBasicDemo = () => {
   }, []);
   return (
     <>
-      <Input />
+      <Input value="123" text />
     </>
   );
 };
