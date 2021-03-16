@@ -64,6 +64,7 @@ export default defineConfig({
           'component/button',
           'component/job-status-tag',
           'component/form',
+          'component/data-source',
           'component/modal',
         ],
       },

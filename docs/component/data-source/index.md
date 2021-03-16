@@ -7,7 +7,14 @@ group:
   path: /datasource
 ---
 
-<code src="./data-source.tsx" title='Update DataSource' desc='use `MIConfig` to update dataSource' />
+# DataSource
+
+## Select
+<code src="./index.tsx" title='Update DataSource' desc='use `MIConfig` to update dataSource' />
+
+## List
+<code src="./list.tsx" title='Update DataSource' desc='use `MIConfig` to update dataSource' />
+
 
 
 ```js
@@ -25,6 +32,9 @@ MIConfig.setConfig({
   });
 
 ```
+
+
+## API
 
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |

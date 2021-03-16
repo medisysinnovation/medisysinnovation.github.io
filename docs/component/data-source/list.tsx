@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Form, Button, Modal, Select } from '@medisys/component';
+import { Form, Button, Modal, Select, List } from '@medisys/component';
 import { MIConfig, sleep } from '@medisys/utils';
 // console.dir(ConfigProvider);
 // console.dir(ConfigProvider.ConfigContext.Consumer);
@@ -65,18 +65,29 @@ const test_data = {
     { id: 8, text: 'UIJ' },
   ],
 };
+const data = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.',
+];
 function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
 const DataSelectDemo = () => {
   const [v, setV] = useState(0);
-
+  const myRef = React.useRef();
   const changeVal = useMemo(() => {
     return val => {
       console.log(val);
       setV(val);
     };
+  }, []);
+
+  useEffect(() => {
+    console.log(myRef);
   }, []);
   return (
     <>
@@ -94,58 +105,15 @@ const DataSelectDemo = () => {
         >
           Load Data
         </Button>
-        <Select code="users" mode="tags" />
-      </div>
-
-      <div>
-        <Button
-          onClick={() => {
-            const start = getRandomInt(test_data.roles.length - 1);
-            const end = start + getRandomInt(test_data.roles.length - start);
-            MIConfig.updateState({
-              dataSource: {
-                roles: test_data.roles.slice(start, end),
-              },
-            });
-          }}
-        >
-          Load Data
-        </Button>
-        <Select
-          code="roles"
-          // filter={r => {
-          //   console.log(r);
-          //   return r.id === 7;
-          // }}
-          mode="tags"
-          value={1}
-          onChange={changeVal}
-        />
-      </div>
-
-      <div>
-        <Button
-          onClick={() => {
-            const start = getRandomInt(test_data.roles.length - 1);
-            const end = start + getRandomInt(test_data.roles.length - start);
-            MIConfig.updateState({
-              dataSource: {
-                roles: test_data.roles.slice(start, end),
-              },
-            });
-          }}
-        >
-          Load Data
-        </Button>
-        <Select
-          code="roles"
-          // url={'test/weree'}
-          // mode="tags"
-          // filter={r => {
-          //   return r.id === 7;
-          // }}
-          dependencies={[v]}
-          value={123}
+        <List
+          ref={myRef}
+          code="users"
+          size="small"
+          header={<div>Header</div>}
+          footer={<div>Footer</div>}
+          bordered
+          dataSource={data}
+          renderItem={item => <List.Item>{item}</List.Item>}
         />
       </div>
     </>

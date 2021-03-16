@@ -12,7 +12,7 @@ group:
 
 ## Form
 
-<code src="./index.tsx" title='Dirty Check Form' desc='Form have dirty field checking prompt' />
+<code src="./main.tsx" title='Dirty Check Form' desc='Form have dirty field checking prompt' />
 
 The form will prompt confirmation if any field has been touched when
 

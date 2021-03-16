@@ -7,6 +7,9 @@ group:
   path: /input
 ---
 
+# Input
+
+## Basic
 <code src="./basic.tsx" title='Basic usage' desc='-' />
 
 ## API
