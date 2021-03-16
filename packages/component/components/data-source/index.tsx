@@ -27,6 +27,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   filter?: (currentValue: VT, index: number, array: VT[]) => boolean;
   filterRule?: CodeTableSourceFilterRule | CodeTableSourceFilterRule.Contains;
   onChange?: (value: VT, option: object) => void;
+  onDataSourceChange?: (array: VT[]) => void;
   children: React.ReactNode;
 }
 
@@ -53,6 +54,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     url,
     text,
     onChange,
+    onDataSourceChange,
     filterOption,
     dependencies = defaultDependencies,
     ...restProps
@@ -62,10 +64,14 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   //console.log(restProps);
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
   const prevDependency = usePrevious(dependencies) || defaultDependencies;
+  const setRawData = (newData: VT[]) => {
+    if (onDataSourceChange) onDataSourceChange(newData);
+    setList(newData);
+  };
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
     //console.log(2, e.detail);
 
-    setList(e.detail ?? []);
+    setRawData(e.detail ?? []);
     setDataSourceLoading(false);
   });
 
@@ -77,7 +83,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 
       if (existList.length > 0) {
         //console.log(3, existList);
-        setList(existList);
+        setRawData(existList);
         return;
       }
       if (!url) {
@@ -88,7 +94,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
         if (dataSourceLoader) {
           dataSourceLoader(code).then(newData => {
             //console.log(4, newData);
-            setList(newData);
+            setRawData(newData);
           });
         } else {
           setDataSourceLoading(true);
@@ -105,7 +111,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 
         if (existList.length > 0) {
           //console.log(5, existList);
-          setList(existList);
+          setRawData(existList);
           return;
         }
       }
@@ -129,7 +135,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
             setDataSourceLoading(false);
             //console.log(6, data);
 
-            setList(data);
+            setRawData(data);
           }
         });
       }

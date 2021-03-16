@@ -92,6 +92,9 @@ const DataSelectDemo = () => {
 
           console.log(v, opt);
         }}
+        onDataSourceChange={arr => {
+          console.log(arr);
+        }}
         value={currentRole}
       />
       <Select
