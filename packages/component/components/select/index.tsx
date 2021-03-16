@@ -20,6 +20,8 @@ const MIDataSelect = <
         dataSource = [],
         valueField = 'id',
         displayField = 'text',
+        filter,
+        ...payload
       }: MIDataSourceProps<VT>) => {
         return (
           <Select
@@ -27,7 +29,7 @@ const MIDataSelect = <
             style={{ minWidth: 100 }}
             // placeholder="Select a person"
             // optionFilterProp="children"
-            {...restProps}
+            {...payload}
           >
             {children
               ? children

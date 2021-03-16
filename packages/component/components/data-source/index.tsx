@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { useEventListener, useWhyDidYouUpdate } from 'ahooks';
+import { useEventListener } from 'ahooks';
 import { SelectProps, SelectValue } from 'antd/es/select';
 
 import { MIConfig, GET } from '@medisys/utils';
@@ -59,21 +59,24 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   } = props;
   const [list, setList] = useState<VT[]>([]);
   const [filteredList, setFilteredList] = useState<VT[]>([]);
-
+  //console.log(restProps);
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
   const prevDependency = usePrevious(dependencies) || defaultDependencies;
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
+    //console.log(2, e.detail);
+
     setList(e.detail ?? []);
     setDataSourceLoading(false);
   });
 
-  useWhyDidYouUpdate('Data Source', { ...props });
+  // useWhyDidYouUpdate('Data Source', { ...props });
 
   useEffect(() => {
     if (code) {
       const existList = MIConfig.getData(code);
 
       if (existList.length > 0) {
+        //console.log(3, existList);
         setList(existList);
         return;
       }
@@ -84,6 +87,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 
         if (dataSourceLoader) {
           dataSourceLoader(code).then(newData => {
+            //console.log(4, newData);
             setList(newData);
           });
         } else {
@@ -100,6 +104,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
         const existList = MIConfig.getData(code);
 
         if (existList.length > 0) {
+          //console.log(5, existList);
           setList(existList);
           return;
         }
@@ -122,6 +127,8 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
             });
           } else {
             setDataSourceLoading(false);
+            //console.log(6, data);
+
             setList(data);
           }
         });
@@ -131,11 +138,13 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 
   useEffect(() => {
     if (dataSource) {
+      //console.log(1, dataSource);
       setList(dataSource);
     }
   }, [dataSource]);
 
   useEffect(() => {
+    //console.log(list);
     if (typeof filter === 'function') {
       setFilteredList(list.filter(filter));
     } else {
@@ -178,18 +187,20 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 
   const handleOnChange = (value: VT, option: Object) => {
     const opt = filteredList.find((opt: any) => opt[valueField] === value);
+    //console.log(opt, onChange);
     onChange && onChange(value, { ...option, data: opt });
   };
-  // console.log(list);
+  // //console.log(list);
   // if(typeof children === function)
   // if(typeof children =)
-  // console.log(
+  // //console.log(
   //   isReact.component(children),
   //   typeof children,
   //   children,
   //   isReact.element(children),
   // );
   const sharedProps = {
+    ...props,
     loading: dataSourceLoading,
     filterOption: handleFilter,
     onChange: handleOnChange,
@@ -197,8 +208,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   if (typeof children === 'function') {
     return children({
       dataSource: filteredList,
-      valueField,
-      displayField,
+
       ...sharedProps,
     } as MIDataSourceProps<VT>);
   }

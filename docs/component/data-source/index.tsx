@@ -45,24 +45,18 @@ MIConfig.setConfig({
 
 const test_data = {
   users: [
-    { id: 1, text: 'ABC' },
-    { id: 2, text: 'CDE' },
-    { id: 3, text: 'FGH' },
-    { id: 4, text: 'EDS' },
-    { id: 5, text: 'ANI' },
-    { id: 6, text: 'LIT' },
-    { id: 7, text: 'RVS' },
-    { id: 8, text: 'UIJ' },
+    { id: 1, text: 'U_ABC', roleId: 1 },
+    { id: 2, text: 'U_CDE', roleId: 1 },
+    { id: 3, text: 'U_FGH', roleId: 1 },
+    { id: 4, text: 'U_EDS', roleId: 1 },
+    { id: 5, text: 'U_ANI', roleId: 1 },
+    { id: 6, text: 'U_LIT', roleId: 2 },
+    { id: 7, text: 'U_RVS', roleId: 2 },
+    { id: 8, text: 'U_UIJ', roleId: 2 },
   ],
   roles: [
-    { id: 1, text: 'ABC' },
-    { id: 2, text: 'CDE' },
-    { id: 3, text: 'FGH' },
-    { id: 4, text: 'EDS' },
-    { id: 5, text: 'ANI' },
-    { id: 6, text: 'LIT' },
-    { id: 7, text: 'RVS' },
-    { id: 8, text: 'UIJ' },
+    { id: 1, text: 'R_ABC' },
+    { id: 2, text: 'R_CDE' },
   ],
 };
 function getRandomInt(max) {
@@ -83,9 +77,40 @@ const DataSelectDemo = () => {
       setV(val);
     };
   }, []);
+  const [currentRole, setCurrentRole] = useState(0);
+  const [currentUser, setCurrentUser] = useState(1);
+
+  console.log(currentRole, currentUser);
   return (
     <>
-      <div>
+      <Select
+        placeholder="Role"
+        code="roles"
+        onChange={(v: number, opt) => {
+          setCurrentRole(v);
+          setCurrentUser(undefined);
+
+          console.log(v, opt);
+        }}
+        value={currentRole}
+      />
+      <Select
+        placeholder="User"
+        code="users"
+        filter={(v, opt) => {
+          console.log(v.roleId === currentRole);
+          return v.roleId === currentRole;
+        }}
+        onChange={(v: number, opt) => {
+          console.log(v, opt);
+
+          setCurrentUser(v);
+          setCurrentRole(opt.data.roleId);
+        }}
+        value={currentUser}
+        dependencies={[currentRole]}
+      />
+      {/* <div>
         <Button
           onClick={() => {
             const start = getRandomInt(test_data.users.length - 1);
@@ -152,7 +177,7 @@ const DataSelectDemo = () => {
           dependencies={[v]}
           value={123}
         />
-      </div>
+      </div> */}
     </>
   );
 };
