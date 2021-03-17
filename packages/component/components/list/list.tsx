@@ -1,23 +1,26 @@
 import React from 'react';
 import { List } from 'antd';
 import { ListProps } from 'antd/lib/list';
-import DataSource from '../data-source';
+import DataSource, { MIDataSourceProps } from '../data-source';
+import { SelectValue } from 'antd/es/select';
 
-export interface ModalLocale {
-  okText: string;
-  cancelText: string;
-  justOkText: string;
+export interface MIListProps<VT> extends ListProps<VT> {
+  code?: boolean;
 }
 
-export interface MIListProps<T> extends ListProps<T> {
-  triggerDiscard?: boolean;
-  model?: string;
-}
-
-function MIList<T>({ ...props }: MIListProps<T>) {
+function MIList<
+  VT extends SelectValue = SelectValue & { [index: string]: string }
+>({ ...restProps }: MIListProps<VT>) {
   return (
-    <DataSource>
-      <List {...props} />
+    <DataSource {...(restProps as MIDataSourceProps<VT>)}>
+      {({
+        valueField = 'id',
+        displayField = 'text',
+        filter,
+        ...payload
+      }: MIDataSourceProps<VT>) => {
+        return <List {...(payload as MIListProps<VT>)} />;
+      }}
     </DataSource>
   );
 }

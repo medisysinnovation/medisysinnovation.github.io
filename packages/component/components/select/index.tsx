@@ -12,7 +12,7 @@ const MIDataSelect = <
   props: MIDataSelectProps<VT>,
   ref: React.Ref<RefSelectProps>,
 ) => {
-  const { children, text, ...restProps } = props;
+  const { children, ...restProps } = props;
 
   return (
     <DataSource {...(restProps as MIDataSourceProps<VT>)}>

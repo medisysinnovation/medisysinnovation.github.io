@@ -28,7 +28,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   filterRule?: CodeTableSourceFilterRule | CodeTableSourceFilterRule.Contains;
   onChange?: (value: VT, option: object) => void;
   onDataSourceChange?: (array: VT[]) => void;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 export interface MIDataSourceChildrenProps<VT> {
