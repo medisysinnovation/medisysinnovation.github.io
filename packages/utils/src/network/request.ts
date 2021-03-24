@@ -89,6 +89,7 @@ export const GET = async (
     }
     return result;
   } catch (error) {
+    console.log(error, error instanceof UnauthorizedError);
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
       console.log(isTokenRefresh);
