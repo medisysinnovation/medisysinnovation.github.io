@@ -77,7 +77,7 @@ const DataSelectDemo = () => {
       setV(val);
     };
   }, []);
-  const [currentRole, setCurrentRole] = useState(0);
+  const [currentRole, setCurrentRole] = useState(1);
   const [currentUser, setCurrentUser] = useState(1);
 
   console.log(currentRole, currentUser);

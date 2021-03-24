@@ -91,7 +91,7 @@ export const GET = async (
   } catch (error) {
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
-
+      console.log(isTokenRefresh);
       if (isTokenRefresh) {
         return await GET(url, payload, overrideOptions);
 
@@ -110,9 +110,12 @@ export const GET = async (
         //   return result.data;
         // }
         // return result;
+      } else {
+        throw error;
       }
+    } else {
+      throw error;
     }
-    throw error;
   }
 };
 
