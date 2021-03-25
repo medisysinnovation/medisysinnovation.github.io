@@ -43,10 +43,10 @@ const getHeaders = () => {
 };
 
 const doRefreshTokenFirst = async () => {
-  const hasRefreshToken = !!localStorage.getItem(
+  const refreshAccessToken = localStorage.getItem(
     LOCAL_STORAGE_KEY.refreshTokenKey,
   );
-  if (!hasRefreshToken) return false;
+  if (!refreshAccessToken) return false;
 
   const result = await refreshToken();
   if (result && result.access_token) {
