@@ -46,6 +46,7 @@ const doRefreshTokenFirst = async () => {
   const refreshAccessToken = localStorage.getItem(
     LOCAL_STORAGE_KEY.refreshTokenKey,
   );
+  console.log(refreshAccessToken);
   if (!refreshAccessToken) return false;
 
   const result = await refreshToken();
