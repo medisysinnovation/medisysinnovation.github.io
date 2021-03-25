@@ -50,6 +50,8 @@ const doRefreshTokenFirst = async () => {
   if (!refreshAccessToken) return false;
 
   const result = await refreshToken();
+  console.log(result);
+
   if (result && result.access_token) {
     const {
       access_token: accessToken,
