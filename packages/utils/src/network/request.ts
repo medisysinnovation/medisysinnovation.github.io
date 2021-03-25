@@ -49,7 +49,6 @@ const doRefreshTokenFirst = async () => {
   if (!refreshAccessToken) return false;
 
   const result = await refreshToken();
-  console.log(result);
   if (result && result.access_token) {
     const {
       access_token: accessToken,
@@ -90,10 +89,8 @@ export const GET = async (
     }
     return result;
   } catch (error) {
-    console.log(error, error instanceof UnauthorizedError);
     if (error instanceof UnauthorizedError) {
       const isTokenRefresh = await doRefreshTokenFirst();
-      console.log(isTokenRefresh);
       if (isTokenRefresh) {
         return await GET(url, payload, overrideOptions);
 
@@ -112,12 +109,9 @@ export const GET = async (
         //   return result.data;
         // }
         // return result;
-      } else {
-        throw error;
       }
-    } else {
-      throw error;
     }
+    throw error;
   }
 };
 
