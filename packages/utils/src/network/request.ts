@@ -30,7 +30,7 @@ export const refreshToken = async () => {
       getResponse: true,
     },
   );
-  return result;
+  return result?.data;
 };
 
 const getHeaders = () => {
@@ -46,12 +46,10 @@ const doRefreshTokenFirst = async () => {
   const refreshAccessToken = localStorage.getItem(
     LOCAL_STORAGE_KEY.refreshTokenKey,
   );
-  console.log(refreshAccessToken);
   if (!refreshAccessToken) return false;
 
   const result = await refreshToken();
   console.log(result);
-
   if (result && result.access_token) {
     const {
       access_token: accessToken,
