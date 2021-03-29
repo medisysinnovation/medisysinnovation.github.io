@@ -65,7 +65,7 @@ const _MIForm: ForwardRefRenderFunction<
     onDirtyCheck = (currentLocation: any) => {
       // console.log(currentLocation.pathname, history.location.pathname);
       if (currentLocation.pathname === history.location.pathname) return false;
-      console.log(currentLocation.pathname, history.location.pathname);
+      // console.log(currentLocation.pathname, history.location.pathname);
       showUnsavedPrompt({
         onOk: async () => {
           wrapForm.resetFields();
