@@ -18,7 +18,7 @@ export declare type FilterFunc<OptionType> = (
 export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   code?: string;
   url?: string;
-  text?: boolean;
+  readonly?: boolean;
   valueField?: string;
   displayField?: string;
   dependencies?: any[];
@@ -30,6 +30,9 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   onDataSourceChange?: (array: VT[]) => void;
   dataFormatter?: (array: VT[]) => VT[];
   children?: React.ReactNode;
+
+  //deprecated
+  text?: boolean;
 }
 
 export interface MIDataSourceChildrenProps<VT> {
@@ -77,6 +80,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     filterRule,
     url,
     text,
+    readonly,
     onChange,
     dataFormatter,
     onDataSourceChange,
@@ -189,7 +193,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     }
   }, [dependencies]);
 
-  if (text) {
+  if (text || readonly) {
     const option = filteredList.find(
       (opt: VT) =>
         //@ts-ignore

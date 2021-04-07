@@ -1,11 +1,10 @@
 import request from './baseRequest';
 import { RequestOptionsInit } from 'umi-request';
-import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
 import { UnauthorizedError } from './exception';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { MIConfig } from '../config';
-
+import { getKey } from '../helper';
 export const refreshToken = async () => {
   const FORM_DATA = {
     grant_type: 'refresh_token', // refresh_token for refresh token
@@ -16,7 +15,7 @@ export const refreshToken = async () => {
 
   const requestBody = {
     ...FORM_DATA,
-    refresh_token: localStorage.getItem(LOCAL_STORAGE_KEY.refreshTokenKey),
+    refresh_token: localStorage.getItem(getKey('refreshToken')),
   };
 
   const result = await POST(
@@ -34,7 +33,7 @@ export const refreshToken = async () => {
 };
 
 const getHeaders = () => {
-  const token = localStorage.getItem(LOCAL_STORAGE_KEY.accessTokenKey);
+  const token = localStorage.getItem(getKey('accessToken'));
 
   return {
     authorization: `Bearer ${token}`,
@@ -43,9 +42,7 @@ const getHeaders = () => {
 };
 
 const doRefreshTokenFirst = async () => {
-  const refreshAccessToken = localStorage.getItem(
-    LOCAL_STORAGE_KEY.refreshTokenKey,
-  );
+  const refreshAccessToken = getKey('refreshToken');
   if (!refreshAccessToken) return false;
 
   const result = await refreshToken();

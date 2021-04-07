@@ -37,6 +37,12 @@ const _confg: MedisysConfigProps = {
     role: '/api/role',
     tenant: '/api/tenant',
   },
+  keys: {
+    accessTokenKey: '_t',
+    refreshTokenKey: '_r',
+    userAccessRightsKey: '_ar',
+    lastActiveTime: '_lat',
+  },
   dataLoader: undefined,
 };
 

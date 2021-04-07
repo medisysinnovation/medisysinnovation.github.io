@@ -1,16 +1,15 @@
-import LOCAL_STORAGE_KEY from '../constant/localStorageKey';
 import SaveTokenPayload from '../interface/misc/SaveTokenPayload';
-
+import { getKey } from '../helper';
 export const saveAuthToken = (payload: SaveTokenPayload) => {
   const { access_token: accessToken, refresh_token: refreshToken } = payload;
-  localStorage.setItem(LOCAL_STORAGE_KEY.accessTokenKey, accessToken);
-  localStorage.setItem(LOCAL_STORAGE_KEY.refreshTokenKey, refreshToken);
+  localStorage.setItem(getKey('accessToken'), accessToken);
+  localStorage.setItem(getKey('refreshToken'), refreshToken);
 };
 
 export const removeAuthToken = () => {
   // clear token
-  localStorage.removeItem(LOCAL_STORAGE_KEY.accessTokenKey);
-  localStorage.removeItem(LOCAL_STORAGE_KEY.refreshTokenKey);
+  localStorage.removeItem(getKey('accessToken'));
+  localStorage.removeItem(getKey('refreshToken'));
 };
 
 export const setWithExpiry = (key: string, value: any, ttl: number) => {
