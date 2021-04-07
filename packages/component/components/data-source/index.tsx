@@ -123,17 +123,17 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 
   // useWhyDidYouUpdate('Data Source', { ...props });
 
-  const [formSearch, setFormSearch] = useMountMergeState<Record<string, any> | undefined>(() => {
-    // 如果手动模式，或者 search 不存在的时候设置为 undefined
-    // undefined 就不会触发首次加载
-    if (manualRequest) {
-      return undefined;
-    }
-    return {};
-  });
+  // const [formSearch, setFormSearch] = useMountMergeState<Record<string, any> | undefined>(() => {
+  //   // 如果手动模式，或者 search 不存在的时候设置为 undefined
+  //   // undefined 就不会触发首次加载
+  //   if (manualRequest) {
+  //     return undefined;
+  //   }
+  //   return {};
+  // });
 
-  const [proFilter, setProFilter] = useMountMergeState<Record<string, React.ReactText[]>>({});
-  const [proSort, setProSort] = useMountMergeState<Record<string, SortOrder>>({});
+  // const [proFilter, setProFilter] = useMountMergeState<Record<string, React.ReactText[]>>({});
+  // const [proSort, setProSort] = useMountMergeState<Record<string, SortOrder>>({});
 
   const fetchData = useMemo(() => {
     if (!request) return undefined;
@@ -147,7 +147,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
       const response = await request((actionParams as unknown) as ParamsType, proSort, proFilter);
       return response as RequestData<VT>;
     };
-  }, [formSearch, params, proFilter, proSort, request]);
+  }, [params,request]);// formSearch, proFilter, proSort, 
 
 
   useEffect(() => {
