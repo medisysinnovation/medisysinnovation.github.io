@@ -32,7 +32,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   filterRule?: CodeTableSourceFilterRule | CodeTableSourceFilterRule.Contains;
   onChange?: (value: VT, option: object) => void;
   onDataSourceChange?: (array: VT[]) => void;
-  dataFormatter?: (array: VT[]) => VT[];
+  remoteDataFormatter?: (source: any) => VT[];
   children?: React.ReactNode;
     /** @name 是否手动触发请求 */
     manualRequest?: boolean;
@@ -54,9 +54,9 @@ export interface MIDataSourceChildrenProps<VT> {
   dataSource: VT[];
 }
 
-const loadRemoteData = async ({ url, request, code, dataFormatter }: any) => {
+const loadRemoteData = async ({ url, request, code, remoteDataFormatter }: any) => {
   const result =request? await request() : await GET(url, { pageSize: 9999 });
-  const data = dataFormatter ? dataFormatter(result) : result?.data;
+  const data = remoteDataFormatter ? remoteDataFormatter(result) : result?.data;
   if (code) {
     MIConfig.updateState({
       dataSource: {
@@ -95,7 +95,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     text,
     readonly,
     onChange,
-    dataFormatter,
+    remoteDataFormatter,
     onDataSourceChange,
     filterOption,
     dependencies = defaultDependencies,
@@ -110,7 +110,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
   const prevDependency = usePrevious(dependencies) || defaultDependencies;
   const setRawData = (newData: VT[]) => {
-    const d = dataFormatter ? dataFormatter(newData) : newData;
+    const d = newData;
     if (onDataSourceChange) onDataSourceChange(d);
     setList(d);
   };
@@ -199,7 +199,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
           url,
           request:fetchData,
           code,
-          dataFormatter,
+          remoteDataFormatter,
         }).then((data: any) => {
           setDataSourceLoading(false);
 
