@@ -63,6 +63,10 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+interface T2 {
+  id: string;
+  name: string;
+}
 const DataSelectDemo = () => {
   const [v, setV] = useState(0);
   const myRef = React.useRef();
@@ -83,6 +87,39 @@ const DataSelectDemo = () => {
   console.log(currentRole, currentUser);
   return (
     <>
+      <Select
+        placeholder="Test"
+        code="abc"
+        request={async (
+          // 第一个参数 params 查询表单和 params 参数的结合
+          // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
+          params: {
+            pageSize: number;
+            current: number;
+          },
+          sort,
+          filter,
+        ) => {
+          return new Promise(resolve => {
+            resolve({
+              data: [{ id: 1, name: 123 }],
+
+              success: true,
+              total: 123,
+            });
+          });
+        }}
+        // onChange={(v: number, opt) => {
+        //   setCurrentRole(v);
+        //   setCurrentUser(undefined);
+
+        //   console.log(v, opt);
+        // }}
+        // onDataSourceChange={arr => {
+        //   console.log(arr);
+        // }}
+        // value={currentRole}
+      />
       <Select
         placeholder="Role"
         code="roles"
