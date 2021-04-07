@@ -132,8 +132,8 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   //   return {};
   // });
 
-  const [proFilter, setProFilter] = useMountMergeState<Record<string, React.ReactText[]>>({});
-  const [proSort, setProSort] = useMountMergeState<Record<string, SortOrder>>({});
+  const [proFilter] = useMountMergeState<Record<string, React.ReactText[]>>({});
+  const [proSort] = useMountMergeState<Record<string, SortOrder>>({});
 
   const fetchData = useMemo(() => {
     if (!request) return undefined;
