@@ -28,6 +28,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   filterRule?: CodeTableSourceFilterRule | CodeTableSourceFilterRule.Contains;
   onChange?: (value: VT, option: object) => void;
   onDataSourceChange?: (array: VT[]) => void;
+  dataFormatter?: (array: VT[]) => VT[];
   children?: React.ReactNode;
 }
 
@@ -36,6 +37,29 @@ export interface MIDataSourceChildrenProps<VT> {
   displayField: string;
   dataSource: VT[];
 }
+
+const loadDataFromURL = async ({ url, code, dataFormatter }: any) => {
+  const result = await GET(url, { pageSize: 9999 });
+  const data = dataFormatter ? dataFormatter(result) : result?.data;
+  if (code) {
+    MIConfig.updateState({
+      dataSource: {
+        [code]: data ?? [],
+      },
+    });
+    delete codeLoading[code];
+  }
+
+  return new Promise((resolve, reject) => {
+    if (data) {
+      resolve(data);
+    } else {
+      reject({
+        message: 'not able to retrieve data',
+      });
+    }
+  });
+};
 
 const codeLoading: { [key: string]: boolean } = {};
 const defaultDependencies: any[] = [];
@@ -54,6 +78,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     url,
     text,
     onChange,
+    dataFormatter,
     onDataSourceChange,
     filterOption,
     dependencies = defaultDependencies,
@@ -65,8 +90,9 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
   const prevDependency = usePrevious(dependencies) || defaultDependencies;
   const setRawData = (newData: VT[]) => {
-    if (onDataSourceChange) onDataSourceChange(newData);
-    setList(newData);
+    const d = dataFormatter ? dataFormatter(newData) : newData;
+    if (onDataSourceChange) onDataSourceChange(d);
+    setList(d);
   };
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
     //console.log(2, e.detail);
@@ -122,21 +148,14 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
           codeLoading[code] = true;
         }
 
-        GET(url, { pageSize: 9999 }).then((result: any) => {
-          const data = result?.data;
-          if (code) {
-            delete codeLoading[code];
-            MIConfig.updateState({
-              dataSource: {
-                [code]: data ?? [],
-              },
-            });
-          } else {
-            setDataSourceLoading(false);
-            //console.log(6, data);
+        loadDataFromURL({
+          url,
+          code,
+          dataFormatter,
+        }).then((data: any) => {
+          setDataSourceLoading(false);
 
-            setRawData(data);
-          }
+          setRawData(data);
         });
       }
     }
