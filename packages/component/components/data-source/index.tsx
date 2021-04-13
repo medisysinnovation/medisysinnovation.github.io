@@ -43,7 +43,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
     keyword?: string;
 }, sort: Record<string, SortOrder>, filter: Record<string, React.ReactText[]>) => Promise<Partial<RequestData<VT>>>;
 
-  //deprecated
+  /* deprecated */
   text?: boolean;
   url?: string;
 }

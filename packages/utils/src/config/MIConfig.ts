@@ -26,7 +26,7 @@ let localStore: StateProps = {
 const _me = {
   imt_current: immutable.fromJS(localStore),
 };
-const _confg: MedisysConfigProps = {
+const _config: MedisysConfigProps = {
   cache: false,
   urls: {
     login: '/connect/token',
@@ -38,28 +38,32 @@ const _confg: MedisysConfigProps = {
     tenant: '/api/tenant',
   },
   keys: {
-    accessTokenKey: '_t',
-    refreshTokenKey: '_r',
-    userAccessRightsKey: '_ar',
+    accessToken: '_t',
+    refreshToken: '_r',
+    userAccessRights: '_ar',
     lastActiveTime: '_lat',
   },
   dataLoader: undefined,
 };
 
 class MIConfig {
-  static setConfig({ dataLoader, urls, cache }: MedisysConfigProps) {
+  static setConfig({ dataLoader, urls, cache, keys }: MedisysConfigProps) {
     //@ts-ignore
-    if (dataLoader) _confg.dataLoader = dataLoader;
+    if (dataLoader) _config.dataLoader = dataLoader;
 
     if (urls) {
-      _confg.urls = { ..._confg.urls, ...urls };
+      _config.urls = { ..._config.urls, ...urls };
     }
 
-    _confg.cache = cache ?? true;
+    _config.cache = cache ?? true;
+    _config.keys = {
+      ..._config.keys,
+      ...keys,
+    };
   }
 
   static getConfig(key: string) {
-    return _confg[key];
+    return _config[key];
   }
 
   static initialization() {
@@ -97,8 +101,8 @@ class MIConfig {
   }
 
   static async loadData(code: string, params?: any) {
-    // console.log(code, _confg.dataLoader);
-    if (!_confg.dataLoader) {
+    // console.log(code, _config.dataLoader);
+    if (!_config.dataLoader) {
       throw 'No default loader configed, please use `config` function set default dataLoader';
     }
 
@@ -107,7 +111,7 @@ class MIConfig {
     }
     loadingStates[code] = true;
     //@ts-ignore
-    const data = await _confg.dataLoader({ code, ...params });
+    const data = await _config.dataLoader({ code, ...params });
     delete loadingStates[code];
     if (data) {
       this.updateState({
@@ -168,7 +172,7 @@ class MIConfig {
 
     _me.imt_current = immutable.merge(_me.imt_current, imt_data);
     // console.log(imt_current.toJS());
-    if (_confg.cache && dataSourceChanged) {
+    if (_config.cache && dataSourceChanged) {
       // console.log('set', imt_current.get('dataSource').toJS());
       sessionStorage.setItem(
         'mi_ds',
