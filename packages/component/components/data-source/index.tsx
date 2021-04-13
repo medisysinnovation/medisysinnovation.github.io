@@ -114,6 +114,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     if (onDataSourceChange) onDataSourceChange(d);
     setList(d);
   };
+  //@ts-ignore
   useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
     //console.log(2, e.detail);
 

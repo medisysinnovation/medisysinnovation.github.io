@@ -49,12 +49,14 @@ const MIModal: React.FC<MIModalProps> = ({
   //     //@ts-ignore
   //     onCancel(e);
   // };
+  //@ts-ignore
   useEventListener('discardform', (e: FormEvent) => {
     if (onCancel && isVisible(ref?.current)) {
       //@ts-ignore
       onCancel(e);
     }
   });
+  //@ts-ignore
   useEventListener('loadingstatechanged', (e: FormEvent) => {
     if (model && isVisible(ref?.current)) {
       const models = e.detail?.models ?? {};
