@@ -95,7 +95,6 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     text,
     readonly,
     onChange,
-    remoteDataFormatter,
     onDataSourceChange,
     filterOption,
     dependencies = defaultDependencies,
@@ -104,6 +103,8 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     params = {},
     ...restProps
   } = props;
+  const {remoteDataFormatter,...otherProps}=props
+
   const [list, setList] = useState<VT[]>([]);
   const [filteredList, setFilteredList] = useState<VT[]>([]);
   //console.log(restProps);
@@ -275,7 +276,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   //   isReact.element(children),
   // );
   const sharedProps = {
-    ...props,
+    ...otherProps,
     loading: dataSourceLoading,
     filterOption: handleFilter,
     onChange: handleOnChange,
