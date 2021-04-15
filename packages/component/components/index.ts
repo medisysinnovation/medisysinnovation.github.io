@@ -8,7 +8,7 @@ export { default as Select } from './select';
 export { default as Button } from './button';
 export { default as Input } from './input';
 export { default as List } from './list';
-
+export { default as DataSource } from './data-source';
 export { JobCounter } from './job-counter';
 
 export { JobStatusTag } from './job-status-tag';
