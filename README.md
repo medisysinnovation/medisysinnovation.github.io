@@ -1,5 +1,10 @@
 # medisys
 
+This project currently still under development, for internal use only
+
+Online document 
+https://medisysinnovation.github.io/medisys/components
+
 ## Getting Started
 
 Install dependencies,
