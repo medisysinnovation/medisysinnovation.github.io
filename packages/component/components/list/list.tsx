@@ -14,8 +14,8 @@ function MIList<
   return (
     <DataSource {...(restProps as MIDataSourceProps<VT>)}>
       {({
-        valueField = 'id',
-        displayField = 'text',
+        valueField = 'value',
+        displayField = 'label',
         filter,
         ...payload
       }: MIDataSourceProps<VT>) => {

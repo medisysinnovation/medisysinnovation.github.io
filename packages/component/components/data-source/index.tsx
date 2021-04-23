@@ -84,8 +84,8 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
 ) => {
   const {
     code,
-    valueField = 'id',
-    displayField = 'text',
+    valueField = 'value',
+    displayField = 'label',
     children,
     dataSource,
     dataSourceLoader,

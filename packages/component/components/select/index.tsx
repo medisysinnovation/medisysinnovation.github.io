@@ -18,8 +18,8 @@ const MIDataSelect = <
     <DataSource {...(restProps as MIDataSourceProps<VT>)}>
       {({
         dataSource = [],
-        valueField = 'id',
-        displayField = 'text',
+        valueField = 'value',
+        displayField = 'label',
         filter,
         ...payload
       }: MIDataSourceProps<VT>) => {
