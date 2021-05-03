@@ -244,7 +244,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     const option = filteredList.find(
       (opt: VT) =>
         //@ts-ignore
-        opt[valueField || 'id'] === restProps.value,
+        opt[valueField] === restProps.value,
     );
     //@ts-ignore
     if (option) return <span>{option[displayField]}</span>;
@@ -266,15 +266,6 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     //console.log(opt, onChange);
     onChange && onChange(value, { ...option, data: opt });
   };
-  // //console.log(list);
-  // if(typeof children === function)
-  // if(typeof children =)
-  // //console.log(
-  //   isReact.component(children),
-  //   typeof children,
-  //   children,
-  //   isReact.element(children),
-  // );
   const sharedProps = {
     ...otherProps,
     loading: dataSourceLoading,

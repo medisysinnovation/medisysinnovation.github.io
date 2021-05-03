@@ -3,7 +3,7 @@ import { Input, InputProps } from 'antd';
 
 export interface MIInputProps extends InputProps {
   trim?: boolean;
-  text?: boolean;
+  readonly?: boolean;
   // code?: string;
   // url?: string;
   // text?: boolean;
@@ -12,6 +12,9 @@ export interface MIInputProps extends InputProps {
   // dataSource?: object[];
   // dataSourceLoader?: (code: string, params?: any) => Promise<object[]>;
   // filter?: (options: object[]) => object[];
+
+  /* deprecated */
+  text?: boolean;
 }
 
 export interface _RefInputProps {
@@ -26,7 +29,13 @@ const MIInput: React.ForwardRefRenderFunction<
   RefInputProps | undefined,
   MIInputProps
 > = (props, ref) => {
-  const { trim = true, text = false, onBlur, ...restProps } = props;
+  const {
+    trim = true,
+    text = false,
+    readonly = false,
+    onBlur,
+    ...restProps
+  } = props;
 
   const myRef = React.useRef<RefInputProps>();
   React.useImperativeHandle(ref, () => {
@@ -44,7 +53,7 @@ const MIInput: React.ForwardRefRenderFunction<
     // console.log(myRef);
   }, []);
 
-  if (text) return <span>{restProps.value || ''}</span>;
+  if (text || readonly) return <span>{restProps.value || ''}</span>;
 
   return (
     <Input

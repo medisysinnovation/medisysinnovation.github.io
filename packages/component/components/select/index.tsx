@@ -33,11 +33,13 @@ const MIDataSelect = <
           >
             {children
               ? children
-              : dataSource.map((o: VT & { [index: string]: string }) => (
-                  <Option key={o[valueField]} value={o[valueField]}>
-                    {o[displayField]}
-                  </Option>
-                ))}
+              : dataSource.map((o: VT & { [index: string]: string }) => {
+                  return (
+                    <Option key={o[valueField]} value={o[valueField]}>
+                      {o[displayField]}
+                    </Option>
+                  );
+                })}
           </Select>
         );
       }}

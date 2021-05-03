@@ -89,8 +89,6 @@ class MIConfig {
   }
 
   static getData(code: string) {
-    console.log(code);
-
     if (!code) throw 'Must pass in `code`';
     const existingData = immutable.getIn(
       _me.imt_current,
