@@ -23,6 +23,7 @@ const MIDataSelect = <
         filter,
         ...payload
       }: MIDataSourceProps<VT>) => {
+        console.log(payload);
         return (
           <Select
             ref={ref}

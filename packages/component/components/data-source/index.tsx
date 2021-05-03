@@ -23,6 +23,7 @@ export declare type FilterFunc<OptionType> = (
 export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   code?: string;
   readonly?: boolean;
+  spliter?:string;
   valueField?: string;
   displayField?: string;
   dependencies?: any[];
@@ -94,6 +95,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     url,
     text,
     readonly,
+    spliter=', ',
     onChange,
     onDataSourceChange,
     filterOption,
@@ -241,13 +243,13 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
   }, [dependencies]);
 
   if (text || readonly) {
-    const option = filteredList.find(
+    const options = filteredList.filter(
       (opt: VT) =>
         //@ts-ignore
-        opt[valueField] === restProps.value,
+        opt[valueField] === restProps.value || restProps.value.includes( opt[valueField] ),
     );
     //@ts-ignore
-    if (option) return <span>{option[displayField]}</span>;
+    if (options.length>0) return <span>{options.map(o=>o[displayField]).join(spliter) }</span>;
     return null;
   }
   const handleFilter = useMemo(() => {

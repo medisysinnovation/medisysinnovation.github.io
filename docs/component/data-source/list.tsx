@@ -37,7 +37,7 @@ const DataSelectDemo = () => {
           bordered
           renderItem={item => (
             <List.Item>
-              {item.id}/{item.text}
+              {item.value}/{item.label}
             </List.Item>
           )}
         />

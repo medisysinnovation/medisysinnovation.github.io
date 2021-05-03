@@ -11,7 +11,7 @@ const codeLoading = {};
 MIConfig.setConfig({
   cache: false,
   dataLoader: async ({ code }) => {
-    console.log(code);
+    // console.log(code);
 
     if (codeLoading[code]) {
       return;
@@ -45,18 +45,18 @@ MIConfig.setConfig({
 
 const test_data = {
   users: [
-    { id: 1, text: 'U_ABC', roleId: 1 },
-    { id: 2, text: 'U_CDE', roleId: 1 },
-    { id: 3, text: 'U_FGH', roleId: 1 },
-    { id: 4, text: 'U_EDS', roleId: 1 },
-    { id: 5, text: 'U_ANI', roleId: 1 },
-    { id: 6, text: 'U_LIT', roleId: 2 },
-    { id: 7, text: 'U_RVS', roleId: 2 },
-    { id: 8, text: 'U_UIJ', roleId: 2 },
+    { value: 1, label: 'U_ABC', roleId: 1 },
+    { value: 2, label: 'U_CDE', roleId: 1 },
+    { value: 3, label: 'U_FGH', roleId: 1 },
+    { value: 4, label: 'U_EDS', roleId: 1 },
+    { value: 5, label: 'U_ANI', roleId: 1 },
+    { value: 6, label: 'U_LIT', roleId: 2 },
+    { value: 7, label: 'U_RVS', roleId: 2 },
+    { value: 8, label: 'U_UIJ', roleId: 2 },
   ],
   roles: [
-    { id: 1, text: 'R_ABC' },
-    { id: 2, text: 'R_CDE' },
+    { value: 1, label: 'R_ABC' },
+    { value: 2, label: 'R_CDE' },
   ],
 };
 function getRandomInt(max) {
@@ -64,15 +64,15 @@ function getRandomInt(max) {
 }
 
 interface T2 {
-  id: string;
-  name: string;
+  value: string;
+  label: string;
 }
 const DataSelectDemo = () => {
   const [v, setV] = useState(0);
   const myRef = React.useRef();
 
   useEffect(() => {
-    console.log(myRef);
+    // console.log(myRef);
   }, []);
 
   const changeVal = useMemo(() => {
@@ -84,7 +84,6 @@ const DataSelectDemo = () => {
   const [currentRole, setCurrentRole] = useState(1);
   const [currentUser, setCurrentUser] = useState(1);
 
-  console.log(currentRole, currentUser);
   return (
     <>
       <Select
@@ -102,7 +101,7 @@ const DataSelectDemo = () => {
         ) => {
           return new Promise(resolve => {
             resolve({
-              data: [{ id: 1, name: 123 }],
+              data: [{ value: 1, label: 123 }],
 
               success: true,
               total: 123,
@@ -123,6 +122,7 @@ const DataSelectDemo = () => {
       <Select
         placeholder="Role"
         code="roles"
+        mode="multiple"
         onChange={(v: number, opt) => {
           setCurrentRole(v);
           setCurrentUser(undefined);
@@ -132,7 +132,8 @@ const DataSelectDemo = () => {
         onDataSourceChange={arr => {
           console.log(arr);
         }}
-        value={currentRole}
+        readonly
+        value={[1, 2]}
       />
       <Select
         placeholder="User"
@@ -185,7 +186,7 @@ const DataSelectDemo = () => {
           code="roles"
           // filter={r => {
           //   console.log(r);
-          //   return r.id === 7;
+          //   return r.value === 7;
           // }}
           mode="tags"
           value={1}
@@ -212,7 +213,7 @@ const DataSelectDemo = () => {
           // url={'test/weree'}
           // mode="tags"
           // filter={r => {
-          //   return r.id === 7;
+          //   return r.value === 7;
           // }}
           dependencies={[v]}
           value={123}
