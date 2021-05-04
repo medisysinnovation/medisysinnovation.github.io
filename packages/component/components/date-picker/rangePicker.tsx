@@ -21,8 +21,8 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
       value={
         autoTransferTime
           ? (value || []).map((o: any, i: number) => {
-              if (i === 0) return o.startOf('day');
-              return o.endOf('day');
+              if (i === 0) return o?.startOf('day');
+              return o?.endOf('day');
             })
           : value
       }
