@@ -16,7 +16,7 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
   showTime,
   ...props
 }) => {
-  console.log(value, autoTransferTime, showTime);
+  // console.log(value, autoTransferTime, showTime);
   return (
     <DatePicker.RangePicker
       //@ts-ignore
