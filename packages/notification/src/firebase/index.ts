@@ -1,17 +1,14 @@
-import { initializeApp } from 'firebase/app';
-import { getMessaging, onMessage, getToken } from 'firebase/messaging';
-import { FirebaseOptions, FirebaseApp } from '@firebase/app-types';
+import firebase from 'firebase';
+import 'firebase/messaging';
+import { FirebaseOptions } from '@firebase/app-types';
 
-export const initFirebaseConfig = (
-  option: FirebaseOptions,
-): Omit<FirebaseApp, 'delete'> => {
+export const initFirebaseConfig = (option: FirebaseOptions) => {
   console.log('init firebase start');
-  const firebaseApp = initializeApp(option);
-  return firebaseApp;
+  if (!firebase.apps.length) {
+    firebase.initializeApp(option);
+  }
 };
 
-export const getFirebaseMessaging = (app: FirebaseApp) => {
-  return getMessaging(app);
+export const getFirebaseMessaging = () => {
+  return firebase.messaging();
 };
-
-export { onMessage as onFirebaseMessage, getToken as getMessagingToken };

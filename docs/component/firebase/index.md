@@ -8,17 +8,15 @@ group:
 ---
 
 # Messaging
-<code src="../../index.tsx" inline />
 
 <code src="./messaging" title='Receive messaging from firebase pushing' desc='TBD' />
 
 
 
-
-## API
+## Notification Option API
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| triggerDiscard | Enable dirty form check | boolean | true |  |
-| model | Dva model namespace | string |  |  |
+| initFirebaseConfig  | Initialize firebase app | void |  |  |
+| getFirebaseMessaging | get firebase messaging object | firebase messaging object |  |  |
 
