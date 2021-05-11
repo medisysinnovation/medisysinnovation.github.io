@@ -66,6 +66,7 @@ export default defineConfig({
           'component/form',
           'component/data-source',
           'component/modal',
+          'component/firebase',
         ],
       },
     ],
