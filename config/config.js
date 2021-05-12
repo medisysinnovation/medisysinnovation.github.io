@@ -11,8 +11,8 @@ export default defineConfig({
   // hash: true,
   title: 'Medisys Lab',
   mode: 'site',
-  base: '/medisys',
-  publicPath: '/medisys/',
+  base: '/', // use it if deploy to sub site like /medisys
+  publicPath: '/', // use it if deploy to sub site like /medisys
   // exportStatic: {}, // 将所有路由输出为 HTML 目录结构，以免刷新页面时 404
   extraBabelPlugins: [
     [

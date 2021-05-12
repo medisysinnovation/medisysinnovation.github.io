@@ -1,5 +1,5 @@
-importScripts('http://www.gstatic.com/firebasejs/8.5.0/firebase-app.js');
-importScripts('http://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js');
 
 let config = {
   subscribeFCM: true,
