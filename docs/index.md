@@ -20,8 +20,6 @@ hero:
 footer: Open-source MIT Licensed | Copyright © 2020-present<br />Powered by Medisys Innovation Pte Ltd
 ---
 
-<br />
-<code src="./index.tsx" inline />
 ## Getting Started
 
 ```bash

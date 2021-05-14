@@ -104,6 +104,7 @@ const _MIForm: ForwardRefRenderFunction<
     if (!shouldWarn || !wrapForm?.isFieldsTouched()) return true;
     // To show a native browser "Unsaved changes prompt"
 
+    if (!discardCheck) return true;
     // Cancel the event as stated by the standard.
     event.preventDefault();
     // Older browsers supported custom message

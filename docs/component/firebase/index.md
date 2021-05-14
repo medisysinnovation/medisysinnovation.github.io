@@ -18,5 +18,5 @@ group:
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
 | initFirebaseConfig  | Initialize firebase app | void |  |  |
-| getFirebaseMessaging | get firebase messaging object | firebase messaging object |  |  |
+| initFirebaseMessaging | get firebase messaging object | firebase messaging object |  |  |
 
