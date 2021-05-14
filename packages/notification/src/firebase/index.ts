@@ -268,7 +268,7 @@ export const sendMessageAsync = async ({
       (response.responseJSON.error.code === 401 ||
         (Array.isArray(response.responseJSON.error.details) &&
           response.responseJSON.error.details.find(
-            o => o.errorCode === 'UNAUTHENTICATED',
+            (o: any) => o.errorCode === 'UNAUTHENTICATED',
           ))) // UNREGISTERED
     ) {
       throw new Error('401: Invalid sender token, get new token and retry');
