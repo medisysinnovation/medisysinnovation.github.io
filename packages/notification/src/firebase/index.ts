@@ -13,26 +13,30 @@ export const initFirebaseConfig = (option: FirebaseOptions) => {
   }
 };
 
-export type ReceivedMessagePayload = {};
+export type ReceivedMessagePayload = {
+  data?: MessageData;
+  priority?: 'low' | 'normal' | 'high';
+  from: string;
+};
 
 export type FirebaseConfig = FirebaseOptions & {
   vapidKey?: string;
   serverKey?: string;
-  onGetFirebaseConfig?: () => FirebaseConfig;
+  onGetFirebaseConfigAsync?: () => Promise<FirebaseConfig>;
   onMessageReceived?: (payload: ReceivedMessagePayload) => void;
-  onGetSenderToken?: () => string;
+  onGetSenderTokenAsync?: () => Promise<string>;
   onTokenReceived?: (token: string) => boolean;
 };
 
 export const initFirebaseMessagingAsync = async ({
   onTokenReceived,
-  onGetSenderToken = () => '',
+  onGetSenderTokenAsync,
   onMessageReceived = () => {},
-  onGetFirebaseConfig,
+  onGetFirebaseConfigAsync,
   ...config
 }: FirebaseConfig) => {
-  if (onGetFirebaseConfig) {
-    fcmConfig = await onGetFirebaseConfig!();
+  if (onGetFirebaseConfigAsync) {
+    fcmConfig = await onGetFirebaseConfigAsync!();
     const { vapidKey, serverKey, ...otherConfig } = fcmConfig;
 
     initFirebaseConfig({
@@ -48,7 +52,6 @@ export const initFirebaseMessagingAsync = async ({
     const currentToken = await messaging.getToken({
       vapidKey: config.vapidKey || fcmConfig!.vapidKey,
     });
-    console.log(currentToken);
     if (currentToken) {
       let proceed = true;
       if (onTokenReceived) {
@@ -82,9 +85,11 @@ export const initFirebaseMessagingAsync = async ({
           }
         }
       });
-      const _senderToken = await onGetSenderToken();
-      if (_senderToken) {
-        fcmSendMessageToken = _senderToken;
+      if (onGetSenderTokenAsync) {
+        const _senderToken = await onGetSenderTokenAsync();
+        if (_senderToken) {
+          fcmSendMessageToken = _senderToken;
+        }
       }
     } else {
       throw new Error(
@@ -103,7 +108,7 @@ export const subscribeTopicAsync = async ({
 }: {
   token: string;
   topic: string;
-  serverKey: string;
+  serverKey?: string;
 }) => {
   //Subscribe topic
   const r = await request.post(
@@ -161,24 +166,24 @@ export type WebPushNotificationAction = {
 };
 
 export type WebPushNotification = {
-  tag: string;
-  silent: boolean;
-  renotify: boolean;
-  requireInteraction: boolean;
-  actions: WebPushNotificationAction[];
+  title?: string;
+  body?: string;
+  tag?: string;
+  silent?: boolean;
+  renotify?: boolean;
+  requireInteraction?: boolean;
+  actions?: WebPushNotificationAction[];
 };
 
 export type MessageData = Record<string, any> & {
   notification?: WebPushNotification;
 };
 
-export type MessagePayload = {
+export type MessagePayload = ReceivedMessagePayload & {
   identity: { topic: string } | { token: string };
   title: string;
   projectId?: string;
   senderToken: string;
-  data?: MessageData;
-  priority?: 'low' | 'normal' | 'high';
   messagePayload: any;
 };
 

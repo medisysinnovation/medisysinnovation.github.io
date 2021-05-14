@@ -130,7 +130,7 @@ const MessagingDemo = () => {
           });
         }}
       >
-        <Form.Item name="receiveMessage" rules={[{ required: true }]}>
+        <Form.Item name="topic" rules={[{ required: true }]}>
           <Input placeholder="Input topic here" />
         </Form.Item>
         <Form.Item name="receiveMessage">
