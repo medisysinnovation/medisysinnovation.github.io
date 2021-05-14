@@ -17,7 +17,6 @@ import {
 } from '@medisys/notification';
 
 import { useBoolean } from 'ahooks';
-const topic = 'TEST_TOPIC_1';
 
 const MessagingDemo = () => {
   const [state, { toggle, setTrue, setFalse }] = useBoolean(false);
@@ -25,10 +24,12 @@ const MessagingDemo = () => {
     state2,
     { toggle: toggle2, setTrue: setTrue2, setFalse: setFalse2 },
   ] = useBoolean(false);
+  const [form] = Form.useForm();
 
   const [registrationToken, setRegistrationToken] = useState('');
   const subscribeTopic = useCallback(
     token => {
+      const topic = form.getFieldValue('topic');
       subscribeTopicAsync({
         token: typeof token === 'string' ? token : registrationToken,
         topic,
@@ -41,10 +42,12 @@ const MessagingDemo = () => {
           console.log(error);
         });
     },
-    [registrationToken],
+    [registrationToken, form],
   );
   const unsubscribeTopic = useCallback(
     e => {
+      const topic = form.getFieldValue('topic');
+
       console.log(e);
       unsubscribeTopicAsync({
         token: registrationToken,
@@ -58,7 +61,7 @@ const MessagingDemo = () => {
           console.log(error);
         });
     },
-    [registrationToken],
+    [registrationToken, form],
   );
   useEffect(() => {
     initFirebaseMessagingAsync({
@@ -99,8 +102,6 @@ const MessagingDemo = () => {
     });
   }, []);
 
-  const [form] = Form.useForm();
-
   return (
     <>
       <div>{state && 'Firebase Messaging active'}</div>
@@ -109,9 +110,12 @@ const MessagingDemo = () => {
       <Form
         form={form}
         discardCheck={false}
+        initialValues={{
+          topic: 'MyTestTopic',
+        }}
         onFinish={values => {
           sendMessageAsync({
-            identity: { topic },
+            identity: { topic: form.getFieldValue('topic') },
             title: 'A message from Medisys Lab',
             data: {
               content: values.messageBody,
@@ -126,6 +130,9 @@ const MessagingDemo = () => {
           });
         }}
       >
+        <Form.Item name="receiveMessage" rules={[{ required: true }]}>
+          <Input placeholder="Input topic here" />
+        </Form.Item>
         <Form.Item name="receiveMessage">
           <Input.TextArea
             readOnly
