@@ -183,8 +183,8 @@ export type MessagePayload = ReceivedMessagePayload & {
   identity: { topic: string } | { token: string };
   title: string;
   projectId?: string;
-  senderToken: string;
-  messagePayload: any;
+  senderToken?: string;
+  messagePayload?: any;
 };
 
 export const sendMessageAsync = async ({
