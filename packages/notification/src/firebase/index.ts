@@ -1,5 +1,4 @@
 import app from 'firebase/app';
-import 'firebase/messaging';
 import { FirebaseOptions } from '@firebase/app-types';
 import request from 'umi-request';
 //Firebase messaging restful api
@@ -47,7 +46,7 @@ export const initFirebaseMessagingAsync = async ({
     initFirebaseConfig(config);
   }
 
-  const messaging = firebase.messaging();
+  const messaging = app.messaging();
   try {
     const currentToken = await messaging.getToken({
       vapidKey: config.vapidKey || fcmConfig!.vapidKey,
