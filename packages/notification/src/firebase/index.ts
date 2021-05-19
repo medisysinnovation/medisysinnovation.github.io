@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from 'firebase';
 import 'firebase/messaging';
 import { FirebaseOptions } from '@firebase/app-types';
 import request from 'umi-request';
