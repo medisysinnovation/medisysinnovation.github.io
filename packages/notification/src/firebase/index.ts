@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import app from 'firebase/app';
 import 'firebase/messaging';
 import { FirebaseOptions } from '@firebase/app-types';
 import request from 'umi-request';
@@ -8,8 +8,8 @@ import request from 'umi-request';
 let fcmConfig: FirebaseConfig | undefined = undefined;
 let fcmSendMessageToken = '';
 export const initFirebaseConfig = (option: FirebaseOptions) => {
-  if (!firebase.apps.length) {
-    firebase.initializeApp(option);
+  if (!app.apps.length) {
+    app.initializeApp(option);
   }
 };
 
