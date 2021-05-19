@@ -246,7 +246,7 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
     const options = filteredList.filter(
       (opt: VT) =>
         //@ts-ignore
-        opt[valueField] === restProps.value || restProps.value.includes( opt[valueField] ),
+        opt[valueField] === restProps.value || restProps.value.includes!( opt[valueField] ),
     );
     //@ts-ignore
     if (options.length>0) return <span>{options.map(o=>o[displayField]).join(spliter) }</span>;
