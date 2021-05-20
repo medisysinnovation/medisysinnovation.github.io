@@ -161,7 +161,11 @@ const _MIForm: ForwardRefRenderFunction<
               // }
               return (
                 <>
-                  <Prompt message={debouncedDirtyCheck} when={isTouched} />
+                  <Prompt
+                    //@ts-ignore
+                    message={debouncedDirtyCheck}
+                    when={isTouched}
+                  />
                 </>
               );
             }}
