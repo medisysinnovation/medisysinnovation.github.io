@@ -82,7 +82,7 @@ const _MIForm: ForwardRefRenderFunction<
   const { run: debouncedDirtyCheck } = useDebounceFn(
     p => {
       //@ts-ignore
-      onDirtyCheck(p);
+      return onDirtyCheck(p);
     },
     {
       wait: 1000,
