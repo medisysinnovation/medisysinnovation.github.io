@@ -11,6 +11,11 @@ export { default as DatePicker } from './date-picker';
 
 export { default as List } from './list';
 export { default as DataSource } from './data-source';
+
+export { default as ProForm } from './pro-form';
+
+export { default as ProSelect } from './pro-select';
+
 export { JobCounter } from './job-counter';
 
 export { JobStatusTag } from './job-status-tag';

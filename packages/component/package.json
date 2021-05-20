@@ -39,6 +39,7 @@
     "test:bak": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
+    "@ant-design/pro-form": "^1.24.0",
     "@ant-design/pro-table": "^2.33.0",
     "@medisys/utils": "^0.1.141",
     "ahooks": "^2.9.4",

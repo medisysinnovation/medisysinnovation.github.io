@@ -5,7 +5,7 @@ import React, {
   ForwardRefRenderFunction,
 } from 'react';
 import { Form, Modal } from 'antd';
-import { useEventListener } from 'ahooks';
+import { useEventListener, useDebounceFn } from 'ahooks';
 import { Prompt, PromptProps } from 'react-router-dom';
 import { useHistory, BrowserRouter as Router } from 'react-router-dom';
 import useForm from './useForm';
@@ -79,6 +79,18 @@ const _MIForm: ForwardRefRenderFunction<
     },
   } = restProps;
 
+  const { run: debouncedDirtyCheck } = useDebounceFn(
+    p => {
+      //@ts-ignore
+      onDirtyCheck(p);
+    },
+    {
+      wait: 1000,
+      leading: true,
+      trailing: false,
+    },
+  );
+
   // useWhyDidYouUpdate('useWhyDidYouUpdateComponent', { ...restProps });
   const discardForm = () => {
     setShowConfirm(false);
@@ -149,7 +161,7 @@ const _MIForm: ForwardRefRenderFunction<
               // }
               return (
                 <>
-                  <Prompt message={onDirtyCheck} when={isTouched} />
+                  <Prompt message={debouncedDirtyCheck} when={isTouched} />
                 </>
               );
             }}

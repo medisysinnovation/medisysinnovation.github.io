@@ -1,7 +1,14 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Form, Button, Modal, Select } from '@medisys/component';
+import {
+  Form,
+  Button,
+  Modal,
+  Select,
+  ProSelect,
+  ProForm,
+} from '@medisys/component';
 import { MIConfig, sleep } from '@medisys/utils';
 // console.dir(ConfigProvider);
 // console.dir(ConfigProvider.ConfigContext.Consumer);
@@ -70,9 +77,21 @@ interface T2 {
 const DataSelectDemo = () => {
   const [v, setV] = useState(0);
   const myRef = React.useRef();
-
+  const [ds, setDs] = useState([]);
   useEffect(() => {
     // console.log(myRef);
+    setTimeout(() => {
+      setDs([
+        { value: 1, label: 'U_ABC', roleId: 1 },
+        { value: 2, label: 'U_CDE', roleId: 1 },
+        { value: 3, label: 'U_FGH', roleId: 1 },
+        { value: 4, label: 'U_EDS', roleId: 1 },
+        { value: 5, label: 'U_ANI', roleId: 1 },
+        { value: 6, label: 'U_LIT', roleId: 2 },
+        { value: 7, label: 'U_RVS', roleId: 2 },
+        { value: 8, label: 'U_UIJ', roleId: 2 },
+      ]);
+    }, 4000);
   }, []);
 
   const changeVal = useMemo(() => {
@@ -151,6 +170,35 @@ const DataSelectDemo = () => {
         value={currentUser}
         dependencies={[currentRole]}
       />
+      <Select
+        placeholder="User"
+        dataSource={ds}
+        onChange={(v: number, opt) => {
+          console.log(v, opt);
+
+          setCurrentUser(v);
+          setCurrentRole(opt.data.roleId);
+        }}
+        value={currentUser}
+        dependencies={[currentRole]}
+      />
+      <ProForm initialValues={{ testuser: 1 }}>
+        <ProSelect
+          placeholder="User"
+          dataSource={ds}
+          name="testuser"
+          onChange={(v: number, opt) => {
+            console.log(v, opt);
+
+            setCurrentUser(v);
+            setCurrentRole(opt.data.roleId);
+          }}
+          value={currentUser}
+          valueField="value"
+          displayField="label"
+        />
+      </ProForm>
+
       {/* <div>
         <Button
           onClick={() => {
