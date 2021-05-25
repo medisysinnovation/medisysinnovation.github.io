@@ -5,7 +5,6 @@ import { stringify } from 'qs';
 import { MIConfig } from '../config';
 import { getKey } from '../helper';
 
-const request = MIConfig.getRequest();
 export const refreshToken = async () => {
   const FORM_DATA = {
     grant_type: 'refresh_token', // refresh_token for refresh token
@@ -75,7 +74,7 @@ export const GET = async (
 
   const streamTypeList = ['arrayBuffer', 'blob'];
   try {
-    const result = await request.get(url, options);
+    const result = await MIConfig.getRequest().get(url, options);
     if (
       overrideOptions.responseType &&
       streamTypeList.indexOf(overrideOptions.responseType) > -1
@@ -125,7 +124,7 @@ export const POST = async (
     ...overrideOptions,
   };
   try {
-    const result = await request.post(url, options);
+    const result = await MIConfig.getRequest().post(url, options);
     const streamTypeList = ['arrayBuffer', 'blob'];
     if (
       overrideOptions.responseType &&
@@ -145,7 +144,7 @@ export const POST = async (
       if (isTokenRefresh) {
         return await POST(url, payload, overrideOptions);
         /* call getHeaders() again to use latest access token */
-        //   const result = await request.post(url, {
+        //   const result = await MIConfig.getRequest().post(url, {
         //     ...options,
         //     headers: getHeaders(),
         //   });
@@ -172,7 +171,7 @@ export const PUT = async (
     headers: getHeaders(),
   };
   try {
-    const result = await request.put(url, options);
+    const result = await MIConfig.getRequest().put(url, options);
     if (result?.status === 0) {
       return result.data;
     }
@@ -184,7 +183,7 @@ export const PUT = async (
       if (isTokenRefresh) {
         return await PUT(url, payload, overrideOptions);
         /* call getHeaders() again to use latest access token */
-        //   const result = await request.put(url, {
+        //   const result = await MIConfig.getRequest().put(url, {
         //     ...options,
         //     headers: getHeaders(),
         //   });
@@ -208,7 +207,7 @@ export const DELETE = async (
     getResponse: false,
   };
   try {
-    const result = await request.delete(url, options);
+    const result = await MIConfig.getRequest().delete(url, options);
     if (result?.status === 0) {
       return result.data;
     }
@@ -220,7 +219,7 @@ export const DELETE = async (
       if (isTokenRefresh) {
         return await DELETE(url, overrideOptions);
         /* call getHeaders() again to use latest access token */
-        // const result = await request.put(url, {
+        // const result = await MIConfig.getRequest().put(url, {
         //   ...options,
         //   headers: getHeaders(),
         // });
