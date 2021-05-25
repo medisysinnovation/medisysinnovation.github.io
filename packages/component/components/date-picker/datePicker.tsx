@@ -1,16 +1,13 @@
 import React from 'react';
-// import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
-
-import { DatePicker } from 'antd';
-
+import { DatePicker } from '@medisys/component';
+import { defaultFormat } from './utils';
+import RangePicker from './rangePicker';
 type ComponentProps = React.ComponentProps<typeof DatePicker>;
 
-export type MIDatePickerProps = ComponentProps & {
-  triggerDiscard?: boolean;
+const MIDatePicker = (props: ComponentProps) => {
+  return <DatePicker format={defaultFormat} {...props} />;
 };
 
-const MIDatePicker: React.FC<MIDatePickerProps> = ({ ...props }) => {
-  return <DatePicker {...props} />;
-};
+MIDatePicker.RangePicker = RangePicker;
 
 export default MIDatePicker;

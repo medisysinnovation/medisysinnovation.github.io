@@ -10,13 +10,18 @@ export interface StateProps {
   loading?: Object;
   dataSource?: Object;
 }
+export type RequestConfig = {
+  timeout?: number;
+};
 
 type KeyValuePair = { [key: string]: any };
 export interface MedisysConfigProps extends KeyValuePair {
   dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
   urls?: { [key: string]: string };
   cache?: boolean;
+  request?: RequestConfig;
 }
+
 const loadingStates: { [key: string]: boolean } = {};
 let localStore: StateProps = {
   loading: {},
@@ -26,7 +31,7 @@ let localStore: StateProps = {
 const _me = {
   imt_current: immutable.fromJS(localStore),
 };
-const _config: MedisysConfigProps = {
+let _config: MedisysConfigProps = {
   cache: false,
   urls: {
     login: '/connect/token',
@@ -44,10 +49,19 @@ const _config: MedisysConfigProps = {
     lastActiveTime: '_lat',
   },
   dataLoader: undefined,
+  request: {
+    timeout: 120,
+  },
 };
 
 class MIConfig {
-  static setConfig({ dataLoader, urls, cache, keys }: MedisysConfigProps) {
+  static setConfig({
+    dataLoader,
+    urls,
+    cache,
+    keys,
+    ...restConfigs
+  }: MedisysConfigProps) {
     //@ts-ignore
     if (dataLoader) _config.dataLoader = dataLoader;
 
@@ -60,9 +74,13 @@ class MIConfig {
       ..._config.keys,
       ...keys,
     };
+    _config = {
+      ..._config,
+      ...restConfigs,
+    };
   }
 
-  static getConfig(key: string) {
+  static getConfig(key: keyof MedisysConfigProps) {
     return _config[key];
   }
 

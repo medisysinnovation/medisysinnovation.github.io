@@ -7,7 +7,7 @@ import { extend } from 'umi-request';
 import APIResponse from './APIResponse';
 import Qs from 'qs';
 import { UnauthorizedError } from './exception';
-
+import { MIConfig } from '../config';
 const codeMessage = {
   200: 'Success',
   201: 'Insert/Update Successfully',
@@ -62,6 +62,7 @@ const request = extend({
   paramsSerializer: (params: object) => {
     return Qs.stringify(params, { allowDots: true });
   },
+  ...MIConfig.getConfig('request'),
 });
 
 export default request;

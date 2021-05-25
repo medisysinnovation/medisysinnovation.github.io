@@ -2,6 +2,7 @@ import React from 'react';
 // import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
 
 import { DatePicker } from 'antd';
+import { defaultFormat } from './utils';
 
 type ComponentProps = React.ComponentProps<typeof DatePicker.RangePicker>;
 
@@ -19,6 +20,7 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
   // console.log(value, autoTransferTime, showTime);
   return (
     <DatePicker.RangePicker
+      format={defaultFormat}
       //@ts-ignore
       value={
         autoTransferTime && !showTime
