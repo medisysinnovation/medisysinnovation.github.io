@@ -7,7 +7,7 @@ import { extend } from 'umi-request';
 import APIResponse from '../network/APIResponse';
 import Qs from 'qs';
 import { UnauthorizedError } from '../network/exception';
-import { Extend,RequestMethod } from 'umi-request/types';
+import { extend as RequestConfig,RequestMethod } from 'umi-request/types';
 const codeMessage = {
   200: 'Success',
   201: 'Insert/Update Successfully',
@@ -76,5 +76,5 @@ const getRequest = (config: Extend) => {
     ...config,
   });
 };
-export type { Extend as RequestConfig, RequestMethod }
+export type { RequestConfig, RequestMethod }
 export default getRequest;
