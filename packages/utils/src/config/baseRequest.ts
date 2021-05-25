@@ -7,8 +7,7 @@ import { extend } from 'umi-request';
 import APIResponse from '../network/APIResponse';
 import Qs from 'qs';
 import { UnauthorizedError } from '../network/exception';
-import { extend as RequestConfigValue,RequestMethod } from 'umi-request/types';
-type RequestConfig = typeof RequestConfigValue
+import { RequestOptionsInit as RequestConfig,RequestMethod } from 'umi-request/types';
 const codeMessage = {
   200: 'Success',
   201: 'Insert/Update Successfully',
