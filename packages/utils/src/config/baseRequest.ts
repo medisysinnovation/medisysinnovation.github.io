@@ -7,7 +7,8 @@ import { extend } from 'umi-request';
 import APIResponse from '../network/APIResponse';
 import Qs from 'qs';
 import { UnauthorizedError } from '../network/exception';
-import { extend as RequestConfig,RequestMethod } from 'umi-request/types';
+import { extend as RequestConfigValue,RequestMethod } from 'umi-request/types';
+type RequestConfig = typeof RequestConfigValue
 const codeMessage = {
   200: 'Success',
   201: 'Insert/Update Successfully',
@@ -64,7 +65,7 @@ const request = extend({
   },
 });
 
-const getRequest = (config: Extend) => {
+const getRequest = (config: RequestConfig) => {
   return extend({
     timeout: 60 * 1000,
     prefix: process.env.url,
