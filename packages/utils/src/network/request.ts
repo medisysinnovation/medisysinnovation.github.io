@@ -5,7 +5,7 @@ import { stringify } from 'qs';
 import { MIConfig } from '../config';
 import { getKey } from '../helper';
 
-const request = MIConfig.getConfig('request');
+const request = MIConfig.getRequest();
 export const refreshToken = async () => {
   const FORM_DATA = {
     grant_type: 'refresh_token', // refresh_token for refresh token
