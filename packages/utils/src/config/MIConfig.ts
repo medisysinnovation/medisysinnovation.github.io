@@ -1,4 +1,6 @@
 import immutable from 'immutable';
+import getRequest from './baseRequest';
+import type { RequestConfig,RequestMethod } from './baseRequest'
 // console.log(immutable);
 const { Map, List } = immutable;
 export interface ModalStaticFunctions {
@@ -10,10 +12,6 @@ export interface StateProps {
   loading?: Object;
   dataSource?: Object;
 }
-export type RequestConfig = {
-  timeout?: number;
-};
-
 type KeyValuePair = { [key: string]: any };
 export interface MedisysConfigProps extends KeyValuePair {
   dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
@@ -49,17 +47,16 @@ let _config: MedisysConfigProps = {
     lastActiveTime: '_lat',
   },
   dataLoader: undefined,
-  request: {
-    timeout: 120,
-  },
+  request:undefined,
 };
-
+let requestInstance:RequestMethod
 class MIConfig {
   static setConfig({
     dataLoader,
     urls,
     cache,
     keys,
+    request,
     ...restConfigs
   }: MedisysConfigProps) {
     //@ts-ignore
@@ -74,16 +71,24 @@ class MIConfig {
       ..._config.keys,
       ...keys,
     };
-    _config = {
-      ..._config,
-      ...restConfigs,
-    };
+    if(request){
+      requestInstance = getRequest(request)
+    }
+    // _config = {
+    //   ..._config,
+    //   ...restConfigs,
+    // };
   }
 
   static getConfig(key: keyof MedisysConfigProps) {
     return _config[key];
   }
-
+  static getRequest(config?:RequestConfig) {
+    if(config){
+      requestInstance= getRequest(config)
+    }
+    return requestInstance;
+  }
   static initialization() {
     var ds = _me.imt_current.get('dataSource');
 

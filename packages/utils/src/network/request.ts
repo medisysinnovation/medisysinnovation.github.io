@@ -1,10 +1,11 @@
-import request from './baseRequest';
 import { RequestOptionsInit } from 'umi-request';
 import { UnauthorizedError } from './exception';
 import { saveAuthToken } from '../helper/localStorage';
 import { stringify } from 'qs';
 import { MIConfig } from '../config';
 import { getKey } from '../helper';
+
+const request = MIConfig.getConfig('request');
 export const refreshToken = async () => {
   const FORM_DATA = {
     grant_type: 'refresh_token', // refresh_token for refresh token

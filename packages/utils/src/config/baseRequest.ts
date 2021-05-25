@@ -4,10 +4,10 @@
  */
 import { extend } from 'umi-request';
 // import { notification } from "antd";
-import APIResponse from './APIResponse';
+import APIResponse from '../network/APIResponse';
 import Qs from 'qs';
-import { UnauthorizedError } from './exception';
-import { MIConfig } from '../config';
+import { UnauthorizedError } from '../network/exception';
+import { Extend,RequestMethod } from 'umi-request/types';
 const codeMessage = {
   200: 'Success',
   201: 'Insert/Update Successfully',
@@ -62,7 +62,19 @@ const request = extend({
   paramsSerializer: (params: object) => {
     return Qs.stringify(params, { allowDots: true });
   },
-  ...MIConfig.getConfig('request'),
 });
 
-export default request;
+const getRequest = (config: Extend) => {
+  return extend({
+    timeout: 60 * 1000,
+    prefix: process.env.url,
+    errorHandler, // default error handler
+    credentials: 'include', // default include cookie
+    paramsSerializer: (params: object) => {
+      return Qs.stringify(params, { allowDots: true });
+    },
+    ...config,
+  });
+};
+export type { Extend as RequestConfig, RequestMethod }
+export default getRequest;
