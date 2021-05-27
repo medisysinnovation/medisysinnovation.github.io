@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker } from '@medisys/component';
+import { DatePicker } from 'antd';
 import { defaultFormat } from './utils';
 import RangePicker from './rangePicker';
 type ComponentProps = React.ComponentProps<typeof DatePicker>;
