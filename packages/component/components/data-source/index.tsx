@@ -80,7 +80,7 @@ const loadRemoteData = async ({ url, request, code, remoteDataFormatter }: any) 
 
 const codeLoading: { [key: string]: boolean } = {};
 const defaultDependencies: any[] = [];
-const MIDataSource = <VT extends SelectValue = SelectValue>(
+const MIDataSource = <VT extends SelectValue>(
   props: MIDataSourceProps<VT>,
 ) => {
   const {
@@ -249,7 +249,12 @@ const MIDataSource = <VT extends SelectValue = SelectValue>(
         opt[valueField] === restProps.value || Array.isArray( restProps.value) && restProps.value.includes( opt[valueField] ),
     );
     //@ts-ignore
-    if (options.length>0) return <span>{options.map(o=>o[displayField]).join(spliter) }</span>;
+    if (options.length>0) return <div>{
+      options.map((o,i)=>{
+        //@ts-ignore
+        return <span>{o[displayField]}{i<options.length?spliter:''}</span>
+      })}
+    </div>;
     return null;
   }
   const handleFilter = useMemo(() => {
