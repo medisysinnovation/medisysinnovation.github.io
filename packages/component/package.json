@@ -69,6 +69,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "@types/lodash":"^4.14.170",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.4.1",
     "bundlesize": "^0.18.0",
     "enzyme": "^3.11.0",
