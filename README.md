@@ -29,7 +29,7 @@ Build documentation,
 $ npm run docs:build
 ```
 
-Build library,
+Build library using lerna
 
 ```bash
 $ lerna run build
