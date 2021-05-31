@@ -2,7 +2,7 @@
 
 This project currently still under development, for internal use only
 
-Online document 
+Online document
 https://medisysinnovation.github.io/components
 
 ## Getting Started
@@ -13,6 +13,8 @@ Install dependencies,
 $ npm i
 
 $ lerna bootstrap
+
+$ lerna run build
 ```
 
 Start the dev server,
@@ -27,10 +29,10 @@ Build documentation,
 $ npm run docs:build
 ```
 
-Build library via `father-build`,
+Build library using lerna
 
 ```bash
-$ npm run build
+$ lerna run build
 ```
 
 Release package to npm
