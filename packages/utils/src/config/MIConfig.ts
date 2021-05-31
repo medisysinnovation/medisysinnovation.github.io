@@ -50,6 +50,7 @@ let _config: MedisysConfigProps = {
   request:undefined,
 };
 let requestInstance:RequestMethod
+let useModel:any
 class MIConfig {
   static setConfig({
     dataLoader,
@@ -57,6 +58,7 @@ class MIConfig {
     cache,
     keys,
     request,
+    model,
     ...restConfigs
   }: MedisysConfigProps) {
     //@ts-ignore
@@ -74,6 +76,9 @@ class MIConfig {
     if(request){
       requestInstance = getRequest(request)
     }
+    if(model){
+      useModel=model
+    }
     // _config = {
     //   ..._config,
     //   ...restConfigs,
@@ -88,6 +93,16 @@ class MIConfig {
       requestInstance= getRequest(config)
     }
     return requestInstance;
+  }
+  static getModelHook() {
+    if(!useModel){
+      useModel= this.getConfig('model')
+    }
+    return useModel || function(){
+      return {
+        api:{}
+      }
+    };
   }
   static initialization() {
     var ds = _me.imt_current.get('dataSource');
