@@ -14,7 +14,7 @@ export const SaveEditableAction: React.FC<
   return (
     <a
       key="save"
-      onClick={async (e) => {
+      onClick={async (e:any) => {
         e.stopPropagation();
         e.preventDefault();
         try {
@@ -46,6 +46,7 @@ export const SaveEditableAction: React.FC<
       {...elementProps}
     >
       {loading ? (
+        //@ts-ignore
         <LoadingOutlined
           style={{
             marginRight: 8,
@@ -108,6 +109,7 @@ export const DeleteEditableAction: React.FC<ActionRenderConfig<any> & { row: any
     <Popconfirm key="delete" title={deletePopconfirmMessage} onConfirm={onConfirm}>
       <a>
         {loading ? (
+          //@ts-ignore
           <LoadingOutlined
             style={{
               marginRight: 8,

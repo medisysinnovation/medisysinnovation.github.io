@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState, useRef, useMemo } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
 import Button from '../button';
@@ -103,6 +104,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         search={{}}
         // style={}
         columns={mergedColumns}
+        // @ts-ignore
         recordCreatorProps={{
           // @ts-ignore
           style: {
@@ -174,8 +176,11 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
               [rowKey]: uniqueid() as unknown,
             }}
           >
-            <Button type="primary">              
-              <PlusOutlined  /> New
+            <Button type="primary">    
+              {
+              //@ts-ignore
+              <PlusOutlined />
+              } New
             </Button>
           </ProTable.Editable.RecordCreator>,
         ]}

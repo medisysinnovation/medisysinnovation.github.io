@@ -4,6 +4,7 @@ import { Input, InputProps } from 'antd';
 export interface MIInputProps extends InputProps {
   trim?: boolean;
   readonly?: boolean;
+  onBlur?: (e: Event) => void;
   // code?: string;
   // url?: string;
   // text?: boolean;
@@ -24,7 +25,6 @@ export interface _RefInputProps {
 
 type RefInputProps = Input & _RefInputProps;
 
-// let a = 0;
 const MIInput: React.ForwardRefRenderFunction<
   RefInputProps | undefined,
   MIInputProps
@@ -58,9 +58,12 @@ const MIInput: React.ForwardRefRenderFunction<
   return (
     <Input
       {...restProps}
-      onBlur={e => {
+      //@ts-ignore
+      onBlur={(e: Event) => {
         if (trim && myRef.current) {
-          myRef.current.input.value = e.target.value?.trim();
+          //@ts-ignore
+          myRef.current.input.value = e.target?.value?.trim();
+          //@ts-ignore
           myRef.current.handleChange(e);
         }
         if (onBlur) onBlur(e);

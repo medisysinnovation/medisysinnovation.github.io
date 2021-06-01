@@ -12,6 +12,7 @@ declare module 'react' {
     key?:string;
     children?:any;
     onClick?:any;
+    style?:any
   }
   interface HTMLAttributes<HTMLDivElement> extends HTMLDivElement<T> {
     ref?: any;
