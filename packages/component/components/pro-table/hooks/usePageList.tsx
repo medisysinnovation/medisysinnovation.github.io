@@ -25,6 +25,7 @@ const PageList = <T, U, ValueType>({
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
   api: APIInterface<T>;
   onRowDblClick?: (entity: T) => void;
+  onEdit?: (entity: T) => void;
   request?: () => Promise<unknown>;
   editable?: boolean;
   rowKey: string;

@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import type { ProColumns } from '@ant-design/pro-table';
-import { DatePicker } from '@medisys/component';
+import DatePicker from '../../date-picker';
 import humps from 'humps';
 
 export type ExtraColumn = 'createdBy' | 'updatedBy' | 'options';

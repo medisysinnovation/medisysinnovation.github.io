@@ -1,6 +1,6 @@
 import { useState, useRef, useMemo } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Button } from '@medisys/component';
+import Button from '../button';
 import { message } from 'antd';
 import { getDefaultErrorMessage } from './utils';
 import type { ActionRenderConfig, NewLineConfig } from '@ant-design/pro-utils/es/useEditableArray';
@@ -70,6 +70,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   const mergedColumns = useMemo(() => {
     // @ts-ignore
     return (originalColumns || []).map((o) => {
+      // @ts-ignore
       if (o.formItemProps?.rules) {
         // @ts-ignore
         // eslint-disable-next-line no-param-reassign
