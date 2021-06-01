@@ -11,7 +11,9 @@ import useHighlight from './useHighlight';
 const useOptionRender = <
   T extends {
     isUserMaintainable: boolean;
-  },
+  } & {
+    [key: string]: number | string | boolean,
+   },
 >({
   features = [],
   rowKey,
@@ -31,9 +33,9 @@ const useOptionRender = <
   const { remove, create, query, update } = api;
   const cb = useCallback(
     (
-      dom: React.ReactNode,
+      _dom: React.ReactNode,
       entity: T,
-      index: number,
+      _index: number,
       action: ProCoreActionType,
       // schema: ProSchema<T>,
     ) => {
@@ -98,6 +100,7 @@ const useOptionRender = <
               // @ts-ignore
               onClick={async () => {
                 const { data: latestEntity } = query
+                //@ts-ignore
                   ? ((await query!({ id: entity[rowKey] })) as any)
                   : { data: entity };
                 if (entity[opt.filedName] !== latestEntity[opt.filedName]) {
@@ -121,11 +124,13 @@ const useOptionRender = <
       features.forEach((f) => {
         const addAction = (fn: TableFeature<T>, list: JSX.Element[]) => {
           if (typeof fn === 'string') {
+            //@ts-ignore
             if (defaultFeatures[fn]) addAction(defaultFeatures[fn], list);
           } else if (typeof fn === 'object' && (fn as ColumnAction<T>)?.code) {
             list.push(
               (fn as ColumnAction<T>)?.render
                 ? (fn as ColumnAction<T>)?.render(entity)
+                //@ts-ignore
                 : defaultFeatures[(fn as ColumnAction<T>)?.code],
             );
           } else if (typeof fn === 'function') {

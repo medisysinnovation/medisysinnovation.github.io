@@ -19,7 +19,7 @@ export type TableFeature<T> =
   | ColumnAction<T>;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MergedColumns = <T, U, ValueType = 'text'>({
+const MergedColumns = <T, _U, ValueType = 'text'>({
   columns = [],
   defaultColumns = [],
   extraColumns = [],
@@ -53,7 +53,7 @@ const MergedColumns = <T, U, ValueType = 'text'>({
         renderFormItem: () => {
           return <DatePicker.RangePicker showTime />;
         },
-        render: (dom: React.ReactNode, entity: T) => {
+        render: (_dom: React.ReactNode, entity: T) => {
           // @ts-ignore
           if (!entity.createdByUser) return '-';
           // @ts-ignore
@@ -80,7 +80,7 @@ const MergedColumns = <T, U, ValueType = 'text'>({
         renderFormItem: () => {
           return <DatePicker.RangePicker showTime />;
         },
-        render: (dom: React.ReactNode, entity: T) => {
+        render: (_dom: React.ReactNode, entity: T) => {
           // @ts-ignore
           if (!entity.updatedByUser) return '-';
           // @ts-ignore
@@ -103,9 +103,11 @@ const MergedColumns = <T, U, ValueType = 'text'>({
     return (columns || [])
       .map((o) => ({
         title:
+          // @ts-ignore
           typeof o.dataIndex === 'string' ? humps.pascalize(o.dataIndex, { separator: ' ' }) : '',
         ...o,
       }))
+      // @ts-ignore
       ?.concat(extraCols.concat(extraColumns)) as ProColumns<T>[];
   }, [columns, defaultColumns, extraColumns, optionRender]);
 
