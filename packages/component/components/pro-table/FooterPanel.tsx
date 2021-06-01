@@ -1,6 +1,6 @@
 import { FooterToolbar } from '@ant-design/pro-layout';
 import { DeleteWrapper } from './ActionButton';
-import { Button } from '@medisys/component';
+import Button from '../button';
 
 export default ({
   onRemove,
@@ -27,7 +27,7 @@ export default ({
         rowKey={rowKey}
         onRemove={onRemove}
         rows={rows}
-        onComplete={(success) => {
+        onComplete={success => {
           if (success && onSuccess) onSuccess();
         }}
       >

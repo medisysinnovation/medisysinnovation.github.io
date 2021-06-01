@@ -41,6 +41,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   const tableRef = useRef<HTMLDivElement>();
   const [lastRowId, setLastRowId] = useState();
   const { api, model, rowKey, ...sharedPageProps } = usePageList({
+    //@ts-ignore
     actionRef,
     tableRef,
     editable: true,
@@ -61,6 +62,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   const originalColumns = useColumns({
     rowKey,
     api,
+    //@ts-ignore
     columns,
     defaultColumns,
     extraColumns: [],
@@ -100,10 +102,9 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         size="small"
         search={{}}
         // style={}
-        // @ts-ignore
         columns={mergedColumns}
-        // @ts-ignore
         recordCreatorProps={{
+          // @ts-ignore
           style: {
             display: 'none',
           },
@@ -173,8 +174,8 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
               [rowKey]: uniqueid() as unknown,
             }}
           >
-            <Button type="primary">
-              <PlusOutlined /> New
+            <Button type="primary">              
+              <PlusOutlined  /> New
             </Button>
           </ProTable.Editable.RecordCreator>,
         ]}

@@ -9,7 +9,9 @@ import type { ProTableProps } from '@ant-design/pro-table';
 import type { ActionType } from '@ant-design/pro-table';
 const getUseModel=MIConfig.getModelHook
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const PageList = <T, U, ValueType>({
+const PageList = <T extends {
+  [key: string]: number | string | boolean,
+ }, U, ValueType>({
   actionRef,
   tableRef,
   api,
@@ -48,7 +50,7 @@ const PageList = <T, U, ValueType>({
 
   const defaultEditCallback = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (entity) => (e: Event) => {
+    (entity) => (_e: Event) => {
       if(dispatch)
       dispatch({
         type: 'updateState',
@@ -63,6 +65,7 @@ const PageList = <T, U, ValueType>({
 
   useEffect(() => {
     const rowDblClick = (e: MouseEvent) => {
+      // @ts-ignore
       if (e.target?.tagName === 'A') return;
       // @ts-ignore
       const tr = e.target?.closest('tr');

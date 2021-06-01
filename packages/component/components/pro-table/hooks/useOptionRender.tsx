@@ -47,7 +47,7 @@ const useOptionRender = <
             key="edit"
             // @ts-ignore
             disabled={entity.isUserMaintainable === false}
-            onClick={() => action.startEditable?.(entity[rowKey])}
+            onClick={() => action.startEditable?.(entity[rowKey] as React.Key)}
           >
             Edit
           </a>
@@ -61,7 +61,7 @@ const useOptionRender = <
                 getNewValue: (v: T) => v,
               }) as ColumnAction<T>;
               const { data: latestEntity } = query
-                ? ((await query!({ id: entity[rowKey] })) as any)
+                ? ((await query!({ id: entity[rowKey] as string })) as any)
                 : { data: entity };
 
               const newId: any = await create!({
