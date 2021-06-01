@@ -6,7 +6,6 @@ import { MIConfig, sleep } from '@medisys/utils';
 // console.dir(ConfigProvider);
 // console.dir(ConfigProvider.ConfigContext.Consumer);
 
-console.dir(Table);
 const codeLoading = {};
 
 function getRandomInt(max) {

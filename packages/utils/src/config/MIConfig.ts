@@ -163,6 +163,15 @@ class MIConfig {
     return data;
   }
 
+  static clearData(code: string) {
+    if (!code) throw 'Must pass in `code`';
+    MIConfig.updateState({
+      dataSource: {
+        [code]: undefined,
+      },
+    });
+  }
+
   static updateState(newState: StateProps = {}) {
     const { loading, dataSource } = newState;
     let imt_data = immutable.fromJS(newState) as Map<string, any>;
