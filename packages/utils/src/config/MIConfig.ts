@@ -165,7 +165,7 @@ class MIConfig {
 
   static clearData(code: string) {
     if (!code) throw 'Must pass in `code`';
-    MIConfig.updateState({
+    this.updateState({
       dataSource: {
         [code]: undefined,
       },
