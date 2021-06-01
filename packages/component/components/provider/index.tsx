@@ -1,1 +1,2 @@
-export { default as FormProvider } from './form';
+export { FormProvider } from './form';
+export { ConfigProvider } from 'antd';

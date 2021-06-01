@@ -98,6 +98,7 @@ class MIConfig {
     if(!useModel){
       useModel= this.getConfig('model')
     }
+    console.log(useModel)
     return useModel || function(){
       return {
         api:{}

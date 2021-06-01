@@ -11,7 +11,6 @@ group:
 
 <code src="./range-picker" title='Basic usage' desc='Basic usage example.'/>
 
-
 ## API
 
 ### Range Picker

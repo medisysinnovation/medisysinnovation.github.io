@@ -49,4 +49,4 @@ const FormProvider: React.FC<FormProviderProps> = ({
   );
 };
 
-export default FormProvider;
+export { FormProvider };

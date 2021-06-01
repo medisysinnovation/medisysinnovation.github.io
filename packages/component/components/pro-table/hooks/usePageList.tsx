@@ -32,8 +32,7 @@ const PageList = <T, U, ValueType>({
 }) => {
   const { setValues } = useContext(PageContext);
   const { model: defaultModel } = useContext(PageContext);
-  const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model || defaultModel) as any);
-  console.log(model,api)
+  const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model || defaultModel) as any) || {api:{}};
 
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);

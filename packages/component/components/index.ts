@@ -18,7 +18,9 @@ export { ProTable } from './pro-table';
 export { default as ProForm } from './pro-form';
 
 export { default as ProSelect } from './pro-select';
+export { default as ProInput } from './pro-input';
 
+export * from './provider';
 export { JobCounter } from './job-counter';
 
 export { JobStatusTag } from './job-status-tag';

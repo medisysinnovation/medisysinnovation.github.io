@@ -23,8 +23,18 @@ export default defineConfig({
       },
     ],
   ],
+  // locale: {
+  //   // default zh-CN
+  //   default: 'en-US',
+  //   antd: true,
+  //   // default true, when it is true, will use `navigator.language` overwrite default
+  //   baseNavigator: false,
+  // },
   dynamicImport: {},
-  locales: [['en-US', 'English']],
+  locales: [
+    ['en-US', 'English'],
+    ['zh-CN', '中文'],
+  ],
   menus: {
     '/guide': [
       {
@@ -71,29 +81,37 @@ export default defineConfig({
       },
     ],
   },
-  // navs: {
-  //   'en-US': [
-  //     null,
-  //     { title: 'GitHub', path: 'https://github.com/umijs/dumi' },
-  //     { title: 'Changelog', path: 'https://github.com/umijs/dumi/releases' },
-  //   ],
-  //   'zh-CN': [
-  //     null,
-  //     { title: 'GitHub', path: 'https://github.com/umijs/dumi' },
-  //     { title: '更新日志', path: 'https://github.com/umijs/dumi/releases' },
-  //   ],
-  // },
+  navs: {
+    'en-US': [
+      null,
+      {
+        title: 'GitHub',
+        path:
+          'https://github.com/medisysinnovation/medisysinnovation.github.io',
+      },
+      // { title: 'Changelog', path: 'https://github.com/medisysinnovation/medisysinnovation.github.io/releases' },
+    ],
+    'zh-CN': [
+      null,
+      {
+        title: 'GitHub',
+        path:
+          'https://github.com/medisysinnovation/medisysinnovation.github.io',
+      },
+      // { title: '更新日志', path: 'https://github.com/medisysinnovation/medisysinnovation.github.io/releases' },
+    ],
+  },
 
-  // extraBabelPlugins: [
-  //   [
-  //     "import",
-  //     {
-  //       libraryName: "antd",
-  //       libraryDirectory: "es",
-  //       style: "css",
-  //     },
-  //   ],
-  // ],
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        // style: "css",
+      },
+    ],
+  ],
   // scripts: ["https://v1.cnzz.com/z_stat.php?id=1278653578&web_id=1278653578"],
   // analytics: {
   //   ga: "UA-128069695-2",

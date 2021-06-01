@@ -1,11 +1,10 @@
 import React, { useState, useRef } from 'react';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import type { ProTableProps } from '@ant-design/pro-table';
-import type { RowKey } from './utils';
 import type { ActionType } from '@ant-design/pro-table';
 import type { RowEditableConfig, ProCoreActionType, ProSchema } from '@ant-design/pro-utils';
+import type { RowKey } from './utils';
 import EditableProTable from './ProEditableTable';
-
 import type { ExtraColumn, TableFeature } from './hooks/useColumns';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
@@ -34,7 +33,6 @@ export type MIProTableProps<T, U, ValueType> = Omit<ProTableProps<T, U, ValueTyp
   onEdit?: (entity: T) => void;
   rowKey?: RowKey;
 };
-
 const MIProTable = <T, U, ValueType = 'text'>({
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   optionColumnRender,
@@ -78,9 +76,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
     api,
     tableRef,
   });
-
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
-
   return (
     <div ref={tableRef}>
       <ProTable
@@ -120,6 +116,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
           }}
         />
       )}
+
     </div>
   );
 };
