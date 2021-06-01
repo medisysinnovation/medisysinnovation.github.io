@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import type { ProTableProps } from '@ant-design/pro-table';
@@ -9,6 +10,7 @@ import type { ExtraColumn, TableFeature } from './hooks/useColumns';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
 import {APIInterface} from './typing'
+
 
 export type MIProTableProps<T, U, ValueType> = Omit<ProTableProps<T, U, ValueType>, 'request'> & {
   // model name, refer to @/models folder
@@ -33,6 +35,10 @@ export type MIProTableProps<T, U, ValueType> = Omit<ProTableProps<T, U, ValueTyp
   onEdit?: (entity: T) => void;
   rowKey?: RowKey;
 };
+
+
+const MyProTable = ProTable as any
+
 const MIProTable = <T, U, ValueType = 'text'>({
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   optionColumnRender,
@@ -47,6 +53,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
   const { api, rowKey, defaultEditCallback, ...sharedPageProps } = usePageList({
+    //@ts-ignore
     actionRef,
     tableRef,
     ...props,
@@ -76,10 +83,12 @@ const MIProTable = <T, U, ValueType = 'text'>({
     api,
     tableRef,
   });
+    //@ts-ignore
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
+  // @ts-ignore-start
   return (
     <div ref={tableRef}>
-      <ProTable
+      <MyProTable
         rowKey={rowKey}
         bordered
         size="small"
@@ -92,10 +101,9 @@ const MIProTable = <T, U, ValueType = 'text'>({
             // },
           }
         }
-        // @ts-ignore
         columns={mergedColumns}
         rowSelection={{
-          onChange: (_, selectedRows) => {
+          onChange: (_:any, selectedRows:any) => {
             setSelectedRows(selectedRows);
           },
         }}
@@ -119,7 +127,10 @@ const MIProTable = <T, U, ValueType = 'text'>({
 
     </div>
   );
+  // @ts-ignore-end
+
 };
+
 MIProTable.TableDropdown = TableDropdown;
 MIProTable.Editable = EditableProTable;
 

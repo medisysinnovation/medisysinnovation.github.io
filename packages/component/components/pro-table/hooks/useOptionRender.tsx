@@ -45,7 +45,6 @@ const useOptionRender = <
         edit: (
           <a
             key="edit"
-            // @ts-ignore
             disabled={entity.isUserMaintainable === false}
             onClick={() => action.startEditable?.(entity[rowKey] as React.Key)}
           >
@@ -55,7 +54,6 @@ const useOptionRender = <
         duplicate: (
           <a
             key="duplicate"
-            // @ts-ignore
             onClick={async () => {
               const opt = (features.find((o) => (o as ColumnAction<T>)?.code === 'duplicate') || {
                 getNewValue: (v: T) => v,

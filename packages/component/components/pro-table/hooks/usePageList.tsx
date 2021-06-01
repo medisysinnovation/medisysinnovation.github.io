@@ -22,13 +22,12 @@ const PageList = <T extends {
   rowKey = 'id',
   editable,
   model,
-}: Omit<ProTableProps<T, U, ValueType>, 'request' | 'editable'> & {
+}: Omit<ProTableProps<T, U, ValueType>,  'editable'> & {
   actionRef: React.MutableRefObject<ActionType | undefined>;
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
   api: APIInterface<T>;
   onRowDblClick?: (entity: T) => void;
   onEdit?: (entity: T) => void;
-  request?: () => Promise<unknown>;
   editable?: boolean;
   rowKey: string;
   model?: string;
