@@ -21,6 +21,8 @@ export { default as ProSelect } from './pro-select';
 export { default as ProInput } from './pro-input';
 
 export * from './provider';
+export * from './context';
+
 export { JobCounter } from './job-counter';
 
 export { JobStatusTag } from './job-status-tag';
