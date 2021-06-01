@@ -96,7 +96,7 @@ class MIConfig {
   }
   static getModelHook() {
     if(!useModel){
-      useModel= MIConfig.getConfig('model')
+      useModel= this.getConfig('model')
     }
     return useModel || function(){
       return {
@@ -166,7 +166,7 @@ class MIConfig {
     if (!code) throw 'Must pass in `code`';
     this.updateState({
       dataSource: {
-        [code]: undefined,
+        [code]: [],
       },
     });
   }
@@ -202,7 +202,7 @@ class MIConfig {
         document.dispatchEvent(
           new CustomEvent('mi_datasourcechanged_' + code, {
             bubbles: true,
-            detail: imt_dataSource.get(code).toJS(),
+            detail: imt_dataSource.get(code)?.toJS(),
           }),
         );
         // console.log(code);
