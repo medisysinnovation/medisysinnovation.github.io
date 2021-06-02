@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   Form,
@@ -8,6 +7,7 @@ import {
   Select,
   Input,
   RefInputProps,
+  ConfigProvider,
 } from '@medisys/component';
 import { MIConfig, sleep } from '@medisys/utils';
 // console.dir(ConfigProvider);

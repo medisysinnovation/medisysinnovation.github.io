@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import type { ProCoreActionType } from '@ant-design/pro-utils';
 import { DeleteWrapper } from '../ActionButton';
 import { uniqueid } from '@medisys/utils';
-import {APIInterface} from '../typing'
+import type {APIInterface, MIRowEditableConfig} from '../typing'
 import { message } from 'antd';
 import type { TableFeature, ColumnAction } from './useColumns';
 import useHighlight from './useHighlight';
@@ -19,11 +19,15 @@ const useOptionRender = <
   rowKey,
   api,
   tableRef,
+  editable,
+
 }: {
   features?: TableFeature<T>[];
   rowKey: string;
   api: APIInterface<T>;
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
+  editable?: MIRowEditableConfig<T>;
+
 }) => {
   const [lastRowId, setLastRowId] = useState<string>();
   useHighlight({
@@ -70,6 +74,8 @@ const useOptionRender = <
               if (opt) await action?.reloadAndRest?.();
               message.success('Record duplicated');
               setLastRowId(newId);
+              editable?.onRowDataChanged?.([newId]);
+
             }}
           >
             Duplicate
@@ -106,12 +112,15 @@ const useOptionRender = <
                   action?.reload();
                   return;
                 }
-                await update!({
+                const newEntity = {
                   ...latestEntity,
                   [opt.filedName]: !latestEntity[opt.filedName],
-                });
+                };
+                await update!(newEntity);
                 if (opt) await action?.reloadAndRest?.();
                 message.success('Status updated');
+                editable?.onRowDataChanged?.([newEntity]);
+
               }}
             >
               {entity[opt.filedName] === true ? 'Deactivate' : 'Active'}
@@ -142,7 +151,7 @@ const useOptionRender = <
 
       return ary;
     },
-    [features, remove, rowKey, create, update, query, setLastRowId],
+    [features, remove, rowKey, create, update, query, setLastRowId,editable],
   );
 
   return cb;

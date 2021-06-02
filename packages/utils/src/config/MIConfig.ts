@@ -96,7 +96,7 @@ class MIConfig {
   }
   static getModelHook() {
     if(!useModel){
-      useModel= this.getConfig('model')
+      useModel= MIConfig.getConfig('model')
     }
     return useModel || function(){
       return {

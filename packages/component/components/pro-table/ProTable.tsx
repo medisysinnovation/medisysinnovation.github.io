@@ -1,40 +1,12 @@
 
 import React, { useState, useRef } from 'react';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
-import type { ProTableProps } from '@ant-design/pro-table';
 import type { ActionType } from '@ant-design/pro-table';
-import type { RowEditableConfig, ProCoreActionType, ProSchema } from '@ant-design/pro-utils';
-import type { RowKey } from './utils';
 import EditableProTable from './ProEditableTable';
-import type { ExtraColumn, TableFeature } from './hooks/useColumns';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
-import {APIInterface} from './typing'
+import {MIProTableProps} from './typing'
 
-
-export type MIProTableProps<T, U, ValueType> = Omit<ProTableProps<T, U, ValueType>, 'request'> & {
-  // model name, refer to @/models folder
-  model?: string;
-  request?: () => Promise<unknown>;
-  editable?: RowEditableConfig<T>;
-  api?: APIInterface<T>;
-  features?: TableFeature<T>[];
-  defaultColumns?: ExtraColumn[];
-  optionColumnRender?: any[];
-  optionColumnEditRender?: (
-    dom: React.ReactNode,
-    entity: T,
-    index: number,
-    action: ProCoreActionType,
-    schema: ProSchema<T> & {
-      isEditable?: boolean;
-      type: unknown;
-    },
-  ) => React.ReactNode;
-  onRowDblClick?: (entity: T) => void;
-  onEdit?: (entity: T) => void;
-  rowKey?: RowKey;
-};
 
 
 const MyProTable = ProTable as any
@@ -45,6 +17,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
   columns = [],
   features = ['batchRemove', 'remove'],
   postData,
+  editable,
   // toolBarRender,
   ...props
 }: MIProTableProps<T, U, ValueType>) => {
@@ -82,6 +55,8 @@ const MIProTable = <T, U, ValueType = 'text'>({
     rowKey,
     api,
     tableRef,
+    //@ts-ignore
+    editable,
   });
     //@ts-ignore
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
@@ -107,6 +82,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
             setSelectedRows(selectedRows);
           },
         }}
+        editable={editable}
         // toolBarRender={toolBarRender.map((o) => {
         //   return o;
         // })}

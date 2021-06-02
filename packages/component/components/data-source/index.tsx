@@ -252,7 +252,7 @@ const MIDataSource = <VT extends SelectValue>(
     if (options.length>0) return <div>{
       options.map((o,i)=>{
         //@ts-ignore
-        return <span key={o[displayField]}>{o[displayField]}{i<=options.length-1?spliter:''}</span>
+        return <span key={o[displayField]}>{o[displayField]}{i<options.length-1?spliter:''}</span>
       })}
     </div>;
     return null;

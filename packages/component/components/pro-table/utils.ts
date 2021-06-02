@@ -1,6 +1,6 @@
 import type { ProSchema } from '@ant-design/pro-utils';
+import type {RowKey} from './typing'
 import { removeEmpty, convertToAPIObject } from '@medisys/utils';
-
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (request: () => Promise<unknown>, params: Parameters) => {
   if (typeof request !== 'function') return null;
@@ -80,8 +80,7 @@ export const getDefaultErrorMessage = ({ required, min, max, len }: any, colSche
   return 'Validation error';
 };
 
-type GetRowKey = () => string;
-export type RowKey = string | GetRowKey;
+
 export const getRowKey = (rowKey: RowKey) => {
   if (typeof rowKey === 'function' && rowKey) {
     return rowKey();

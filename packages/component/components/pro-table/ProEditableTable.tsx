@@ -10,7 +10,7 @@ import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { uniqueid } from '@medisys/utils';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { MIProTableProps } from './ProTable';
+import type { MIProTableProps } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
 
@@ -34,7 +34,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   optionColumnEditRender,
   ...props
 }: MIProEditableTableProps<T, U, ValueType>) => {
-  const [selectedRowsState, setSelectedRows] = useState<T[]>([]);
+  const [selectedRows, setSelectedRows] = useState<T[]>([]);
   // const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   // const [cols, setCols] = useState<ProColumns<T>[]>([]);
   const actionRef = useRef<ActionType>();
@@ -58,6 +58,8 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
     rowKey,
     api,
     tableRef,
+    //@ts-ignore
+    editable,
   });
   const originalColumns = useColumns({
     rowKey,
@@ -160,12 +162,14 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
             // console.log(key);
             actionRef.current?.cancelEditable(rowId);
             actionRef.current?.reloadAndRest?.();
+            editable?.onRowDataChanged?.([row]);
+
           },
           ...editable,
         }}
         rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
+          onChange: (_, _selectedRows) => {
+            setSelectedRows(_selectedRows);
           },
         }}
         toolBarRender={() => [
@@ -191,13 +195,14 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         {...props}
         actionRef={actionRef}
       />
-      {selectedRowsState?.length > 0 && features.includes('batchRemove') && (
+      {selectedRows?.length > 0 && features.includes('batchRemove') && (
         <FooterPanel
           rowKey={rowKey}
-          rows={selectedRowsState as []}
+          rows={selectedRows as []}
           onRemove={remove!}
           onSuccess={() => {
             actionRef.current?.reloadAndRest?.();
+            editable?.onRowDataChanged?.(selectedRows);
           }}
         />
       )}
