@@ -13,11 +13,13 @@ export interface StateProps {
   dataSource?: Object;
 }
 type KeyValuePair = { [key: string]: any };
+type RequestWrap = (request: () => Promise<unknown>, params: any)=>((...args: any[]) => Promise<unknown>) | null
 export interface MedisysConfigProps extends KeyValuePair {
   dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
   urls?: { [key: string]: string };
   cache?: boolean;
   request?: RequestConfig;
+  requestWrap?:RequestWrap
 }
 
 const loadingStates: { [key: string]: boolean } = {};
@@ -51,7 +53,6 @@ let _config: MedisysConfigProps = {
 };
 let requestInstance:RequestMethod
 let useModel:any
-let requestHandler:(request: () => Promise<unknown>, params: any)=>((...args: any[]) => Promise<unknown>) | null
 class MIConfig {
   static setConfig({
     dataLoader,
@@ -59,6 +60,7 @@ class MIConfig {
     cache,
     keys,
     request,
+    requestWrap,
     model,
     ...restConfigs
   }: MedisysConfigProps) {
@@ -80,10 +82,10 @@ class MIConfig {
     if(model){
       useModel=model
     }
-    // _config = {
-    //   ..._config,
-    //   ...restConfigs,
-    // };
+    _config = {
+      ..._config,
+      ...restConfigs,
+    };
   }
 
   static getConfig(key: keyof MedisysConfigProps) {
@@ -227,11 +229,6 @@ class MIConfig {
         JSON.stringify(_me.imt_current.get('dataSource').toJS()),
       );
     }
-  }
-
-  static setDefaultRequest(handler:any) { 
-    requestHandler=handler
-    return requestHandler
   }
 }
 
