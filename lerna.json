@@ -1,6 +1,6 @@
 {
   "packages": ["packages/*"],
-  "version": "0.1.168",
+  "version": "0.1.169",
   "npmClient": "npm",
   "command": {
     "publish": {
