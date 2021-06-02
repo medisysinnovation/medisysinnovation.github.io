@@ -3,7 +3,7 @@ import type { ActionRenderConfig } from '@ant-design/pro-utils/es/useEditableArr
 import { useMountMergeState } from './hooks';
 import { LoadingOutlined } from '@ant-design/icons';
 import set from 'rc-util/lib/utils/set';
-import { Popconfirm } from '../popconfirm';
+import Popconfirm from '../popconfirm';
 import type { ActionType } from '@ant-design/pro-table';
 
 import { message } from 'antd';
