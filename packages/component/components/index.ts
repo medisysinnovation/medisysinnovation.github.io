@@ -9,7 +9,7 @@ export { default as Button } from './button';
 export { default as Input } from './input';
 export { default as InputNumber } from './input-number';
 export { default as DatePicker } from './date-picker';
-
+export { default as Popconfirm } from './popconfirm';
 export { default as List } from './list';
 export { default as DataSource } from './data-source';
 
