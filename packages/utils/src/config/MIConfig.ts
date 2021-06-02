@@ -51,6 +51,7 @@ let _config: MedisysConfigProps = {
 };
 let requestInstance:RequestMethod
 let useModel:any
+let requestHandler:(request: () => Promise<unknown>, params: any)=>((...args: any[]) => Promise<unknown>) | null
 class MIConfig {
   static setConfig({
     dataLoader,
@@ -226,6 +227,11 @@ class MIConfig {
         JSON.stringify(_me.imt_current.get('dataSource').toJS()),
       );
     }
+  }
+
+  static setDefaultRequest(handler:any) { 
+    requestHandler=handler
+    return requestHandler
   }
 }
 

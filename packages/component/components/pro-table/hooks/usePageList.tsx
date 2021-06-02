@@ -104,6 +104,7 @@ const PageList = <T extends {
     },
     request:
       request ||
+      MIConfig.setDefaultRequest() ||
       // @ts-ignore
       miRequest(queryList),
     postData: (data: any[]) => {

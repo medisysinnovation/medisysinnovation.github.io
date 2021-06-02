@@ -60,7 +60,6 @@ const MIProTable = <T, U, ValueType = 'text'>({
   });
     //@ts-ignore
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
-  // @ts-ignore-start
   return (
     <div ref={tableRef}>
       <MyProTable
@@ -103,7 +102,6 @@ const MIProTable = <T, U, ValueType = 'text'>({
 
     </div>
   );
-  // @ts-ignore-end
 
 };
 
