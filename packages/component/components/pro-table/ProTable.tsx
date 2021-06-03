@@ -30,7 +30,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
     actionRef,
     tableRef,
     //@ts-ignore
-    column,
+    columns,
     ...props,
   });
 
