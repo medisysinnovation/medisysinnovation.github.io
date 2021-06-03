@@ -60,7 +60,6 @@ class MIConfig {
     cache,
     keys,
     request,
-    requestWrap,
     model,
     ...restConfigs
   }: MedisysConfigProps) {
