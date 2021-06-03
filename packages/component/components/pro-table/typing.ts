@@ -1,5 +1,5 @@
 import type { RowEditableConfig, ProCoreActionType, ProSchema } from '@ant-design/pro-utils';
-import type { ProTableProps } from '@ant-design/pro-table';
+import type { ProTableProps,ProColumns } from '@ant-design/pro-table';
 import type { ExtraColumn, TableFeature } from './hooks/useColumns';
 
 type GetRowKey = () => string;
@@ -40,7 +40,7 @@ export type MIRowEditableConfig<T> = RowEditableConfig<T> & {
 
 export type MIProTableProps<T, U, ValueType> = Omit<
   ProTableProps<T, U, ValueType>,
-  'request'
+  'request' | 'columns'
 > & {
   // model name, refer to @/models folder
   model?: string;
@@ -63,4 +63,7 @@ export type MIProTableProps<T, U, ValueType> = Omit<
   onRowDblClick?: (entity: T) => void;
   onEdit?: (entity: T) => void;
   rowKey?: RowKey;
+  columns?: ProColumns<T, ValueType>[] & {
+    sortBy? :string
+  };
 };

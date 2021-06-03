@@ -4,6 +4,7 @@ import type { ProColumns } from '@ant-design/pro-table';
   {
     dataIndex: 'code',
     sorter: true,
+    sortBy:'a.id',//sort by another field
     defaultSortOrder: 'ascend',
     formItemProps: {
       rules: [{ required: true }],

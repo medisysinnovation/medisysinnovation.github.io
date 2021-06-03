@@ -3,8 +3,7 @@ import { useContext, useEffect, useState, useCallback } from 'react';
 import {PageContext} from '../../context/pageContext';
 import { miRequest, getRowKey } from '../utils';
 import { MIConfig } from '@medisys/utils';
-import {APIInterface} from '../typing'
-import type { ProTableProps } from '@ant-design/pro-table';
+import {MIProTableProps, APIInterface} from '../typing'
 
 import type { ActionType } from '@ant-design/pro-table';
 const getUseModel=MIConfig.getModelHook
@@ -22,7 +21,8 @@ const PageList = <T extends {
   rowKey = 'id',
   editable,
   model,
-}: Omit<ProTableProps<T, U, ValueType>,  'editable'> & {
+  columns,
+}: Omit<MIProTableProps<T, U, ValueType>,  'editable'> & {
   actionRef: React.MutableRefObject<ActionType | undefined>;
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
   api: APIInterface<T>;
@@ -96,17 +96,28 @@ const PageList = <T extends {
     editable,
   ]);
 
+  const _request = useCallback(async ( params:any,sort:any,filter:any)=>{
+    console.log(params,sort,filter)
+    const convertedSort = Object.keys((sort || {})).reduce((acc,curr)=>{
+      return {
+        ...acc,
+        //@ts-ignore
+        [(columns || []).find(o=>o.dataIndex===curr)?.sortBy || curr]:sort[curr]
+      }
+    },{})
+    return request?.apply(undefined,[params,convertedSort,filter]) ||
+      MIConfig.getConfig('requestWrap')?.(queryList)?.apply(undefined,[params,convertedSort,filter]) ||
+      // @ts-ignore
+      miRequest(queryList)?.apply(undefined,[params,convertedSort,filter])
+  },[request,miRequest, queryList,MIConfig.getConfig('requestWrap')?.(queryList)])
+
   return {
     api: api || modelAPI,
     model: {
       ...restModel,
       api: api || modelAPI,
     },
-    request:
-      request ||
-      MIConfig.getConfig('requestWrap')?.(queryList) ||
-      // @ts-ignore
-      miRequest(queryList),
+    request:_request,
     postData: (data: any[]) => {
       let d = data;
       if (postData) {

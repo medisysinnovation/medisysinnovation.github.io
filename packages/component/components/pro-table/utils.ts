@@ -32,7 +32,6 @@ export const miRequest = (request: () => Promise<unknown>, params: Parameters) =
             ]
           : [],
     };
-
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-invalid-this
     const r = (await request.apply(this, args)) as any;

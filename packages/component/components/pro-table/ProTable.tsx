@@ -29,6 +29,8 @@ const MIProTable = <T, U, ValueType = 'text'>({
     //@ts-ignore
     actionRef,
     tableRef,
+    //@ts-ignore
+    column,
     ...props,
   });
 
