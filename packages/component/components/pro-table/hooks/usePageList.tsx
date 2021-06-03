@@ -104,7 +104,7 @@ const PageList = <T extends {
     },
     request:
       request ||
-      MIConfig.getConfig('requestWrap') ||
+      MIConfig.getConfig('requestWrap')?.(queryList) ||
       // @ts-ignore
       miRequest(queryList),
     postData: (data: any[]) => {
