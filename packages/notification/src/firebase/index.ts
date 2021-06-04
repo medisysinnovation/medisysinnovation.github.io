@@ -14,6 +14,7 @@ export const initFirebaseConfig = (option: FirebaseOptions) => {
 };
 
 export type ReceivedMessagePayload = {
+  /** This is your message payload, 'notification' prop is reserved, use to config browser notification content */
   data?: MessageData;
   priority?: 'low' | 'normal' | 'high';
   from: string;
@@ -76,6 +77,12 @@ export const initFirebaseMessagingAsync = async ({
             } catch (error) {
               console.error(`not able to parse payload ${parsedData}`);
             }
+            // console.log({
+            //   ...data,
+            //   ...data.data,
+            //   data: parsedData,
+            // });
+
             onMessageReceived({
               ...data,
               ...data.data,
@@ -84,6 +91,10 @@ export const initFirebaseMessagingAsync = async ({
           } else if (
             data.firebaseMessaging?.type === 'background-push-received'
           ) {
+            // console.log({
+            //   ...data.firebaseMessaging?.payload,
+            //   messageType: data.firebaseMessaging?.type,
+            // });
             onMessageReceived({
               ...data.firebaseMessaging?.payload,
               messageType: data.firebaseMessaging?.type,
@@ -186,6 +197,7 @@ export type MessageData = Record<string, any> & {
 };
 
 export type MessagePayload = ReceivedMessagePayload & {
+  /** Send to topic or send to token */
   identity: { topic: string } | { token: string };
   title: string;
   projectId?: string;

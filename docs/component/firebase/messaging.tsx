@@ -119,6 +119,8 @@ const MessagingDemo = () => {
             title: 'A message from Medisys Lab',
             data: {
               content: values.messageBody,
+              content2: '123123',
+              abc: true,
               notification: {
                 body: 'I am a testing message body',
               },

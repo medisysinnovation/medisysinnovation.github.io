@@ -25,6 +25,11 @@ import type { ProColumns } from '@ant-design/pro-table';
       rows: 1,
     },
   },
+  {
+    dataIndex: 'balance',
+    hideInForm: true,
+    valueType:'money'
+  },  
 ];
 
 export {defaultColumns}

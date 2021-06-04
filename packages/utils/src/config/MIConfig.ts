@@ -19,7 +19,7 @@ export interface MedisysConfigProps extends KeyValuePair {
   urls?: { [key: string]: string };
   cache?: boolean;
   request?: RequestConfig;
-  requestWrap?:RequestWrap
+  requestWrap?:RequestWrap;
 }
 
 const loadingStates: { [key: string]: boolean } = {};

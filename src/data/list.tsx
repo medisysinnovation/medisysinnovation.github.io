@@ -2,6 +2,7 @@ const sampleListData = [
   {
     id: '20d6aa1a-f5e4-4140-9f1a-73b53f9161ed',
     code: 'sss',
+    balance: 111111,
     displayValue: 'Female',
     description: 'Female',
     isActive: true,
@@ -12,6 +13,7 @@ const sampleListData = [
     concurrencyToken: 2478,
   },
   {
+    balance: 222222,
     id: 'e7ed747a-f51d-4c52-a87b-8996d34bf134',
     code: '33',
     displayValue: '33',

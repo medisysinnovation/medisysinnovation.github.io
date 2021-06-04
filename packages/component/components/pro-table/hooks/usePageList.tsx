@@ -4,8 +4,15 @@ import {PageContext} from '../../context/pageContext';
 import { miRequest, getRowKey } from '../utils';
 import { MIConfig } from '@medisys/utils';
 import {MIProTableProps, APIInterface} from '../typing'
+import { ConfigProvider } from '../../provider';
 
 import type { ActionType } from '@ant-design/pro-table';
+
+const localeMapper :{
+  [key: string]: string,
+ }={
+  en:'en-US'
+}
 const getUseModel=MIConfig.getModelHook
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PageList = <T extends {
@@ -35,7 +42,7 @@ const PageList = <T extends {
   const { setValues } = useContext(PageContext);
   const { model: defaultModel } = useContext(PageContext);
   const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model || defaultModel) as any) || {api:{}};
-
+  const {locale:{locale ='en-US'}={}}={} = useContext(ConfigProvider.ConfigContext)
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);
   useEffect(() => {
@@ -95,9 +102,17 @@ const PageList = <T extends {
     tableRef,
     editable,
   ]);
-
+console.log((columns || []).map(({valueType='text', ...o})=>{
+  return {
+    ...o,
+    valueType:{
+      type:valueType,
+      ...(typeof valueType ==='object'? valueType:{}),
+      locale:locale
+    }
+  }
+}))
   const _request = useCallback(async ( params:any,sort:any,filter:any)=>{
-    console.log(params,sort,filter)
     const convertedSort = Object.keys((sort || {})).reduce((acc,curr)=>{
       return {
         ...acc,
@@ -128,6 +143,16 @@ const PageList = <T extends {
     },
     rowKey: key,
     defaultEditCallback,
+    columns:(columns || []).map(({valueType='text', ...o})=>{
+      return {
+        ...o,
+        valueType:{
+          type:valueType,
+          ...(typeof valueType ==='object'? valueType:{}),
+          locale:localeMapper[locale]
+        }
+      }
+    })
   };
 };
 
