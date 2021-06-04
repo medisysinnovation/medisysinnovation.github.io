@@ -65,13 +65,13 @@ const MessagingDemo = () => {
   );
   useEffect(() => {
     initFirebaseMessagingAsync({
-      onGetFirebaseConfig: async () => {
+      onGetFirebaseConfigAsync: async () => {
         const response = await request(
           'https://localhost:44397/api/FirebaseMessaging/Config',
         );
         return response?.data;
       },
-      onGetSenderToken: async () => {
+      onGetSenderTokenAsync: async () => {
         const response = await request(
           'https://localhost:44397/api/FirebaseMessaging/SenderToken',
         );

@@ -1,9 +1,10 @@
 import app from 'firebase/app';
+import 'firebase/messaging';
+
 import { FirebaseOptions } from '@firebase/app-types';
 import request from 'umi-request';
 //Firebase messaging restful api
 //https://documenter.getpostman.com/view/5523742/RzZFBG7C#3864fe44-5434-43d1-a5a0-a46ac51bb5a8
-
 let fcmConfig: FirebaseConfig | undefined = undefined;
 let fcmSendMessageToken = '';
 export const initFirebaseConfig = (option: FirebaseOptions) => {
