@@ -70,10 +70,16 @@ export const initFirebaseMessagingAsync = async ({
         //@ts-ignore
         if (source!.scriptURL.indexOf('firebase-messaging-sw') > 0) {
           if (data.messageType === 'push-received') {
+            let parsedData = data?.data?.data;
+            try {
+              parsedData = JSON.parse(parsedData);
+            } catch (error) {
+              console.error(`not able to parse payload ${parsedData}`);
+            }
             onMessageReceived({
               ...data,
               ...data.data,
-              data: JSON.parse(data.data.data),
+              data: parsedData,
             });
           } else if (
             data.firebaseMessaging?.type === 'background-push-received'
