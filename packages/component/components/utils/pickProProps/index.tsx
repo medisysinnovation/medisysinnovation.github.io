@@ -10,6 +10,7 @@ export default function pickProProps(props: Record<string, any>) {
     if (propList.includes(key)) {
       return;
     }
+    //@ts-ignore
     attrs[key] = props[key];
   });
   return attrs;
