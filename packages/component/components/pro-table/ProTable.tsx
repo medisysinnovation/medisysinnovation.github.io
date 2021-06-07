@@ -91,7 +91,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
         columns={mergedColumns}
 
       />
-      {selectedRowsState?.length > 0 && features.includes('batchRemove') && (
+      {selectedRowsState?.length > 0 && features?.includes('batchRemove') && (
         <FooterPanel
           rowKey={rowKey}
           rows={selectedRowsState as []}
