@@ -77,6 +77,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
             // },
           }
         }
+        //@ts-ignore
         columns={mergedColumns}
         rowSelection={{
           onChange: (_:any, selectedRows:any) => {

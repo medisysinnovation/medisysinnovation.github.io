@@ -104,6 +104,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         size="small"
         search={{}}
         // style={}
+        //@ts-ignore
         columns={mergedColumns}
         // @ts-ignore
         recordCreatorProps={{
