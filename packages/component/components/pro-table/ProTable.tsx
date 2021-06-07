@@ -10,12 +10,25 @@ import {MIProTableProps} from './typing'
 
 
 const MyProTable = ProTable as any
-
+const _defaultFeatures=['batchRemove',{
+  code: 'edit',
+  render: (entity: any) => (
+    <a
+      key="edit"
+      // @ts-ignore
+      disabled={entity.isUserMaintainable === false}
+      // @ts-ignore
+      onClick={defaultEditCallback(entity)}
+    >
+      Edit
+    </a>
+  ),
+}, 'remove']
 const MIProTable = <T, U, ValueType = 'text'>({
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   optionColumnRender,
   columns = [],
-  features = ['batchRemove', 'remove'],
+  features = _defaultFeatures,
   postData,
   editable,
   // toolBarRender,
@@ -37,23 +50,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const { remove } = api;
 
   const optionRender = useOptionRender({
-    features: [
-      {
-        code: 'edit',
-        render: (entity: T) => (
-          <a
-            key="edit"
-            // @ts-ignore
-            disabled={entity.isUserMaintainable === false}
-            // @ts-ignore
-            onClick={defaultEditCallback(entity)}
-          >
-            Edit
-          </a>
-        ),
-      },
-      ...features.filter((o) => o !== 'edit'),
-    ],
+    features:_defaultFeatures,
     rowKey,
     api,
     tableRef,
