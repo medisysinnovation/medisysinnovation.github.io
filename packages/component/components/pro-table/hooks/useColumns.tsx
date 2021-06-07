@@ -92,7 +92,8 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
     if (defaultColumns.includes('options')) {
       extraCols.push({
         title: 'Option',
-        dataIndex: 'option',
+        dataIndex: 'options',
+        align:'center',
         valueType: 'option',
         render: optionRender,
         fixed: 'right',

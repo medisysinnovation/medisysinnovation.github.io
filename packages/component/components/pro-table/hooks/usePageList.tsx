@@ -103,6 +103,7 @@ const PageList = <T extends {
     editable,
   ]);
   const _request = useCallback(async ( params:any,sort:any,filter:any)=>{
+    //TODO: fix sort error when dataIndex is in ['a','id'] format
     const convertedSort = Object.keys((sort || {})).reduce((acc,curr)=>{
       return {
         ...acc,
@@ -133,9 +134,11 @@ const PageList = <T extends {
     },
     rowKey: key,
     defaultEditCallback,
-    columns:(columns || []).map(({valueType, ...o})=>{
+    columns:(columns || []).map(({valueType,...o})=>{
       if(!valueType) return o
       return {
+        //@ts-ignore
+        align:['money','digit'].includes(valueType)?'right':o.align,
         ...o,
         valueType:{
           type:valueType,
