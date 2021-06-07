@@ -133,7 +133,8 @@ const PageList = <T extends {
     },
     rowKey: key,
     defaultEditCallback,
-    columns:(columns || []).map(({valueType='text', ...o})=>{
+    columns:(columns || []).map(({valueType, ...o})=>{
+      if(!valueType) return o
       return {
         ...o,
         valueType:{
