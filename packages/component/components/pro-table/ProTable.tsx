@@ -59,7 +59,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
     editable,
   });
     //@ts-ignore
-  const mergedColumns = useColumns({ columns:convertedColumns, defaultColumns, optionRender });
+  const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
   return (
     <div ref={tableRef}>
       <MyProTable
