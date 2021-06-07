@@ -102,16 +102,6 @@ const PageList = <T extends {
     tableRef,
     editable,
   ]);
-console.log((columns || []).map(({valueType='text', ...o})=>{
-  return {
-    ...o,
-    valueType:{
-      type:valueType,
-      ...(typeof valueType ==='object'? valueType:{}),
-      locale:locale
-    }
-  }
-}))
   const _request = useCallback(async ( params:any,sort:any,filter:any)=>{
     const convertedSort = Object.keys((sort || {})).reduce((acc,curr)=>{
       return {

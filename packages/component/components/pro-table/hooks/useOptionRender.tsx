@@ -129,10 +129,10 @@ const useOptionRender = <
         },
       };
       features.forEach((f) => {
-        const addAction = (fn: TableFeature<T>, list: JSX.Element[]) => {
+        const action = (fn: TableFeature<T>, list: JSX.Element[]) => {
           if (typeof fn === 'string') {
             //@ts-ignore
-            if (defaultFeatures[fn]) addAction(defaultFeatures[fn], list);
+            if (defaultFeatures[fn]) action(defaultFeatures[fn], list);
           } else if (typeof fn === 'object' && (fn as ColumnAction<T>)?.code) {
             list.push(
               (fn as ColumnAction<T>)?.render
@@ -146,7 +146,7 @@ const useOptionRender = <
             list.push(fn as JSX.Element);
           }
         };
-        addAction(f, ary);
+        action(f, ary);
       });
 
       return ary;

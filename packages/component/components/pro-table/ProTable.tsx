@@ -50,7 +50,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const { remove } = api;
 
   const optionRender = useOptionRender({
-    features:_defaultFeatures,
+    features,
     rowKey,
     api,
     tableRef,
