@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef ,useMemo} from 'react';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import type { ActionType } from '@ant-design/pro-table';
 import EditableProTable from './ProEditableTable';
@@ -10,25 +10,27 @@ import {MIProTableProps} from './typing'
 
 
 const MyProTable = ProTable as any
-const _defaultFeatures=['batchRemove',{
-  code: 'edit',
-  render: (entity: any) => (
-    <a
-      key="edit"
-      // @ts-ignore
-      disabled={entity.isUserMaintainable === false}
-      // @ts-ignore
-      onClick={defaultEditCallback(entity)}
-    >
-      Edit
-    </a>
-  ),
-}, 'remove']
+const _defaultFeatures=useMemo(()=>{
+  return ['batchRemove',{
+    code: 'edit',
+    render: (entity: any) => (
+      <a
+        key="edit"
+        // @ts-ignore
+        disabled={entity.isUserMaintainable === false}
+        // @ts-ignore
+        onClick={defaultEditCallback!(entity)}
+      >
+        Edit
+      </a>
+    ),
+  }, 'remove']
+},[])
 const MIProTable = <T, U, ValueType = 'text'>({
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   optionColumnRender,
   columns = [],
-  features = _defaultFeatures,
+  features,
   postData,
   editable,
   // toolBarRender,
@@ -38,7 +40,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const [selectedRowsState, setSelectedRows] = useState<T[]>([]);
   const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
-  const { api, rowKey, defaultEditCallback, ...sharedPageProps } = usePageList({
+  const { api, rowKey, defaultEditCallback, columns:convertedColumns,...sharedPageProps } = usePageList({
     //@ts-ignore
     actionRef,
     tableRef,
@@ -47,10 +49,12 @@ const MIProTable = <T, U, ValueType = 'text'>({
     ...props,
   });
 
+
+
   const { remove } = api;
 
   const optionRender = useOptionRender({
-    features,
+    features:features || _defaultFeatures,
     rowKey,
     api,
     tableRef,
@@ -58,7 +62,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
     editable,
   });
     //@ts-ignore
-  const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
+  const mergedColumns = useColumns({ columns:convertedColumns, defaultColumns, optionRender });
   return (
     <div ref={tableRef}>
       <MyProTable

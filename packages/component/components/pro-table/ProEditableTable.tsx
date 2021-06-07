@@ -30,7 +30,6 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   editable,
   features = ['batchRemove', 'edit', 'duplicate', 'remove'],
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
-  columns = [],
   optionColumnEditRender,
   ...props
 }: MIProEditableTableProps<T, U, ValueType>) => {
@@ -40,7 +39,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
   const [lastRowId, setLastRowId] = useState();
-  const { api, model, rowKey, ...sharedPageProps } = usePageList({
+  const { api, model, rowKey,columns, ...sharedPageProps } = usePageList({
     //@ts-ignore
     actionRef,
     tableRef,
@@ -94,7 +93,6 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
       };
     }) as ProColumns<T>[];
   }, [originalColumns]);
-
   // @ts-ignore
   return (
     <div ref={tableRef}>
