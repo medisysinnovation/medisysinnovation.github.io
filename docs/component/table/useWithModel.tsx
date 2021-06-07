@@ -15,7 +15,7 @@ const EditableTableDemo = props => {
   return (
     <>
       <ConfigProvider locale={enUS}>
-        <ProTable model="couter" columns={defaultColumns} />
+        <ProTable.Editable model="couter" columns={defaultColumns} />
       </ConfigProvider>
     </>
   );

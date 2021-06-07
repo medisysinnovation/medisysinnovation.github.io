@@ -10,26 +10,10 @@ import {MIProTableProps} from './typing'
 
 
 const MyProTable = ProTable as any
-const _defaultFeatures=useMemo(()=>{
-  return ['batchRemove',{
-    code: 'edit',
-    render: (entity: any) => (
-      <a
-        key="edit"
-        // @ts-ignore
-        disabled={entity.isUserMaintainable === false}
-        // @ts-ignore
-        onClick={defaultEditCallback!(entity)}
-      >
-        Edit
-      </a>
-    ),
-  }, 'remove']
-},[])
+
 const MIProTable = <T, U, ValueType = 'text'>({
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   optionColumnRender,
-  columns = [],
   features,
   postData,
   editable,
@@ -40,16 +24,29 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const [selectedRowsState, setSelectedRows] = useState<T[]>([]);
   const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
-  const { api, rowKey, defaultEditCallback, columns:convertedColumns,...sharedPageProps } = usePageList({
+  const { api, rowKey, defaultEditCallback, columns,...sharedPageProps } = usePageList({
     //@ts-ignore
     actionRef,
     tableRef,
-    //@ts-ignore
-    columns,
     ...props,
   });
 
-
+  const _defaultFeatures=useMemo(()=>{
+    return ['batchRemove',{
+      code: 'edit',
+      render: (entity: any) => (
+        <a
+          key="edit"
+          // @ts-ignore
+          disabled={entity.isUserMaintainable === false}
+          // @ts-ignore
+          onClick={defaultEditCallback!(entity)}
+        >
+          Edit
+        </a>
+      ),
+    }, 'remove']
+  },[])
 
   const { remove } = api;
 
@@ -79,7 +76,6 @@ const MIProTable = <T, U, ValueType = 'text'>({
           }
         }
         //@ts-ignore
-        columns={mergedColumns}
         rowSelection={{
           onChange: (_:any, selectedRows:any) => {
             setSelectedRows(selectedRows);
@@ -92,8 +88,10 @@ const MIProTable = <T, U, ValueType = 'text'>({
         {...sharedPageProps}
         {...props}
         actionRef={actionRef}
+        columns={mergedColumns}
+
       />
-      {selectedRowsState?.length > 0 && features?.includes('batchRemove') && (
+      {selectedRowsState?.length > 0 && features.includes('batchRemove') && (
         <FooterPanel
           rowKey={rowKey}
           rows={selectedRowsState as []}

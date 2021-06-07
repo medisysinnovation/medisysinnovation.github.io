@@ -103,7 +103,6 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         search={{}}
         // style={}
         //@ts-ignore
-        columns={mergedColumns}
         // @ts-ignore
         recordCreatorProps={{
           // @ts-ignore
@@ -192,6 +191,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         }}
         {...sharedPageProps}
         {...props}
+        columns={mergedColumns}
         actionRef={actionRef}
       />
       {selectedRows?.length > 0 && features.includes('batchRemove') && (
