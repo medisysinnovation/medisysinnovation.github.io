@@ -24,7 +24,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const [selectedRowsState, setSelectedRows] = useState<T[]>([]);
   const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
-  const { api, rowKey, defaultEditCallback, columns,...sharedPageProps } = usePageList({
+  const { api, rowKey, defaultEditCallback, columns,postData:convertPostData,...sharedPageProps } = usePageList({
     //@ts-ignore
     actionRef,
     tableRef,
@@ -89,7 +89,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
         {...props}
         actionRef={actionRef}
         columns={mergedColumns}
-
+        postData={convertPostData}
       />
       {selectedRowsState?.length > 0 && features?.includes('batchRemove') && (
         <FooterPanel

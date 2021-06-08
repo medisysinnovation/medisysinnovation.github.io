@@ -29,6 +29,7 @@ const PageList = <T extends {
   editable,
   model,
   columns,
+  dataSource
 }: Omit<MIProTableProps<T, U, ValueType>,  'editable'> & {
   actionRef: React.MutableRefObject<ActionType | undefined>;
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
@@ -39,20 +40,26 @@ const PageList = <T extends {
   rowKey: string;
   model?: string;
 }) => {
-  const { setValues } = useContext(PageContext);
-  const { model: defaultModel } = useContext(PageContext);
+  const { setValues,model: defaultModel, ...reset } = useContext(PageContext);
   const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model || defaultModel) as any) || {api:{}};
   const {locale:{locale ='en-US'}={}}={} = useContext(ConfigProvider.ConfigContext)
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);
+  const [currentData, setCurrentData] = useState<T[]>([]);
+
   useEffect(() => {
-    if (setValues)
+    console.log(setValues,reset,defaultModel)
+    if (setValues){
       setValues({
         actionRef,
+        table:{
+          records:  dataSource || currentData
+        },
       });
-  }, [actionRef, setValues]);
+    }
 
-  const [currentData, setCurrentData] = useState<T[]>([]);
+  }, [actionRef, setValues,currentData,dataSource]);
+
 
   const defaultEditCallback = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

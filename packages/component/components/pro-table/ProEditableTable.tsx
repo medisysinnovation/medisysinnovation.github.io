@@ -39,11 +39,12 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
   const [lastRowId, setLastRowId] = useState();
-  const { api, model, rowKey,columns, ...sharedPageProps } = usePageList({
+  const { api, model, rowKey,columns,postData, ...sharedPageProps } = usePageList({
     //@ts-ignore
     actionRef,
     tableRef,
     editable: true,
+    
     ...props,
   });
   const { remove, create, update } = api!;
@@ -193,6 +194,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
         {...props}
         columns={mergedColumns}
         actionRef={actionRef}
+        postData={postData}
       />
       {selectedRows?.length > 0 && features.includes('batchRemove') && (
         <FooterPanel
