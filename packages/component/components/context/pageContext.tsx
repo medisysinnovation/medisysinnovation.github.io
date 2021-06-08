@@ -1,20 +1,26 @@
-import React from 'react';
-import type { ActionType } from '@ant-design/pro-table';
-
+import React,{useRef} from 'react';
+import { createContainer } from "unstated-next"
+import type {MIActionType} from '../pro-table/typing'
 type PageContextType = {
   model?: string;
   table?:any;
-  actionRef?: React.MutableRefObject<ActionType> | undefined;
+  actionRef?: React.MutableRefObject<MIActionType> | undefined;
   setValues: (newValues: any) => void;
 };
 
-const PageContext = React.createContext<PageContextType>({
-  model: '',
-  table:{},
-  actionRef: undefined,
-  setValues: (newValues: any) => {
-    return newValues;
-  },
-});
+const useCustomHook =()=>{
+  const actionRef = useRef()
+  return {
+    model: '',
+    table:{},
+    actionRef,
+    setValues: (newValues: any) => {
+      return newValues;
+    },
+  }
+}
+
+//@ts-ignore
+const PageContext = createContainer<PageContextType>(useCustomHook);
 
 export { PageContext };

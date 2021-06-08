@@ -1,6 +1,7 @@
 import type { ProSchema } from '@ant-design/pro-utils';
-import type {RowKey} from './typing'
+import type {RowKey,MIActionType,UseMIFetchDataAction} from './typing'
 import { removeEmpty, convertToAPIObject } from '@medisys/utils';
+
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (request: () => Promise<unknown>, params: Parameters) => {
   if (typeof request !== 'function') return null;
@@ -87,3 +88,24 @@ export const getRowKey = (rowKey: RowKey) => {
 
   return rowKey;
 };
+
+
+export function useMIActionType<T>(
+  ref: React.MutableRefObject<MIActionType | undefined>,
+  action: UseMIFetchDataAction<T>,
+  props: any,
+) {
+  // const {
+  //   dataSource,
+  //   currentData
+  // }=props
+  /** 这里生成action的映射，保证 action 总是使用的最新 只需要渲染一次即可 */
+  //@ts-ignore
+  const userAction: MIActionType = {
+    ...ref?.current,
+    getRecords: () => action.dataSource || action.currentData || []
+  };
+  console.log(userAction,ref)
+  // eslint-disable-next-line no-param-reassign
+  ref.current = userAction
+}

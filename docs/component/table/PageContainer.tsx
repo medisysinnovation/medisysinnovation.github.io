@@ -21,7 +21,7 @@ const MIPageContainer = ({
 
   return (
     <ConfigProvider componentSize="middle" locale={enUS}>
-      <PageContext.Provider value={values}>{children}</PageContext.Provider>
+      <PageContext.Provider>{children}</PageContext.Provider>
     </ConfigProvider>
   );
 };

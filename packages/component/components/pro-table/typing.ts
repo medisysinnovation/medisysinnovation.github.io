@@ -1,5 +1,5 @@
 import type { RowEditableConfig, ProCoreActionType, ProSchema } from '@ant-design/pro-utils';
-import type { ProTableProps,ProColumns } from '@ant-design/pro-table';
+import type { ProTableProps,ProColumns ,ActionType} from '@ant-design/pro-table';
 import type { ExtraColumn, TableFeature } from './hooks/useColumns';
 
 type GetRowKey = () => string;
@@ -9,6 +9,16 @@ export type Sorting = {
   sortBy?: string;
   order?: string;
 };
+
+export type MIActionType = {
+  getRecords?: () => readonly any[];
+} & ActionType;
+
+export type UseMIFetchDataAction<T = any> = {
+  dataSource: readonly T[] | undefined;
+  currentData: readonly T[] | undefined;
+};
+
 
 export type APIInterface<T> = {
   remove?: (keys: string[]) => Promise<unknown>;
@@ -67,3 +77,4 @@ export type MIProTableProps<T, U, ValueType> = Omit<
     sortBy? :string
   };
 };
+

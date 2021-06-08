@@ -1,4 +1,4 @@
-import React,{ useState, useRef, useMemo } from 'react';
+import React,{ useState, useRef, useMemo ,useEffect} from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
 import Button from '../button';
 import { message } from 'antd';
@@ -10,7 +10,7 @@ import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { uniqueid } from '@medisys/utils';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { MIProTableProps } from './typing';
+import type { MIProTableProps,MIActionType } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
 
@@ -36,17 +36,16 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   // const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   // const [cols, setCols] = useState<ProColumns<T>[]>([]);
-  const actionRef = useRef<ActionType>();
   const tableRef = useRef<HTMLDivElement>();
   const [lastRowId, setLastRowId] = useState();
-  const { api, model, rowKey,columns,postData, ...sharedPageProps } = usePageList({
-    //@ts-ignore
-    actionRef,
+
+  //@ts-ignore
+  const { api, model, rowKey,columns,postData, actionRef, ...sharedPageProps } = usePageList({
     tableRef,
     editable: true,
-    
     ...props,
   });
+
   const { remove, create, update } = api!;
 
   useHighlight({

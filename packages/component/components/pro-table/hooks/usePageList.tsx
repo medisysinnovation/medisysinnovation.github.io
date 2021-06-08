@@ -1,12 +1,11 @@
 import type React from 'react';
-import { useContext, useEffect, useState, useCallback } from 'react';
+import { useContext, useEffect, useState, useCallback,useRef } from 'react';
 import {PageContext} from '../../context/pageContext';
-import { miRequest, getRowKey } from '../utils';
+import { miRequest, getRowKey,useMIActionType } from '../utils';
 import { MIConfig } from '@medisys/utils';
 import {MIProTableProps, APIInterface} from '../typing'
 import { ConfigProvider } from '../../provider';
-
-import type { ActionType } from '@ant-design/pro-table';
+import {MIActionType} from '../typing'
 
 const localeMapper :{
   [key: string]: string,
@@ -18,7 +17,6 @@ const getUseModel=MIConfig.getModelHook
 const PageList = <T extends {
   [key: string]: number | string | boolean,
  }, U, ValueType>({
-  actionRef,
   tableRef,
   api,
   onRowDblClick,
@@ -29,9 +27,11 @@ const PageList = <T extends {
   editable,
   model,
   columns,
-  dataSource
+  dataSource,
+  actionRef:propsActionRef,
+
 }: Omit<MIProTableProps<T, U, ValueType>,  'editable'> & {
-  actionRef: React.MutableRefObject<ActionType | undefined>;
+  actionRef: React.MutableRefObject<MIActionType | undefined>;
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
   api: APIInterface<T>;
   onRowDblClick?: (entity: T) => void;
@@ -40,25 +40,40 @@ const PageList = <T extends {
   rowKey: string;
   model?: string;
 }) => {
-  const { setValues,model: defaultModel, ...reset } = useContext(PageContext);
-  const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model || defaultModel) as any) || {api:{}};
+  // const { setValues,model: defaultModel, ...reset } = PageContext.useContainer()// useContext(PageContext);
+  const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model) as any) || {api:{}};
   const {locale:{locale ='en-US'}={}}={} = useContext(ConfigProvider.ConfigContext)
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);
   const [currentData, setCurrentData] = useState<T[]>([]);
-
+  const actionRef = useRef<MIActionType>();
   useEffect(() => {
-    console.log(setValues,reset,defaultModel)
-    if (setValues){
-      setValues({
-        actionRef,
-        table:{
-          records:  dataSource || currentData
-        },
-      });
+    if (typeof propsActionRef === 'function' && actionRef.current) {
+      propsActionRef(actionRef.current);
     }
+  }, [propsActionRef]);
 
-  }, [actionRef, setValues,currentData,dataSource]);
+  useMIActionType(actionRef, {
+    dataSource,
+    currentData
+  }, {
+
+  })
+  if (propsActionRef) {
+    // @ts-ignore
+    propsActionRef.current = actionRef.current;
+  }
+  // useEffect(() => {
+  //   if (setValues){
+  //     setValues({
+  //       actionRef,
+  //       table:{
+  //         records:  dataSource || currentData
+  //       },
+  //     });
+  //   }
+
+  // }, [actionRef, setValues,currentData,dataSource]);
 
 
   const defaultEditCallback = useCallback(
@@ -125,6 +140,7 @@ const PageList = <T extends {
   },[request,miRequest, queryList,MIConfig.getConfig('requestWrap')?.(queryList)])
 
   return {
+    actionRef,
     api: api || modelAPI,
     model: {
       ...restModel,
