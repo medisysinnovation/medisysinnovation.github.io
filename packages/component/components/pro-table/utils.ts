@@ -93,6 +93,7 @@ export const getRowKey = (rowKey: RowKey) => {
 export function useMIActionType<T>(
   ref: React.MutableRefObject<MIActionType | undefined>,
   action: UseMIFetchDataAction<T>,
+  //@ts-ignore
   props: any,
 ) {
   // const {

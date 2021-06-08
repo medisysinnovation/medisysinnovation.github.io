@@ -1,6 +1,5 @@
 import type React from 'react';
 import { useContext, useEffect, useState, useCallback,useRef } from 'react';
-import {PageContext} from '../../context/pageContext';
 import { miRequest, getRowKey,useMIActionType } from '../utils';
 import { MIConfig } from '@medisys/utils';
 import {MIProTableProps, APIInterface} from '../typing'
@@ -40,7 +39,6 @@ const PageList = <T extends {
   rowKey: string;
   model?: string;
 }) => {
-  // const { setValues,model: defaultModel, ...reset } = PageContext.useContainer()// useContext(PageContext);
   const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model) as any) || {api:{}};
   const {locale:{locale ='en-US'}={}}={} = useContext(ConfigProvider.ConfigContext)
   const { queryList } = api || modelAPI;
@@ -49,6 +47,7 @@ const PageList = <T extends {
   const actionRef = useRef<MIActionType>();
   useEffect(() => {
     if (typeof propsActionRef === 'function' && actionRef.current) {
+      //@ts-ignore
       propsActionRef(actionRef.current);
     }
   }, [propsActionRef]);

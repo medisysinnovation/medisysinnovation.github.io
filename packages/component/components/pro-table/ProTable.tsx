@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo, useEffect } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import EditableProTable from './ProEditableTable';
 import { useColumns, useOptionRender, usePageList } from './hooks';
@@ -30,11 +30,8 @@ const MIProTable = <T, U, ValueType = 'text'>({
     postData: convertPostData,
     actionRef,
     ...sharedPageProps
-  } = usePageList({
-    tableRef,
-    editable: true,
-    ...props,
-  });
+    //@ts-ignore
+  } = usePageList({ tableRef, editable: true, ...props });
 
   const _defaultFeatures = useMemo(() => {
     return [

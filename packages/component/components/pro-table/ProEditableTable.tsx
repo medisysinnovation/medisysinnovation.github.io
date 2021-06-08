@@ -1,4 +1,4 @@
-import React,{ useState, useRef, useMemo ,useEffect} from 'react';
+import React,{ useState, useRef, useMemo } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
 import Button from '../button';
 import { message } from 'antd';
@@ -6,11 +6,11 @@ import { getDefaultErrorMessage } from './utils';
 import type { ActionRenderConfig, NewLineConfig } from '@ant-design/pro-utils/es/useEditableArray';
 import { SaveEditableAction, CancelEdit } from './ActionButton';
 import ProTable from './ProTable';
-import type { ProColumns, ActionType } from '@ant-design/pro-table';
+import type { ProColumns } from '@ant-design/pro-table';
 import { uniqueid } from '@medisys/utils';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { MIProTableProps,MIActionType } from './typing';
+import type { MIProTableProps } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
 
