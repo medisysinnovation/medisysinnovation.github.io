@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.189",
+  "version": "0.1.190",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -39,10 +39,10 @@
     "test:bak": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
+    "@ant-design/pro-descriptions": "^1.8.0",
     "@ant-design/pro-form": "^1.28.0",
     "@ant-design/pro-layout": "^6.19.4",
     "@ant-design/pro-table": "^2.40.0",
-    "@ant-design/pro-descriptions":"^1.8.0",
     "@medisys/utils": "^0.1.189",
     "@types/react-beautiful-dnd": "^13.0.0",
     "ahooks": "^2.10.4",
