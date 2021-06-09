@@ -56,7 +56,13 @@ const MIProTable = <T, U, ValueType = 'text'>({
   const { remove } = api;
 
   const optionRender = useOptionRender({
-    features: features || _defaultFeatures,
+    features: features
+      ? (features || []).map(o => {
+          return o === 'edit'
+            ? _defaultFeatures.find((o: any) => o?.code === 'edit')
+            : o;
+        })
+      : _defaultFeatures,
     rowKey,
     api,
     tableRef,

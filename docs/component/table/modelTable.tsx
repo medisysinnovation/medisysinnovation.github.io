@@ -9,7 +9,6 @@ import {
 } from '@medisys/component';
 
 import { MIConfig, sleep } from '@medisys/utils';
-import enUS from 'antd/es/locale/en_US';
 import { defaultColumns } from './utils';
 
 MIConfig.setConfig({

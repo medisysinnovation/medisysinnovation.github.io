@@ -78,13 +78,13 @@ const PageList = <T extends {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (entity) => (_e: Event) => {
       if(dispatch)
-      dispatch({
-        type: 'updateState',
-        payload: {
-          showDetail: true,
-          currentId: entity[rowKey as any],
-        },
-      });
+        dispatch({
+          type: 'updateState',
+          payload: {
+            showDetail: true,
+            currentId: entity[rowKey as any],
+          },
+        });
     },
     [dispatch, rowKey],
   );

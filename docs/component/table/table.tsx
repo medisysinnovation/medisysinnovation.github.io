@@ -26,6 +26,7 @@ const EditableTableDemo = props => {
         // ref={actionRef}
         dataSource={sampleListData}
         columns={defaultColumns}
+        features={['edit']}
       />
     </>
   );
