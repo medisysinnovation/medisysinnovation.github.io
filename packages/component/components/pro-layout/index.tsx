@@ -14,4 +14,4 @@ const MIProLayout = ProLayout as MIProLayout;
 MIProLayout.PageContainer = PageContainer;
 MIProLayout.SettingDrawer = SettingDrawer;
 
-export default ProLayout;
+export default MIProLayout;
