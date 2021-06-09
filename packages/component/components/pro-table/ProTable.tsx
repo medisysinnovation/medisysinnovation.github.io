@@ -30,7 +30,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
     actionRef,
     ...sharedPageProps
     //@ts-ignore
-  } = usePageList({ tableRef, editable: true, ...props });
+  } = usePageList({ tableRef, editable: false, ...props });
 
   const _defaultFeatures = useMemo(() => {
     return [
