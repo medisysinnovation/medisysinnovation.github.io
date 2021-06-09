@@ -15,6 +15,7 @@ export { default as DataSource } from './data-source';
 
 export { DragDropListTypes } from './drag-drop-list/interface.d';
 export { default as DragDropList } from './drag-drop-list';
+export { default as ProLayout } from './pro-layout';
 export { ProTable } from './pro-table';
 export { default as ProForm } from './pro-form';
 

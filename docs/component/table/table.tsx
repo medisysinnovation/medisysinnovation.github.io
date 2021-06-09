@@ -1,9 +1,8 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
 
-import { ProTable, PageContext, Button } from '@medisys/component';
+import { ProTable, PageContext, Button, ProLayout } from '@medisys/component';
 import { defaultColumns } from './utils';
 import { sampleListData } from '../../../src/data';
-import PageContainer from './PageContainer';
 const EditableTableDemo = props => {
   const { actionRef, table, ...rest } = PageContext.useContainer();
   // const actionRef = useRef();
