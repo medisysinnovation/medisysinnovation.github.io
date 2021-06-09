@@ -37,7 +37,6 @@ const FormProvider: React.FC<FormProviderProps> = ({
       value={{
         payload: contextData,
         setPayload: (v: MIFormContextPayload) => {
-          console.log(v);
           if (v.discard !== contextData.discard)
             // if (v.discard && form?.isFieldsTouched()) setContextData(v);
             setContextData(v);

@@ -44,10 +44,8 @@ const PageList = <T extends {
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);
   const [currentData, setCurrentData] = useState<T[]>([]);
-  const a =  PageContext.useContainer();
-  console.log(a)
-  const { actionRef:pageActionRef }=a
-  const _actionRef = useRef()
+  const { actionRef:pageActionRef } =  PageContext.useContainer();
+  const _actionRef = useRef<MIActionType>()
   useEffect(() => {
     if (typeof propsActionRef === 'function' && pageActionRef?.current) {
       //@ts-ignore

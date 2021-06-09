@@ -32,7 +32,6 @@ const MIInput: React.ForwardRefRenderFunction<
     }
     return myRef.current;
   });
-  console.log(restProps);
 
   if (text || readonly) return <span>{restProps.value || ''}</span>;
   return <InputNumber {...restProps} ref={myRef as any} />;

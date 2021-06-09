@@ -1,8 +1,6 @@
-import {useEffect} from 'react'
 import type { ProSchema } from '@ant-design/pro-utils';
 import type {RowKey,MIActionType,UseMIFetchDataAction} from './typing'
 import { removeEmpty, convertToAPIObject } from '@medisys/utils';
-import {PageContext} from '../context'
 
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (request: () => Promise<unknown>, params: Parameters) => {
