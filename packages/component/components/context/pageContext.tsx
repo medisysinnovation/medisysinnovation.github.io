@@ -1,5 +1,5 @@
-import React,{useRef} from 'react';
-import { createContainer } from "unstated-next"
+import React,{useRef, useState} from 'react';
+import { createContainer } from "../utils/usestated-next"
 import type {MIActionType} from '../pro-table/typing'
 type PageContextType = {
   model?: string;
@@ -9,14 +9,23 @@ type PageContextType = {
 };
 
 const useCustomHook =()=>{
-  const actionRef = useRef()
-  return {
+  const actionRef = useRef<MIActionType>()
+
+  const [state, setState] = useState({
     model: '',
     table:{},
     actionRef,
-    setValues: (newValues: any) => {
-      return newValues;
-    },
+  })
+  console.log(state)
+  const updateState =(newValues:any)=>{
+    setState({
+      ...state,
+      ...newValues
+    })
+  }
+  return {
+    ...state,
+    updateState
   }
 }
 

@@ -6,23 +6,25 @@ import { sampleListData } from '../../../src/data';
 import PageContainer from './PageContainer';
 const EditableTableDemo = props => {
   const { actionRef, table, ...rest } = PageContext.useContainer();
+  // const actionRef = useRef();
   useEffect(() => {
     console.log(actionRef);
   }, []);
-
   return (
     <>
       <Button
         onClick={() => {
-          console.log(table);
-          console.log(actionRef);
-          console.log(actionRef?.current?.getRecords());
+          // console.log(table);
+          console.log(actionRef?.current);
+          console.log(actionRef?.current?.getRecords?.());
+          // actionRef?.current?.getRecords();
         }}
       >
         Log Current Data
       </Button>
       <ProTable
-        actionRef={actionRef}
+        // actionRef={actionRef}
+        // ref={actionRef}
         dataSource={sampleListData}
         columns={defaultColumns}
       />

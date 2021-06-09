@@ -1,6 +1,8 @@
+import {useEffect} from 'react'
 import type { ProSchema } from '@ant-design/pro-utils';
 import type {RowKey,MIActionType,UseMIFetchDataAction} from './typing'
 import { removeEmpty, convertToAPIObject } from '@medisys/utils';
+import {PageContext} from '../context'
 
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (request: () => Promise<unknown>, params: Parameters) => {
@@ -96,6 +98,7 @@ export function useMIActionType<T>(
   //@ts-ignore
   props: any,
 ) {
+  if(!ref)return
   // const {
   //   dataSource,
   //   currentData
@@ -106,7 +109,18 @@ export function useMIActionType<T>(
     ...ref?.current,
     getRecords: () => action.dataSource || action.currentData || []
   };
-  console.log(userAction,ref)
+  // const {actionRef, updateState} =  PageContext.useContainer();
+  // useEffect(()=>{
+  //   if(updateState && actionRef?.current!==userAction){
+  //     updateState({
+  //       actionRef:{
+  //         current:userAction
+  //       }
+  //     })
+  //   }
+  // },[userAction])
+
   // eslint-disable-next-line no-param-reassign
   ref.current = userAction
+  return userAction
 }

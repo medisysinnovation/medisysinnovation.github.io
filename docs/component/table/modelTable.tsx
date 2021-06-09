@@ -16,8 +16,8 @@ MIConfig.setConfig({
   model: useModel,
 });
 const EditableTableDemo = props => {
-  // const { actionRef, table, ...rest } = useContext(PageContext);
-  const actionRef = useRef();
+  const { actionRef, table, ...rest } = PageContext.useContainer();
+  // const actionRef = useRef();
   useEffect(() => {
     console.log(actionRef);
   }, []);
@@ -34,7 +34,7 @@ const EditableTableDemo = props => {
         Log Current Data
       </Button>
       <ProTable.Editable
-        actionRef={actionRef}
+        // actionRef={actionRef}
         model="couter"
         columns={defaultColumns}
         // postData={d => {

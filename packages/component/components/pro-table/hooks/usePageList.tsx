@@ -1,11 +1,11 @@
 import type React from 'react';
-import { useContext, useEffect, useState, useCallback,useRef } from 'react';
+import { useContext, useEffect, useState, useCallback,useRef ,useImperativeHandle} from 'react';
 import { miRequest, getRowKey,useMIActionType } from '../utils';
 import { MIConfig } from '@medisys/utils';
 import {MIProTableProps, APIInterface} from '../typing'
 import { ConfigProvider } from '../../provider';
 import {MIActionType} from '../typing'
-
+import {PageContext} from '../../context'
 const localeMapper :{
   [key: string]: string,
  }={
@@ -44,35 +44,36 @@ const PageList = <T extends {
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);
   const [currentData, setCurrentData] = useState<T[]>([]);
-  const actionRef = useRef<MIActionType>();
+  const a =  PageContext.useContainer();
+  console.log(a)
+  const { actionRef:pageActionRef }=a
+  const _actionRef = useRef()
   useEffect(() => {
-    if (typeof propsActionRef === 'function' && actionRef.current) {
+    if (typeof propsActionRef === 'function' && pageActionRef?.current) {
       //@ts-ignore
       propsActionRef(actionRef.current);
     }
   }, [propsActionRef]);
-
-  useMIActionType(actionRef, {
+  const actionRef=_actionRef || propsActionRef
+  const actions = useMIActionType(actionRef, {
     dataSource,
     currentData
   }, {
 
   })
+  //@ts-ignore
+  useImperativeHandle(pageActionRef, () => {
+    return {
+      //@ts-ignore
+      ...actionRef.current,
+      ...actions,
+    }
+  });
+
   if (propsActionRef) {
     // @ts-ignore
     propsActionRef.current = actionRef.current;
   }
-  // useEffect(() => {
-  //   if (setValues){
-  //     setValues({
-  //       actionRef,
-  //       table:{
-  //         records:  dataSource || currentData
-  //       },
-  //     });
-  //   }
-
-  // }, [actionRef, setValues,currentData,dataSource]);
 
 
   const defaultEditCallback = useCallback(

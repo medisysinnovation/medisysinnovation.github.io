@@ -4,8 +4,7 @@ import EditableProTable from './ProEditableTable';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
 import { MIProTableProps } from './typing';
-import { PageContext } from '../context';
-
+// import PageContextWrap from './PageContextWrap';
 const MyProTable = ProTable as any;
 
 const MIProTable = <T, U, ValueType = 'text'>({
@@ -67,49 +66,47 @@ const MIProTable = <T, U, ValueType = 'text'>({
   //@ts-ignore
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
   return (
-    <PageContext.Provider>
-      <div ref={tableRef}>
-        <MyProTable
-          rowKey={rowKey}
-          bordered
-          size="small"
-          search={
-            {
-              // optionRender: (searchConfig, p, dom) => {
-              //   // ?: ((searchConfig: Omit<BaseQueryFilterProps, 'submitter' | 'isForm'>, props: Omit<BaseQueryFilterProps, 'searchConfig'>, dom: React.ReactNode[]) => React.ReactNode[]) | false;
-              //   console.log(searchConfig, p, dom);
-              //   return dom;
-              // },
-            }
+    <div ref={tableRef}>
+      <MyProTable
+        rowKey={rowKey}
+        bordered
+        size="small"
+        search={
+          {
+            // optionRender: (searchConfig, p, dom) => {
+            //   // ?: ((searchConfig: Omit<BaseQueryFilterProps, 'submitter' | 'isForm'>, props: Omit<BaseQueryFilterProps, 'searchConfig'>, dom: React.ReactNode[]) => React.ReactNode[]) | false;
+            //   console.log(searchConfig, p, dom);
+            //   return dom;
+            // },
           }
-          //@ts-ignore
-          rowSelection={{
-            onChange: (_: any, selectedRows: any) => {
-              setSelectedRows(selectedRows);
-            },
+        }
+        //@ts-ignore
+        rowSelection={{
+          onChange: (_: any, selectedRows: any) => {
+            setSelectedRows(selectedRows);
+          },
+        }}
+        editable={editable}
+        // toolBarRender={toolBarRender.map((o) => {
+        //   return o;
+        // })}
+        {...sharedPageProps}
+        {...props}
+        actionRef={actionRef}
+        columns={mergedColumns}
+        postData={convertPostData}
+      />
+      {selectedRowsState?.length > 0 && features?.includes('batchRemove') && (
+        <FooterPanel
+          rowKey={rowKey}
+          rows={selectedRowsState as []}
+          onRemove={remove!}
+          onSuccess={() => {
+            actionRef.current?.reloadAndRest?.();
           }}
-          editable={editable}
-          // toolBarRender={toolBarRender.map((o) => {
-          //   return o;
-          // })}
-          {...sharedPageProps}
-          {...props}
-          actionRef={actionRef}
-          columns={mergedColumns}
-          postData={convertPostData}
         />
-        {selectedRowsState?.length > 0 && features?.includes('batchRemove') && (
-          <FooterPanel
-            rowKey={rowKey}
-            rows={selectedRowsState as []}
-            onRemove={remove!}
-            onSuccess={() => {
-              actionRef.current?.reloadAndRest?.();
-            }}
-          />
-        )}
-      </div>
-    </PageContext.Provider>
+      )}
+    </div>
   );
 };
 

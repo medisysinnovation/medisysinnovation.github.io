@@ -1,5 +1,5 @@
 import SaveTokenPayload from '../interface/misc/SaveTokenPayload';
-import { getKey } from '../helper';
+import { getKey } from '../helper/utils';
 export const saveAuthToken = (payload: SaveTokenPayload) => {
   const { access_token: accessToken, refresh_token: refreshToken } = payload;
   localStorage.setItem(getKey('accessToken'), accessToken);
