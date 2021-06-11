@@ -13,7 +13,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { MIProTableProps } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
-import { ConfigProviderWrap,useIntl } from '@medisys/provider'
+import { ConfigProviderWrap,useIntl } from '../locale'
 import type { ParamsType } from '@ant-design/pro-provider';
 
 // import { convertMessages } from '@/utils/validation/validUtil';

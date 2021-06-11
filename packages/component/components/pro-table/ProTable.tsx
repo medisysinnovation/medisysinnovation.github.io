@@ -5,10 +5,9 @@ import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
 import { MIProTableProps } from './typing';
 import type { ParamsType } from '@ant-design/pro-provider';
-import { useIntl } from '@medisys/provider';
+import { useIntl ,ConfigProviderWrap} from '../locale';
 
 // import PageContextWrap from './PageContextWrap';
-import { ConfigProviderWrap } from '@medisys/provider';
 const MyProTable = ProTable as any;
 
 const MIProTable = <T, U, ValueType = 'text'>({

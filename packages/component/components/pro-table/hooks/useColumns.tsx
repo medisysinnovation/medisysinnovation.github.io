@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import type { ProColumns } from '@ant-design/pro-table';
 import DatePicker from '../../date-picker';
 import humps from 'humps';
-import { useIntl } from '@medisys/provider';
+import { useIntl } from  '../../locale';
 
 export type ExtraColumn = 'createdBy' | 'updatedBy' | 'options';
 export type DefaultTableOption = 'edit' | 'remove' | 'duplicate' | 'batchRemove' | 'toggleStatus';

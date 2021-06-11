@@ -6,7 +6,7 @@ import type {APIInterface, MIRowEditableConfig} from '../typing'
 import { message } from 'antd';
 import type { TableFeature, ColumnAction } from './useColumns';
 import useHighlight from './useHighlight';
-import { useIntl } from '@medisys/provider';
+import { useIntl } from  '../../locale';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useOptionRender = <
