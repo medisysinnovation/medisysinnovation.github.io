@@ -5,6 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import set from 'rc-util/lib/utils/set';
 import Popconfirm from '../popconfirm';
 import type { ActionType } from '@ant-design/pro-table';
+import { useIntl } from '@medisys/provider'
 
 import { message } from 'antd';
 
@@ -12,6 +13,8 @@ export const SaveEditableAction: React.FC<
   ActionRenderConfig<any> & { row: any; elementProps?: any }
 > = ({ recordKey, onSave, form, row, children, newLineConfig, editorType, elementProps }) => {
   const [loading, setLoading] = useMountMergeState<boolean>(false);
+  const intl = useIntl();
+
   return (
     <a
       key="save"
@@ -54,7 +57,7 @@ export const SaveEditableAction: React.FC<
           }}
         />
       ) : null}
-      {children || 'Save'}
+      {children || intl.getMessage('table.action.save', 'Save')}
     </a>
   );
 };

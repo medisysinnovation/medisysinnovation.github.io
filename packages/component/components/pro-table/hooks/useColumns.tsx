@@ -1,7 +1,8 @@
-import { useMemo } from 'react';
+import { useMemo ,useContext} from 'react';
 import type { ProColumns } from '@ant-design/pro-table';
 import DatePicker from '../../date-picker';
 import humps from 'humps';
+import { useIntl } from '@medisys/provider';
 
 export type ExtraColumn = 'createdBy' | 'updatedBy' | 'options';
 export type DefaultTableOption = 'edit' | 'remove' | 'duplicate' | 'batchRemove' | 'toggleStatus';
@@ -32,6 +33,7 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
   optionRender?: any;
   rowKey?: string;
 }) => {
+  const intl = useIntl();
   const mergedColumns = useMemo(() => {
     const extraCols: ProColumns<T, ValueType>[] = [];
     if (defaultColumns.includes('createdBy')) {
@@ -42,7 +44,7 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
         hideInSearch: true,
       });
       extraCols.push({
-        title: 'Create By / Date',
+        title: intl.getMessage('table.column.createByAndDate', 'Create By / Date'),
         dataIndex: 'createDate',
         editable: false,
         hideInSearch: true,
@@ -57,7 +59,7 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
           // @ts-ignore
           if (!entity.createdByUser) return '-';
           // @ts-ignore
-          return `${entity.createdByUser} on ${entity.createDate?.format()}`;
+          return `${entity.createdByUser} ${intl.getMessage('table.template.on', 'on')} ${entity.createDate?.format()}`;
         },
       });
     }
@@ -69,7 +71,7 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
         hideInSearch: true,
       });
       extraCols.push({
-        title: 'Update By / Date',
+        title: intl.getMessage('table.column.updateByAndDate', 'Update By / Date'),
         dataIndex: 'updateDate',
         editable: false,
         hideInSearch: true,
@@ -84,14 +86,14 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
           // @ts-ignore
           if (!entity.updatedByUser) return '-';
           // @ts-ignore
-          return `${entity.updatedByUser} on ${entity.updateDate?.format()}`;
+          return `${entity.updatedByUser} ${intl.getMessage('table.template.on', 'on')} ${entity.updateDate?.format()}`;
         },
       });
     }
 
     if (defaultColumns.includes('options')) {
       extraCols.push({
-        title: 'Option',
+        title: intl.getMessage('table.column.option', 'Option'),
         dataIndex: 'options',
         align:'center',
         valueType: 'option',

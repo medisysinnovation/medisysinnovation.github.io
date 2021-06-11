@@ -4,7 +4,11 @@ import EditableProTable from './ProEditableTable';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
 import { MIProTableProps } from './typing';
+import type { ParamsType } from '@ant-design/pro-provider';
+import { useIntl } from '@medisys/provider';
+
 // import PageContextWrap from './PageContextWrap';
+import { ConfigProviderWrap } from '@medisys/provider';
 const MyProTable = ProTable as any;
 
 const MIProTable = <T, U, ValueType = 'text'>({
@@ -19,6 +23,8 @@ const MIProTable = <T, U, ValueType = 'text'>({
   // @ts-ignore
   const [selectedRowsState, setSelectedRows] = useState<T[]>([]);
   const tableRef = useRef<HTMLDivElement>();
+  const intl = useIntl();
+
   //@ts-ignore
   const {
     api,
@@ -45,7 +51,7 @@ const MIProTable = <T, U, ValueType = 'text'>({
             // @ts-ignore
             onClick={defaultEditCallback!(entity)}
           >
-            Edit
+           {intl.getMessage('table.action.edit', 'Edit')}
           </a>
         ),
       },
@@ -116,7 +122,21 @@ const MIProTable = <T, U, ValueType = 'text'>({
   );
 };
 
-MIProTable.TableDropdown = TableDropdown;
-MIProTable.Editable = EditableProTable;
+const ProviderWarp = <
+  T extends Record<string, any>,
+  U extends ParamsType = ParamsType,
+  ValueType = 'text'
+>(
+  props: MIProTableProps<T, U, ValueType>,
+) => {
+  return (
+    <ConfigProviderWrap>
+      <MIProTable<T, U, ValueType> {...props} />
+    </ConfigProviderWrap>
+  );
+};
 
-export default MIProTable;
+ProviderWarp.TableDropdown = TableDropdown;
+ProviderWarp.Editable =EditableProTable
+
+export default ProviderWarp;
