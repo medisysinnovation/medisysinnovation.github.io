@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { ConfigProvider as AntdConfigProvider } from '@medisys/component';
+import { ConfigProvider as AntdConfigProvider } from 'antd';
+
 import en_US from 'antd/lib/locale/en_US';
 
 import zhCN from './locale/zh_CN';
@@ -194,6 +195,7 @@ const ConfigProviderWrap: React.FC<Record<string, unknown>> = ({
             : {};
 
         return (
+          //@ts-ignore
           <Provider {...configProvider}>
             <ConfigProvider
               value={{

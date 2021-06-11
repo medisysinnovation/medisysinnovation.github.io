@@ -1,2 +1,2 @@
 export { FormProvider } from './form';
-export { ConfigProvider } from 'antd';
+export { ConfigProvider } from '@medisys/provider';
