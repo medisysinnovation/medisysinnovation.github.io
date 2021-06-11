@@ -1,6 +1,6 @@
 {
   "name": "@medisys/provider",
-  "version": "0.1.179",
+  "version": "0.1.194",
   "description": "Notification based on firebase",
   "author": "Chris Lu Yi <chrisluyi@gmail.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -24,8 +24,6 @@
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
-  },
-  "dependencies": {
   },
   "peerDependencies": {
     "antd": "4.x",
