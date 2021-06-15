@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PageContext, ConfigProvider } from '@medisys/component';
+// import { ConfigProvider } from 'antd';
 import enUS from 'antd/es/locale/en_US';
-
 const MIPageContainer = ({
   children,
   ...props

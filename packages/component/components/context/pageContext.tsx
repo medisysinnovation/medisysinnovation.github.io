@@ -16,7 +16,6 @@ const useCustomHook =()=>{
     table:{},
     actionRef,
   })
-  console.log(state)
   const updateState =(newValues:any)=>{
     setState({
       ...state,

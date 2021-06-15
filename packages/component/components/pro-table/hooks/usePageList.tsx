@@ -40,6 +40,7 @@ const PageList = <T extends {
   model?: string;
 }) => {
   const { api: modelAPI, dispatch, ...restModel } = getUseModel()((model) as any) || {api:{}};
+  //@ts-ignore
   const {locale:{locale ='en-US'}={}}={} = useContext(ConfigProvider.ConfigContext)
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);

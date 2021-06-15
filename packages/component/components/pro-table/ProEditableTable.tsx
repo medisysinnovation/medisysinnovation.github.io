@@ -13,6 +13,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { MIProTableProps } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
+import { ConfigProviderWrap,useIntl } from '../locale'
+import type { ParamsType } from '@ant-design/pro-provider';
 
 // import { convertMessages } from '@/utils/validation/validUtil';
 // import type { FormInstance, FormItemProps } from 'antd/lib/form';
@@ -38,7 +40,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
   // const [cols, setCols] = useState<ProColumns<T>[]>([]);
   const tableRef = useRef<HTMLDivElement>();
   const [lastRowId, setLastRowId] = useState();
-
+  const intl = useIntl();
   //@ts-ignore
   const { api, model, rowKey,columns,postData, actionRef, ...sharedPageProps } = usePageList({
     tableRef,
@@ -155,7 +157,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
               throw new Error('`create` and `update` api function not passed');
             }
             const newId: any = newLine ? await create(row) : await update(row);
-            message.success(`Record ${newLine ? 'created' : 'updated'}`);
+            message.success(newLine?intl.getMessage('table.message.recordCreated', 'Record created') :intl.getMessage('table.message.recordUpdated', 'Record updated'));
             setLastRowId(newId || rowId);
             // console.log(key);
             actionRef.current?.cancelEditable(rowId);
@@ -181,7 +183,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
               {
               //@ts-ignore
               <PlusOutlined />
-              } New
+              } {intl.getMessage('table.action.new', 'New')}
             </Button>
           </ProTable.Editable.RecordCreator>,
         ]}
@@ -209,5 +211,22 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
     </div>
   );
 };
-MIEditableProTable.RecordCreator = EditableProTable.RecordCreator;
-export default MIEditableProTable;
+
+
+const EditableProviderWrap=<
+T extends Record<string, any>,
+U extends ParamsType = ParamsType,
+ValueType = 'text'
+>(
+props: MIProTableProps<T, U, ValueType>,
+) => {
+return (
+<ConfigProviderWrap>
+  <MIEditableProTable<T, U, ValueType> {...props} />
+</ConfigProviderWrap>
+);
+};
+
+
+EditableProviderWrap.RecordCreator = EditableProTable.RecordCreator;
+export default EditableProviderWrap;

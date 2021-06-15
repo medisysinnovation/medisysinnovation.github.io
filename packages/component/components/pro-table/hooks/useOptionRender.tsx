@@ -6,6 +6,7 @@ import type {APIInterface, MIRowEditableConfig} from '../typing'
 import { message } from 'antd';
 import type { TableFeature, ColumnAction } from './useColumns';
 import useHighlight from './useHighlight';
+import { useIntl } from  '../../locale';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useOptionRender = <
@@ -29,6 +30,8 @@ const useOptionRender = <
   editable?: MIRowEditableConfig<T>;
 
 }) => {
+  const intl = useIntl();
+
   const [lastRowId, setLastRowId] = useState<string>();
   useHighlight({
     tableRef,
@@ -52,7 +55,7 @@ const useOptionRender = <
             disabled={entity.isUserMaintainable === false}
             onClick={() => action.startEditable?.(entity[rowKey] as React.Key)}
           >
-            Edit
+            {intl.getMessage('table.action.edit','Edit')}
           </a>
         ),
         duplicate: (
@@ -72,13 +75,14 @@ const useOptionRender = <
                 [rowKey]: uniqueid(),
               });
               if (opt) await action?.reloadAndRest?.();
-              message.success('Record duplicated');
+              message.success(intl.getMessage('table.action.recordDuplicated','Record duplicated'));
               setLastRowId(newId);
               editable?.onRowDataChanged?.([newId]);
 
             }}
           >
-            Duplicate
+            {intl.getMessage('table.action.duplicate','Duplicate')}
+            
           </a>
         ),
         remove: (
@@ -91,7 +95,7 @@ const useOptionRender = <
             }}
             rows={[entity]}
           >
-            <a disabled={entity.isUserMaintainable === false}>Delete</a>
+            <a disabled={entity.isUserMaintainable === false}>{intl.getMessage('table.action.delete','Delete')}</a>
           </DeleteWrapper>
         ),
         toggleStatus: () => {
@@ -108,7 +112,7 @@ const useOptionRender = <
                   ? ((await query!({ id: entity[rowKey] })) as any)
                   : { data: entity };
                 if (entity[opt.filedName] !== latestEntity[opt.filedName]) {
-                  message.warning('Data has been changed');
+                  message.warning(intl.getMessage('table.message.dirtyDataUpdate','Data has been changed'));
                   action?.reload();
                   return;
                 }
@@ -123,7 +127,7 @@ const useOptionRender = <
 
               }}
             >
-              {entity[opt.filedName] === true ? 'Deactivate' : 'Active'}
+              {entity[opt.filedName] === true ? intl.getMessage('table.action.deactivate','Deactivate') : intl.getMessage('table.action.activate','Activate')}
             </a>
           );
         },

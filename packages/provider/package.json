@@ -1,0 +1,39 @@
+{
+  "name": "@medisys/provider",
+  "version": "0.1.194",
+  "description": "Notification based on firebase",
+  "author": "Chris Lu Yi <chrisluyi@gmail.com>",
+  "homepage": "https://github.com/medisysinnovation/medisys#readme",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "src": "dist",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/medisysinnovation/medisys.git"
+  },
+  "bugs": {
+    "url": "https://github.com/medisysinnovation/medisys/issues"
+  },
+  "peerDependencies": {
+    "antd": "4.x",
+    "react": ">=17.0.0"
+  },
+  "scripts": {
+    "build": "father-build",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage",
+    "tsc": "tsc --noEmit",
+    "build:compress": "tsc && microbundle --format modern"
+  }
+}
