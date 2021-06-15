@@ -98,7 +98,6 @@ const PageList = <T extends {
       const clickedRowKey = tr?.getAttribute('data-row-key');
       if (clickedRowKey) {
         const entity = currentData?.find((o) => `${o[rowKey]}` === clickedRowKey) as T;
-        console.log(entity)
         if (onRowDblClick) {
           onRowDblClick(entity);
         } else if (!editable && defaultEditCallback) {
