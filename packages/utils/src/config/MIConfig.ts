@@ -150,8 +150,14 @@ class MIConfig {
       return;
     }
     loadingStates[code] = true;
-    //@ts-ignore
-    const data = await _config.dataLoader({ code, ...params });
+    let data:[]=[]
+    try {
+          //@ts-ignore
+     data = await _config.dataLoader({ code, ...params });
+    } catch (error) {
+      console.error(error)
+    }
+    
     delete loadingStates[code];
     if (data) {
       this.updateState({
