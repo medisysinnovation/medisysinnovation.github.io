@@ -29,8 +29,8 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
     if (autoTransferTime && !showTime) {
       let needChange = false;
       if (
-        v?.[0].format('HH:mm:ss') !== '00:00:00' ||
-        v?.[1].format('HH:mm:ss') !== '23:59:59'
+        v?.[0]?.format('HH:mm:ss') !== '00:00:00' ||
+        v?.[1]?.format('HH:mm:ss') !== '23:59:59'
       ) {
         needChange = true;
       }
