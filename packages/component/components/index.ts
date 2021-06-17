@@ -25,6 +25,8 @@ export { default as ProSwitch } from './pro-switch';
 export { default as ProRadio } from './pro-radio';
 export { default as ProCheckbox } from './pro-checkbox';
 export { default as ProNumber } from './pro-number';
+export { default as ProRangeDatePicker } from './pro-range-datepicker';
+export { default as ProDatePicker } from './pro-datepicker';
 
 export * from './provider';
 export * from './context';

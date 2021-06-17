@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { abc } from '@medisys/test';
-import { DatePicker, Form } from '@medisys/component';
+import { DatePicker, Form, ProRangeDatePicker } from '@medisys/component';
 import { Switch } from 'antd';
 
 const { RangePicker } = DatePicker;
@@ -22,13 +21,12 @@ export default function() {
         form={form}
         initialValues={{
           autoTransfer: true,
-          dateFilter: [moment(), moment()],
+          dateFilter: ['1990-01-01T01:01:00+08:00', moment()],
         }}
       >
         <Form.Item shouldUpdate>
           {({ getFieldsValue }) => {
-            const { dateFilter = [], autoTransfer } = getFieldsValue();
-            // console.log(dateFilter, autoTransfer);
+            const { dateFilter = [] } = getFieldsValue();
             return (
               <div>
                 Date selected : {dateFilter[0]?.format()} to{' '}
@@ -52,6 +50,7 @@ export default function() {
             // }}
           />
         </Form.Item>
+        <ProRangeDatePicker name="dateFilter" />
         {/* <Form.Item shouldUpdate>
           {form => {
             const { dateFilter = [], autoTransfer } = form.getFieldsValue();

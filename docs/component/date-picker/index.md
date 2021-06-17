@@ -7,6 +7,10 @@ group:
   path: /date-picker
 ---
 
+## Date Picker
+
+<code src="./basic" title='Basic usage' desc='Basic usage example.'/>
+
 ## Range Picker
 
 <code src="./range-picker" title='Basic usage' desc='Basic usage example.'/>
