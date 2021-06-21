@@ -3,14 +3,14 @@ import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import EditableProTable from './ProEditableTable';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
-import { MIProTableProps } from './typing';
+import { MIProTableProps,MIRecordType } from './typing';
 import type { ParamsType } from '@ant-design/pro-provider';
 import { useIntl ,ConfigProviderWrap} from '../locale';
 
 // import PageContextWrap from './PageContextWrap';
 const MyProTable = ProTable as any;
 
-const MIProTable = <T, U, ValueType = 'text'>({
+const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   optionColumnRender,
   features,

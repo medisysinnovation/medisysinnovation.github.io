@@ -104,7 +104,8 @@ const PageList = <T extends {
         } else if (!editable && defaultEditCallback) {
           defaultEditCallback(entity)(e);
         } else if (editable) {
-          actionRef.current?.startEditable(clickedRowKey);
+          //@ts-ignore
+          actionRef.current?.setEditableRowKeys([clickedRowKey])//.startEditable(clickedRowKey);
         }
       }
     };

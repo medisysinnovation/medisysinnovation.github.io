@@ -10,7 +10,7 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { uniqueid } from '@medisys/utils';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { MIProEditableTableProps } from './typing';
+import type { MIProEditableTableProps,MIRecordType } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
 import { ConfigProviderWrap,useIntl } from '../locale'
@@ -27,11 +27,15 @@ import type { ParamsType } from '@ant-design/pro-provider';
 // }
 
 
-const MIEditableProTable = <T, U>({
+
+const MIEditableProTable = <T extends MIRecordType, U>({
   editable,
   features = ['batchRemove', 'edit', 'duplicate', 'remove'],
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   recordCreatorProps,
+  behavior={
+    reloadOnSave:true
+  },
   ...props
 }: MIProEditableTableProps<T, U>) => {
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
@@ -60,6 +64,7 @@ const MIEditableProTable = <T, U>({
     tableRef,
     //@ts-ignore
     editable,
+    //@ts-ignore
     recordCreatorProps,
   });
   const originalColumns = useColumns({
@@ -154,7 +159,7 @@ const MIEditableProTable = <T, U>({
               <CancelEdit key="cancel" action={actionRef?.current} {...config} />,
             ];
           },
-          onSave: async (rowId, row, newLine) => {
+          onSave: async (rowId, row:T, newLine) => {
             if (!create || !update) {
               throw new Error('`create` and `update` api function not passed');
             }
@@ -163,14 +168,16 @@ const MIEditableProTable = <T, U>({
             setLastRowId(newId || rowId);
             // console.log(key);
             actionRef.current?.cancelEditable(rowId);
-            actionRef.current?.reloadAndRest?.();
+            if(behavior.reloadOnSave){
+              actionRef.current?.reloadAndRest?.();
+            }
             editable?.onRowDataChanged?.([row]);
 
           },
           ...editable,
         }}
         rowSelection={{
-          onChange: (_, _selectedRows) => {
+          onChange: (_, _selectedRows:T[]) => {
             setSelectedRows(_selectedRows);
           },
         }}
@@ -179,6 +186,7 @@ const MIEditableProTable = <T, U>({
             position="top"
             record={{
               [rowKey]: uniqueid() as unknown,
+              //@ts-ignore
               ...recordCreatorProps?.record
             }}
           >
@@ -217,19 +225,19 @@ const MIEditableProTable = <T, U>({
 
 
 const EditableProviderWrap=<
-T extends Record<string, any>,
-U extends ParamsType = ParamsType,
-ValueType = 'text'
+  T extends MIRecordType,
+  U extends ParamsType = ParamsType,
 >(
-props: MIProTableProps<T, U, ValueType>,
+  props: MIProEditableTableProps<T, U>,
 ) => {
-return (
-<ConfigProviderWrap>
-  <MIEditableProTable<T, U, ValueType> {...props} />
-</ConfigProviderWrap>
-);
+  return (
+    <ConfigProviderWrap>
+      <MIEditableProTable<T, U> {...props} />
+    </ConfigProviderWrap>
+  );
 };
 
 
 EditableProviderWrap.RecordCreator = EditableProTable.RecordCreator;
+
 export default EditableProviderWrap;

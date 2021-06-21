@@ -20,8 +20,14 @@ export type UseMIFetchDataAction<T = any> = {
   currentData: readonly T[] | undefined;
 };
 
+export type MIRecordType ={
+  isUserMaintainable?: boolean;
+} & {
+  [key: string]: number | string | boolean,
+ }
 
-export type APIInterface<T> = {
+
+export type APIInterface<T extends MIRecordType> = {
   remove?: (keys: string[]) => Promise<unknown>;
   create?: (body?: T, options?: Record<string, any>) => Promise<unknown>;
   update?: (body?: T, options?: Record<string, any>) => Promise<unknown>;
@@ -45,17 +51,23 @@ export type APIInterface<T> = {
   ) => Promise<unknown>;
 };
 
-type SharedTableProps<T>={
+type SharedTableProps<T extends MIRecordType>={
   features?: TableFeature<T>[];
   defaultColumns?: ExtraColumn[];
   optionColumnRender?: any[];
+  api?: APIInterface<T>;
+  editable?: MIRowEditableConfig<T>;
 }
 
 export type MIRowEditableConfig<T> = RowEditableConfig<T> & {
   onRowDataChanged: (entities: T[]) => void;
 };
-export type MIProEditableTableProps<T, U> = EditableProTableProps<T, U>  &  SharedTableProps<T>
-export type MIProTableProps<T, U, ValueType> = Omit<
+export type MIProEditableTableProps<T extends MIRecordType, U> = EditableProTableProps<T, U>  &  SharedTableProps<T> & {
+  behavior?:{
+    reloadOnSave?:boolean;
+  }
+}
+export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   ProTableProps<T, U, ValueType>,
   'request' | 'columns'
 > & SharedTableProps<T> & {
@@ -63,7 +75,6 @@ export type MIProTableProps<T, U, ValueType> = Omit<
   model?: string;
   request?: () => Promise<unknown>;
   editable?: MIRowEditableConfig<T>;
-  api?: APIInterface<T>;
   optionColumnEditRender?: (
     dom: React.ReactNode,
     entity: T,

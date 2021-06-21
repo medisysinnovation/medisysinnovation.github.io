@@ -6,23 +6,24 @@ import { message } from 'antd';
 import type { TableFeature, ColumnAction } from './useColumns';
 import useHighlight from './useHighlight';
 import { useIntl } from  '../../locale';
-import type { MIProEditableTableProps } from './typing';
+import type { MIProEditableTableProps,MIRecordType } from '../typing';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useOptionRender = <
-  T extends {
-    isUserMaintainable: boolean;
-  } & {
-    [key: string]: number | string | boolean,
-   },U
+  T extends MIRecordType, U
 >({
   features = [],
   rowKey,
   api,
   tableRef,
   editable,
-  recordCreatorProps
-}:MIProEditableTableProps<T, U>) => {
+  recordCreatorProps={
+    record:{} as T
+  }
+}:MIProEditableTableProps<T, U> & {
+  tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
+  rowKey:string;
+}) => {
   const intl = useIntl();
 
   const [lastRowId, setLastRowId] = useState<string>();
@@ -30,7 +31,7 @@ const useOptionRender = <
     tableRef,
     lastRowId,
   });
-  const { remove, create, query, update } = api;
+  const { remove, create, query, update } = api!;
   const cb = useCallback(
     (
       _dom: React.ReactNode,
@@ -63,6 +64,7 @@ const useOptionRender = <
                 : { data: entity };
 
               const newId: any = await create!({
+                //@ts-ignore
                 ...recordCreatorProps?.record,
                 ...opt.getNewValue(latestEntity),
                 // @ts-ignore
