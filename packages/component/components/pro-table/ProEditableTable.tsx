@@ -10,7 +10,7 @@ import type { ProColumns } from '@ant-design/pro-table';
 import { uniqueid } from '@medisys/utils';
 
 import { PlusOutlined } from '@ant-design/icons';
-import type { MIProTableProps } from './typing';
+import type { MIProEditableTableProps } from './typing';
 import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
 import FooterPanel from './FooterPanel';
 import { ConfigProviderWrap,useIntl } from '../locale'
@@ -26,15 +26,14 @@ import type { ParamsType } from '@ant-design/pro-provider';
 //   });
 // }
 
-type MIProEditableTableProps<T, U, ValueType> = MIProTableProps<T, U, ValueType>;
 
-const MIEditableProTable = <T, U, ValueType = 'text'>({
+const MIEditableProTable = <T, U>({
   editable,
   features = ['batchRemove', 'edit', 'duplicate', 'remove'],
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
-  optionColumnEditRender,
+  recordCreatorProps,
   ...props
-}: MIProEditableTableProps<T, U, ValueType>) => {
+}: MIProEditableTableProps<T, U>) => {
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   // const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   // const [cols, setCols] = useState<ProColumns<T>[]>([]);
@@ -61,6 +60,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
     tableRef,
     //@ts-ignore
     editable,
+    recordCreatorProps,
   });
   const originalColumns = useColumns({
     rowKey,
@@ -111,6 +111,8 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
           style: {
             display: 'none',
           },
+          creatorButtonText:intl.getMessage('table.action.add','Add New Record'),
+          ...recordCreatorProps
         }}
         form={
           {
@@ -177,6 +179,7 @@ const MIEditableProTable = <T, U, ValueType = 'text'>({
             position="top"
             record={{
               [rowKey]: uniqueid() as unknown,
+              ...recordCreatorProps?.record
             }}
           >
             <Button type="primary">    

@@ -2,11 +2,11 @@ import React, { useCallback, useState } from 'react';
 import type { ProCoreActionType } from '@ant-design/pro-utils';
 import { DeleteWrapper } from '../ActionButton';
 import { uniqueid } from '@medisys/utils';
-import type {APIInterface, MIRowEditableConfig} from '../typing'
 import { message } from 'antd';
 import type { TableFeature, ColumnAction } from './useColumns';
 import useHighlight from './useHighlight';
 import { useIntl } from  '../../locale';
+import type { MIProEditableTableProps } from './typing';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useOptionRender = <
@@ -14,22 +14,15 @@ const useOptionRender = <
     isUserMaintainable: boolean;
   } & {
     [key: string]: number | string | boolean,
-   },
+   },U
 >({
   features = [],
   rowKey,
   api,
   tableRef,
   editable,
-
-}: {
-  features?: TableFeature<T>[];
-  rowKey: string;
-  api: APIInterface<T>;
-  tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
-  editable?: MIRowEditableConfig<T>;
-
-}) => {
+  recordCreatorProps
+}:MIProEditableTableProps<T, U>) => {
   const intl = useIntl();
 
   const [lastRowId, setLastRowId] = useState<string>();
@@ -70,6 +63,7 @@ const useOptionRender = <
                 : { data: entity };
 
               const newId: any = await create!({
+                ...recordCreatorProps?.record,
                 ...opt.getNewValue(latestEntity),
                 // @ts-ignore
                 [rowKey]: uniqueid(),

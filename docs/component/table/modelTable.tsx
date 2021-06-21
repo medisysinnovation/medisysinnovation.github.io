@@ -36,6 +36,7 @@ const EditableTableDemo = props => {
         // actionRef={actionRef}
         model="couter"
         columns={defaultColumns}
+
         // postData={d => {
         //   console.log(d);
         //   return d;

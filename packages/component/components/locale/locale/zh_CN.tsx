@@ -17,6 +17,7 @@ export default {
       duplicate: '复制',
       deactivate: '停用',
       activate: '启用',
+      add: '添加一行数据',
     },
     message: {
       dirtyDataUpdate: '数据已被更改',

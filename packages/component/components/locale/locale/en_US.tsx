@@ -17,6 +17,7 @@ export default {
       duplicate: 'Duplicate',
       deactivate: 'Deactivate',
       activate: 'Activate',
+      add: 'Add New Record',
     },
     message: {
       dirtyDataUpdate: 'Data has been changed',
