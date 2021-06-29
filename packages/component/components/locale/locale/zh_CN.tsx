@@ -1,5 +1,8 @@
 export default {
-  moneySymbol: '$$$$$',
+  moneySymbol: '$',
+  form: {
+    input: '请输入',
+  },
   table: {
     column: {
       createBy: '创建',

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState, useRef } from 'react';
 
-import { ProTable, PageContext, Button, ProLayout } from '@medisys/component';
+import { ProTable, PageContext, Button, ProInput } from '@medisys/component';
 import { defaultColumns } from './utils';
 import { sampleListData } from '../../../src/data';
 const EditableTableDemo = props => {

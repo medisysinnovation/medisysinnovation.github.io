@@ -158,7 +158,7 @@ const PageList = <T extends {
     rowKey: key,
     defaultEditCallback,
     columns:(columns || []).map(({valueType,...o})=>{
-      if(!valueType) return o
+      if(!['money','digit'].includes(valueType as string)) return o
       return {
         //@ts-ignore
         align:['money','digit'].includes(valueType)?'right':o.align,

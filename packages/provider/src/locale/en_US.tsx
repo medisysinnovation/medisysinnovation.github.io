@@ -1,5 +1,8 @@
 export default {
-  moneySymbol: '$$',
+  moneySymbol: '$',
+  form: {
+    input: 'Please input',
+  },
   table: {
     column: {
       createBy: 'Create By',
