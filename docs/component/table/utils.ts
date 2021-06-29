@@ -27,9 +27,14 @@ import type { ProColumns } from '@ant-design/pro-table';
   },
   {
     dataIndex: 'balance',
-    hideInForm: true,
+    // hideInForm: true,
     valueType:'money'
   },  
+  {
+    dataIndex: 'closeDate',
+   
+    valueType:'dateTime'
+  }, 
 ];
 
 export {defaultColumns}
