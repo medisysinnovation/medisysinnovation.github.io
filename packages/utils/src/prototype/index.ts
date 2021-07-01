@@ -59,11 +59,13 @@ Date.prototype.duration = function format(unit: DurationUnit) {
 
 // eslint-disable-next-line no-extend-native
 String.prototype.padLeft = function(len: number, charStr: string) {
-  var s = this + '';
+  const s = this as string;
+  if (s.length >= len) return s;
   return new Array(len - s.length + 1).join(charStr || '') + s;
 };
 
 String.prototype.padRight = function(len: number, charStr: string) {
-  var s = this + '';
+  const s = this as string;
+  if (s.length >= len) return s;
   return s + new Array(len - s.length + 1).join(charStr || '');
 };
