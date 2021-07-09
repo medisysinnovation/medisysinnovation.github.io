@@ -29,8 +29,8 @@ export default function() {
             const { dateFilter = [] } = getFieldsValue();
             return (
               <div>
-                Date selected : {dateFilter[0]?.format()} to{' '}
-                {dateFilter[1]?.format()}
+                Date selected : {dateFilter?.[0]?.format()} to{' '}
+                {dateFilter?.[1]?.format()}
               </div>
             );
           }}

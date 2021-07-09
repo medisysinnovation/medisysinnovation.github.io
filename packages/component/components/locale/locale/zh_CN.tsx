@@ -2,6 +2,7 @@ export default {
   moneySymbol: '$',
   form: {
     input: '请输入',
+    select: '请选择',
   },
   table: {
     column: {

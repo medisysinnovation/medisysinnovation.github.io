@@ -4,6 +4,7 @@ import DataSource from '../data-source'
 import type { MIDataSourceProps } from '../data-source';
 import type { SelectValue } from 'antd/es/select';
 import type { FormItemProps } from 'antd';
+import { useIntl } from  '../locale';
 
 type ComponentProps = React.ComponentProps<typeof ProFormSelect>;
 
@@ -15,6 +16,8 @@ const ProSelect = <VT extends SelectValue & {
       formItemProps?: FormItemProps;
     },
 ) => {
+  const intl = useIntl();
+
   const { children, ...restProps } = props;
   return (
     <DataSource {...(restProps as MIDataSourceProps<VT>)}>
@@ -29,7 +32,7 @@ const ProSelect = <VT extends SelectValue & {
         return (
           <ProFormSelect
             // @ts-ignore
-            placeholder="Please select"
+            placeholder={intl.getMessage('form.select', 'Please select')}
             width="xs"
             dropdownMatchSelectWidth={false}
             options={dataSource.map((o:VT) => ({ value: o[valueField], label: o[displayField] }))}
