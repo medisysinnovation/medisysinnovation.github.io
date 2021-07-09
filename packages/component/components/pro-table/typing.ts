@@ -57,6 +57,8 @@ type SharedTableProps<T extends MIRecordType>={
   optionColumnRender?: any[];
   api?: APIInterface<T>;
   editable?: MIRowEditableConfig<T>;
+  // model name, refer to @/models folder
+  model?: string;
 }
 
 export type MIRowEditableConfig<T> = RowEditableConfig<T> & {
@@ -71,8 +73,7 @@ export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   ProTableProps<T, U, ValueType>,
   'request' | 'columns'
 > & SharedTableProps<T> & {
-  // model name, refer to @/models folder
-  model?: string;
+
   request?: () => Promise<unknown>;
   editable?: MIRowEditableConfig<T>;
   optionColumnEditRender?: (

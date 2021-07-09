@@ -1,11 +1,7 @@
-import moment from 'moment';
-
-import type { LongDateFormatSpec } from 'moment';
-
-
+import moment, { LongDateFormatSpec } from 'moment';
 
 type F = LongDateFormatSpec | string;
-type DurationUnit='year'|'month'|'week'|'day'|'hour'|'second'
+type DurationUnit = 'year' | 'month' | 'week' | 'day' | 'hour' | 'second';
 declare global {
   interface String {
     format: (
@@ -16,15 +12,20 @@ declare global {
     ) => string;
 
     toDate: () => Date;
+    padLeft: (len: number, charStr: string) => string;
+    padRight: (len: number, charStr: string) => string;
   }
 
   interface Date {
-    duration:(unit:DurationUnit)=>number
+    duration: (unit: DurationUnit) => number;
   }
 }
 
 // eslint-disable-next-line no-extend-native
-String.prototype.format = function format(f = 'LLL', { empty } = { empty: '-' }) {
+String.prototype.format = function format(
+  f = 'LLL',
+  { empty } = { empty: '-' },
+) {
   const m = moment(this as string);
   if (!m.isValid()) return empty;
   return m.format(f as string);
@@ -36,23 +37,35 @@ String.prototype.toDate = function date() {
   return new Date(this);
 };
 // eslint-disable-next-line no-extend-native
-Date.prototype.duration = function format(unit:DurationUnit) {
-  const value =moment.duration(moment().diff(this))
+Date.prototype.duration = function format(unit: DurationUnit) {
+  const value = moment.duration(moment().diff(this));
   switch (unit) {
     case 'year':
       return value.asYears();
     case 'month':
-      return value.asMonths();  
-      case 'week':
-        return value.asWeeks();  
-        case 'day':
-          return value.asDays();  
-          case 'hour':
-            return value.asHours();  
-            case 'second':
-              return value.asSeconds();  
+      return value.asMonths();
+    case 'week':
+      return value.asWeeks();
+    case 'day':
+      return value.asDays();
+    case 'hour':
+      return value.asHours();
+    case 'second':
+      return value.asSeconds();
     default:
-      return 0
+      return 0;
   }
 };
 
+// eslint-disable-next-line no-extend-native
+String.prototype.padLeft = function(len: number, charStr: string) {
+  const s = this as string;
+  if (s.length >= len) return s;
+  return new Array(len - s.length + 1).join(charStr || '') + s;
+};
+
+String.prototype.padRight = function(len: number, charStr: string) {
+  const s = this as string;
+  if (s.length >= len) return s;
+  return s + new Array(len - s.length + 1).join(charStr || '');
+};
