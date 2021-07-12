@@ -3,13 +3,14 @@
 const getWebpackConfig = require('@ant-design/tools/lib/getWebpackConfig');
 const IgnoreEmitPlugin = require('ignore-emit-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
-const EsbuildPlugin = require('esbuild-webpack-plugin').default;
+const { ESBuildMinifyPlugin } = require('esbuild-loader');
+
 // const darkVars = require('./scripts/dark-vars');
 // const compactVars = require('./scripts/compact-vars');
 
 const { webpack } = getWebpackConfig;
 
-console.log(webpack);
+// console.log(webpack);
 // noParse still leave `require('./locale' + name)` in dist files
 // ignore is better: http://stackoverflow.com/q/25384360
 function ignoreMomentLocale(webpackConfig) {
@@ -103,8 +104,9 @@ if (process.env.RUN_ENV === 'PRODUCTION') {
     config.optimization.usedExports = true;
     // use esbuild
     if (process.env.ESBUILD || process.env.CSB_REPO) {
-      config.optimization.minimizer[0] = new EsbuildPlugin({
-        target: 'chrome49',
+      config.optimization.minimizer[0] = new ESBuildMinifyPlugin({
+        target: 'es2015',
+        css: true,
       });
     }
 
