@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.204",
+  "version": "0.1.205",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -44,7 +44,7 @@
     "@ant-design/pro-layout": "^6.19.4",
     "@ant-design/pro-table": "^2.40.0",
     "@medisys/provider": "^0.1.200",
-    "@medisys/utils": "^0.1.203",
+    "@medisys/utils": "^0.1.205",
     "ahooks": "^2.10.4",
     "antd": "^4.16.2",
     "classnames": "^2.2.6",
@@ -81,11 +81,11 @@
     "bundlesize": "^0.18.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "esbuild-loader": "^2.13.1",
     "mockdate": "^3.0.2",
     "react-test-renderer": "^17.0.0",
     "scroll-into-view-if-needed": "^2.2.26",
-    "string-replace-loader": "^2.3.0",
-    "esbuild-loader": "^2.13.1"
+    "string-replace-loader": "^2.3.0"
   },
   "peerDependencies": {
     "react": ">=17.0.0",
