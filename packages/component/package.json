@@ -7,7 +7,7 @@
   "license": "MIT",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "unpkg": "dist/antd.min.js",
+  "unpkg": "dist/@/medisys/component.min.js",
   "typings": "lib/index.d.ts",
   "directories": {
     "src": "dist",
@@ -15,7 +15,8 @@
   },
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "es"
   ],
   "publishConfig": {
     "access": "public"
