@@ -35,7 +35,7 @@ const ProSelect = <VT extends SelectValue & {
             placeholder={intl.getMessage('form.select', 'Please select')}
             width="xs"
             dropdownMatchSelectWidth={false}
-            options={dataSource.map((o:VT) => ({ value: o[valueField], label: o[displayField] }))}
+            options={dataSource.map((o:VT) => ({ key: o[valueField], value: o[valueField], label: o[displayField] }))}
             {...payload}
           />
         );

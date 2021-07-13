@@ -128,22 +128,23 @@ const useOptionRender = <
           );
         },
       };
-      features.forEach((f) => {
+      features.forEach((f,idx) => {
         const action = (fn: TableFeature<T>, list: JSX.Element[]) => {
           if (typeof fn === 'string') {
             //@ts-ignore
             if (defaultFeatures[fn]) action(defaultFeatures[fn], list);
           } else if (typeof fn === 'object' && (fn as ColumnAction<T>)?.code) {
             list.push(
-              (fn as ColumnAction<T>)?.render
+              <span key={idx}>{
+                (fn as ColumnAction<T>)?.render
                 ? (fn as ColumnAction<T>)?.render(entity)
                 //@ts-ignore
-                : defaultFeatures[(fn as ColumnAction<T>)?.code],
+                : defaultFeatures[(fn as ColumnAction<T>)?.code]}</span>
             );
           } else if (typeof fn === 'function') {
-            list.push(fn(entity));
+            list.push(<span key={idx}>{fn(entity)}</span>);
           } else {
-            list.push(fn as JSX.Element);
+            list.push(<span key={idx}>{fn as JSX.Element}</span>);
           }
         };
         action(f, ary);

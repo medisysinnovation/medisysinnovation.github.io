@@ -5,7 +5,7 @@ type PageContextType = {
   model?: string;
   table?:any;
   actionRef?: React.MutableRefObject<MIActionType> | undefined;
-  setValues: (newValues: any) => void;
+  updateState: (newValues: any) => void;
 };
 
 const useCustomHook =()=>{
