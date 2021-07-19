@@ -52,7 +52,7 @@ const MIEditableProTable = <T extends MIRecordType, U>({
   });
 
   const { remove, create, update } = api!;
-
+  const {params}=props
   useHighlight({
     lastRowId,
     tableRef,
@@ -163,7 +163,7 @@ const MIEditableProTable = <T extends MIRecordType, U>({
             if (!create || !update) {
               throw new Error('`create` and `update` api function not passed');
             }
-            const newId: any = newLine ? await create(row) : await update(row);
+            const newId: any = newLine ? await create(params,row) : await update(params,row);
             message.success(newLine?intl.getMessage('table.message.recordCreated', 'Record created') :intl.getMessage('table.message.recordUpdated', 'Record updated'));
             setLastRowId(newId || rowId);
             // console.log(key);
