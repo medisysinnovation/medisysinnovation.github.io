@@ -21,4 +21,4 @@ group:
   
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| autoTransferTime | Auto set start date time to 00:00:00 and end date time to 23:59:59 | boolean | true |  |
+| autoTransformTime | Auto set start date time to 00:00:00 and end date time to 23:59:59 | boolean | true |  |

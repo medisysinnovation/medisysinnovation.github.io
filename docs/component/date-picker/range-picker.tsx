@@ -6,13 +6,13 @@ import { Switch } from 'antd';
 const { RangePicker } = DatePicker;
 export default function() {
   const [form] = Form.useForm();
-  const [autoTransfer, setAutoTransfer] = useState(true);
+  const [autoTransform, setAutoTransfer] = useState(true);
   return (
     <div>
       <Switch
         checkedChildren="True"
         unCheckedChildren="False"
-        checked={autoTransfer}
+        checked={autoTransform}
         onChange={v => {
           setAutoTransfer(v);
         }}
@@ -20,7 +20,7 @@ export default function() {
       <Form
         form={form}
         initialValues={{
-          autoTransfer: true,
+          autoTransform: true,
           dateFilter: ['1990-01-01T01:01:00+08:00', moment('2021-01-01')], // ['1990-01-01T01:01:00+08:00', moment()],
         }}
       >
@@ -37,8 +37,8 @@ export default function() {
         </Form.Item>
         <Form.Item name="dateFilter">
           <RangePicker
-            autoTransfer={autoTransfer}
-            // autoTransferTime={}
+            autoTransformTime={autoTransform}
+            // autoTransformTime={}
             // onChange={v => {
             //   form.setFields([
             //     {
@@ -53,12 +53,12 @@ export default function() {
         <ProRangeDatePicker name="dateFilter" />
         {/* <Form.Item shouldUpdate>
           {form => {
-            const { dateFilter = [], autoTransfer } = form.getFieldsValue();
-            console.log(dateFilter, autoTransfer);
+            const { dateFilter = [], autoTransform } = form.getFieldsValue();
+            console.log(dateFilter, autoTransform);
             return (
               <RangePicker
                 value={dateFilter}
-                // autoTransferTime={}
+                // autoTransformTime={}
                 onChange={v => {
                   form.setFields([
                     {

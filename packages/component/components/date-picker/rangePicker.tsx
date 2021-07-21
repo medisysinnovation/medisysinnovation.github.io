@@ -8,27 +8,24 @@ import { defaultFormat } from './utils';
 type ComponentProps = React.ComponentProps<typeof DatePicker.RangePicker>;
 
 export type MIRangePickerProps = ComponentProps & {
-  autoTransferTime?: boolean;
+  autoTransformTime?: boolean;
   showTime?: boolean;
 };
 
 const MIRangePicker: React.FC<MIRangePickerProps> = ({
-  autoTransferTime = true,
+  autoTransformTime = true,
   value,
   showTime,
   ...props
 }) => {
-  // console.log(value, autoTransferTime, showTime);
+  // console.log(value, autoTransformTime, showTime);
   const [momentValue, setMomentValue] = useState();
   useEffect(() => {
     const v = value
       ?.map(o => (moment.isMoment(o) ? o : moment(o)))
       .map(o => (o.isValid() ? o : undefined));
-    if (v?.every(o => o && !o.isValid())) {
-      throw new Error('Invalid moment format: ' + value);
-    }
 
-    if (autoTransferTime && !showTime) {
+    if (autoTransformTime && !showTime) {
       let needChange = false;
       if (
         v?.length === 2 &&
