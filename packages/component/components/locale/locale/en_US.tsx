@@ -3,6 +3,9 @@ export default {
   form: {
     input: 'Please input',
     select: 'Please select',
+    datepicker: 'Select date',
+    rangeDatepickerStart: 'Please select',
+    rangeDatepickerEnd: 'Please select',
   },
   table: {
     column: {

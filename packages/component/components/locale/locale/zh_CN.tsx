@@ -3,6 +3,9 @@ export default {
   form: {
     input: '请输入',
     select: '请选择',
+    datepicker: '选择日期',
+    rangeDatepickerStart: '请选择',
+    rangeDatepickerEnd: '请选择',
   },
   table: {
     column: {

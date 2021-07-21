@@ -1,7 +1,24 @@
 import React from 'react';
 import { ProFormDatePicker } from '@ant-design/pro-form';
+import { useIntl } from '../locale';
 
 type ComponentProps = React.ComponentProps<typeof ProFormDatePicker>;
-export default (props: ComponentProps) => {
-  return <ProFormDatePicker {...props} />;
+
+export default ({ fieldProps, ...props }: ComponentProps) => {
+  const intl = useIntl();
+
+  const defaultFieldProps = {
+    value: null,
+    placeholder: intl.getMessage('form.datepicker', 'Select date'),
+  };
+
+  return (
+    <ProFormDatePicker
+      fieldProps={{
+        ...defaultFieldProps,
+        ...fieldProps,
+      }}
+      {...props}
+    />
+  );
 };

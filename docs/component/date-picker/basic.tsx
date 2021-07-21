@@ -9,7 +9,7 @@ export default function() {
       <Form
         form={form}
         initialValues={{
-          stringDate: '2099-12-30T00:00:00+08:00', //moment(),
+          stringDate: '', //'2099-12-30T00:00:00+08:00', //moment(),
           momentDate: moment('2099-12-30T00:00:00+08:00'),
         }}
       >

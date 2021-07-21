@@ -21,7 +21,7 @@ export default function() {
         form={form}
         initialValues={{
           autoTransfer: true,
-          dateFilter: ['1990-01-01T01:01:00+08:00', moment()],
+          dateFilter: ['1990-01-01T01:01:00+08:00', moment('2021-01-01')], // ['1990-01-01T01:01:00+08:00', moment()],
         }}
       >
         <Form.Item shouldUpdate>

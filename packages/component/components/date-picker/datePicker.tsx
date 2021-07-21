@@ -10,17 +10,21 @@ const MIDatePicker = ({ value, ...props }: ComponentProps) => {
     value?.isValid ? value : undefined,
   );
   useEffect(() => {
-    if (!value?.isValid) {
-      const v = moment(value);
-      if (!v.isValid() && !!value) {
-        throw new Error('Invalid moment format: ' + value);
+    if (value) {
+      if (!value?.isValid) {
+        const v = moment(value);
+        if (!v.isValid() && !!value) {
+          throw new Error('Invalid moment format: ' + value);
+        }
+        //@ts-ignore
+        props.onChange(v);
+        //@ts-ignore
+        setMomentValue(v);
+      } else {
+        setMomentValue(value);
       }
-      //@ts-ignore
-      props.onChange(v);
-      //@ts-ignore
-      setMomentValue(v);
     } else {
-      setMomentValue(value);
+      setMomentValue(undefined);
     }
   }, [value]);
   return <DatePicker format={defaultFormat} value={momentValue} {...props} />;

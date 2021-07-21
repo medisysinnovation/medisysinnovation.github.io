@@ -21,8 +21,10 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
   // console.log(value, autoTransferTime, showTime);
   const [momentValue, setMomentValue] = useState();
   useEffect(() => {
-    const v = value?.map(o => (moment.isMoment(o) ? o : moment(o)));
-    if (v?.find(o => !o.isValid())) {
+    const v = value
+      ?.map(o => (moment.isMoment(o) ? o : moment(o)))
+      .map(o => (o.isValid() ? o : undefined));
+    if (v?.every(o => o && !o.isValid())) {
       throw new Error('Invalid moment format: ' + value);
     }
 
