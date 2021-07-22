@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputNumber, InputNumberProps } from 'antd';
+import { InputNumber, InputNumberProps, Statistic } from 'antd';
 
 export interface MIInputNumberProps extends InputNumberProps {
   readonly?: boolean;
@@ -33,7 +33,7 @@ const MIInput: React.ForwardRefRenderFunction<
     return myRef.current;
   });
 
-  if (text || readonly) return <span>{restProps.value || ''}</span>;
+  if (text || readonly) return <Statistic {...restProps} />;
   return <InputNumber {...restProps} ref={myRef as any} />;
 };
 
