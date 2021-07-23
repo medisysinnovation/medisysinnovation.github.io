@@ -28,7 +28,7 @@ let localStore: StateProps = {
   dataSource: JSON.parse(sessionStorage.getItem('mi_ds') || '{}'),
 };
 
-const _me = {
+const _me:Record<string,any> = {
   imt_current: immutable.fromJS(localStore),
 };
 let _config: MedisysConfigProps = {
@@ -137,6 +137,7 @@ class MIConfig {
     );
     // console.log(existingData,_me.imt_current,code)
     if (!existingData) return [];
+    //@ts-ignore
     return existingData.toJS() as [];
   }
 
