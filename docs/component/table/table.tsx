@@ -27,6 +27,15 @@ const EditableTableDemo = props => {
         dataSource={sampleListData}
         columns={defaultColumns}
         features={['edit']}
+        onRowDblClick={e => {
+          console.log(e);
+        }}
+        // rowSelection={{
+        //   selectOnClick: true,
+        // }}
+        onRowClick={(e, tr) => {
+          console.log(e, tr);
+        }}
       />
     </>
   );

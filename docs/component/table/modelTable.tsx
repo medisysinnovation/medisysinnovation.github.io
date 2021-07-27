@@ -36,7 +36,9 @@ const EditableTableDemo = props => {
         // actionRef={actionRef}
         model="couter"
         columns={defaultColumns}
-
+        // rowSelection={{
+        //   selectOnClick: true,
+        // }}
         // postData={d => {
         //   console.log(d);
         //   return d;

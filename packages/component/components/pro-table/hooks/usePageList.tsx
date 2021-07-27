@@ -21,6 +21,10 @@ const localeMapper: {
   en: 'en-US',
 };
 const getUseModel = MIConfig.getModelHook;
+type RowSelectionType = MIProTableProps<any, any, any>['rowSelection'] & {
+  // selectOnClick: boolean;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PageList = <
   T extends {
@@ -32,6 +36,7 @@ const PageList = <
   tableRef,
   api,
   onRowDblClick,
+  onRowClick,
   onEdit,
   request,
   postData,
@@ -41,15 +46,15 @@ const PageList = <
   columns,
   dataSource,
   actionRef: propsActionRef,
-}: Omit<MIProTableProps<T, U, ValueType>, 'editable'> & {
+}: Omit<MIProTableProps<T, U, ValueType>, 'editable' | 'rowSelection'> & {
   actionRef: React.MutableRefObject<MIActionType | undefined>;
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
   api: APIInterface<T>;
-  onRowDblClick?: (entity: T) => void;
   onEdit?: (entity: T) => void;
   editable?: boolean;
   rowKey: string;
   model?: string;
+  rowSelection?: RowSelectionType | false;
 }) => {
   const { api: modelAPI, dispatch, ...restModel } = getUseModel()(
     model as any,
@@ -62,6 +67,8 @@ const PageList = <
   const key = getRowKey(rowKey);
   const [currentData, setCurrentData] = useState<T[]>([]);
   const { actionRef: pageActionRef } = PageContext.useContainer();
+  // const [selectedRowKeys, setSelectedRowKeys] = useState<typeof rowKey[]>([]);
+
   const _actionRef = useRef<MIActionType>();
   useEffect(() => {
     if (typeof propsActionRef === 'function' && pageActionRef?.current) {
@@ -108,6 +115,7 @@ const PageList = <
   );
 
   useEffect(() => {
+    const data = dataSource || currentData;
     const rowDblClick = (e: MouseEvent) => {
       // @ts-ignore
       if (e.target?.tagName === 'A') return;
@@ -115,11 +123,9 @@ const PageList = <
       const tr = e.target?.closest('tr');
       const clickedRowKey = tr?.getAttribute('data-row-key');
       if (clickedRowKey) {
-        const entity = currentData?.find(
-          o => `${o[rowKey]}` === clickedRowKey,
-        ) as T;
+        const entity = data?.find(o => `${o[rowKey]}` === clickedRowKey) as T;
         if (onRowDblClick) {
-          onRowDblClick(entity);
+          onRowDblClick(entity, tr);
         } else if (!editable && defaultEditCallback) {
           defaultEditCallback(entity)(e);
         } else if (editable) {
@@ -128,10 +134,28 @@ const PageList = <
         }
       }
     };
+
+    const rowClick = (e: MouseEvent) => {
+      // @ts-ignore
+      if (e.target?.tagName === 'A') return;
+      // @ts-ignore
+      const tr = e.target?.closest('tr');
+      const clickedRowKey = tr?.getAttribute('data-row-key');
+      if (clickedRowKey) {
+        const entity = data?.find(o => `${o[rowKey]}` === clickedRowKey) as T;
+        if (onRowClick) {
+          onRowClick(entity, tr);
+        }
+      }
+    };
+
     const div = tableRef.current;
     div?.addEventListener('dblclick', rowDblClick);
+    div?.addEventListener('click', rowClick);
+
     return () => {
       div?.removeEventListener('dblclick', rowDblClick);
+      div?.removeEventListener('click', rowClick);
     };
   }, [
     currentData,
@@ -194,16 +218,16 @@ const PageList = <
     columns: (columns || []).map(col => {
       if (!['money', 'digit'].includes(col.valueType as string)) return col;
       const { valueType, ...o } = col;
-      console.log(col, {
-        //@ts-ignore
-        align: ['money', 'digit'].includes(valueType) ? 'right' : o.align,
-        ...o,
-        valueType: {
-          type: valueType,
-          ...(typeof valueType === 'object' ? valueType : {}),
-          locale: localeMapper[locale],
-        },
-      });
+      // console.log(col, {
+      //   //@ts-ignore
+      //   align: ['money', 'digit'].includes(valueType) ? 'right' : o.align,
+      //   ...o,
+      //   valueType: {
+      //     type: valueType,
+      //     ...(typeof valueType === 'object' ? valueType : {}),
+      //     locale: localeMapper[locale],
+      //   },
+      // });
       return {
         //@ts-ignore
         align: ['money', 'digit'].includes(valueType) ? 'right' : o.align,
