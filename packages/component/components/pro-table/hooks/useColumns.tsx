@@ -99,6 +99,7 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
         valueType: 'option',
         render: optionRender,
         fixed: 'right',
+        ...columns.find(o=>o.dataIndex==='options')
       });
     }
 

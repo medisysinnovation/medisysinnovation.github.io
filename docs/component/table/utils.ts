@@ -38,6 +38,10 @@ import type { ProColumns } from '@ant-design/pro-table';
    
     valueType:'dateTime'
   }, 
+  {
+    dataIndex:'options',
+    // width:100
+  }
 ];
 
 export {defaultColumns}
