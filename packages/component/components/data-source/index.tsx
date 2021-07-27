@@ -9,6 +9,7 @@ import {
 } from '@ant-design/pro-utils';
 import { MIConfig, GET } from '@medisys/utils';
 import { usePrevious } from '../hook';
+import {pickProps} from '../utils'
 
 export enum CodeTableSourceFilterRule {
   StartsWidth,
@@ -241,7 +242,6 @@ const MIDataSource = <VT extends SelectValue>(
         setFilteredList(list.filter(filter));
     }
   }, [dependencies]);
-
   if (text || readonly) {
     const options = filteredList.filter(
       (opt: VT) =>
@@ -249,12 +249,12 @@ const MIDataSource = <VT extends SelectValue>(
         opt[valueField] === restProps.value || Array.isArray( restProps.value) && restProps.value.includes( opt[valueField] ),
     );
     //@ts-ignore
-    if (options.length>0) return <div>{
+    if (options.length>0) return <span {...pickProps(restProps,['className','style'])}>{
       options.map((o,i)=>{
         //@ts-ignore
         return <span key={o[displayField]}>{o[displayField]}{i<options.length-1?spliter:''}</span>
       })}
-    </div>;
+    </span>;
     return null;
   }
   const handleFilter = useMemo(() => {
