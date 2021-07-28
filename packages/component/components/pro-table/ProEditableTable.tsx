@@ -45,7 +45,7 @@ const MIEditableProTable = <T extends MIRecordType, U>({
   const [lastRowId, setLastRowId] = useState();
   const intl = useIntl();
   //@ts-ignore
-  const { api, model, rowKey,columns,postData, actionRef, ...sharedPageProps } = usePageList({
+  const { api, model, rowKey,columns,postData, actionRef,onRow, ...sharedPageProps } = usePageList({
     tableRef,
     editable: true,
     ...props,
@@ -204,6 +204,7 @@ const MIEditableProTable = <T extends MIRecordType, U>({
         }}
         {...sharedPageProps}
         {...props}
+        onRow={onRow}
         columns={mergedColumns}
         actionRef={actionRef}
         postData={postData}
