@@ -14,6 +14,7 @@ import { MIActionType } from '../typing';
 import { PageContext } from '../../context';
 import { Statistic } from 'antd';
 import { valueType } from 'antd/lib/statistic/utils';
+import { SyntheticEvent } from 'react';
 
 const localeMapper: {
   [key: string]: string;
@@ -35,8 +36,7 @@ const PageList = <
 >({
   tableRef,
   api,
-  onRowDblClick,
-  onRowClick,
+  onRow,
   onEdit,
   request,
   postData,
@@ -101,7 +101,7 @@ const PageList = <
 
   const defaultEditCallback = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    entity => (_e: Event) => {
+    entity => (_e: SyntheticEvent) => {
       if (dispatch)
         dispatch({
           type: 'updateState',
@@ -114,59 +114,6 @@ const PageList = <
     [dispatch, rowKey],
   );
 
-  useEffect(() => {
-    const data = dataSource || currentData;
-    const rowDblClick = (e: MouseEvent) => {
-      // @ts-ignore
-      if (e.target?.tagName === 'A') return;
-      // @ts-ignore
-      const tr = e.target?.closest('tr');
-      const clickedRowKey = tr?.getAttribute('data-row-key');
-      if (clickedRowKey) {
-        const entity = data?.find(o => `${o[rowKey]}` === clickedRowKey) as T;
-        if (onRowDblClick) {
-          onRowDblClick(entity, tr);
-        } else if (!editable && defaultEditCallback) {
-          defaultEditCallback(entity)(e);
-        } else if (editable) {
-          //@ts-ignore
-          actionRef.current?.setEditableRowKeys([clickedRowKey]); //.startEditable(clickedRowKey);
-        }
-      }
-    };
-
-    const rowClick = (e: MouseEvent) => {
-      // @ts-ignore
-      if (e.target?.tagName === 'A') return;
-      // @ts-ignore
-      const tr = e.target?.closest('tr');
-      const clickedRowKey = tr?.getAttribute('data-row-key');
-      if (clickedRowKey) {
-        const entity = data?.find(o => `${o[rowKey]}` === clickedRowKey) as T;
-        if (onRowClick) {
-          onRowClick(entity, tr);
-        }
-      }
-    };
-
-    const div = tableRef.current;
-    div?.addEventListener('dblclick', rowDblClick);
-    div?.addEventListener('click', rowClick);
-
-    return () => {
-      div?.removeEventListener('dblclick', rowDblClick);
-      div?.removeEventListener('click', rowClick);
-    };
-  }, [
-    currentData,
-    rowKey,
-    onRowDblClick,
-    defaultEditCallback,
-    onEdit,
-    actionRef,
-    tableRef,
-    editable,
-  ]);
   const _request = useCallback(
     async (params: any, sort: any, filter: any) => {
       //TODO: fix sort error when dataIndex is in ['a','id'] format
@@ -215,6 +162,44 @@ const PageList = <
     },
     rowKey: key,
     defaultEditCallback,
+    onRow: (record: T, rowIndex: number) => {
+      if (!onRow) return {};
+      const _onRow = onRow(record, rowIndex);
+      return {
+        onClick: (event: SyntheticEvent) => {
+          if (_onRow?.onClick) {
+            _onRow?.onClick(event);
+          }
+        }, // click row
+        onDoubleClick: (event: SyntheticEvent) => {
+          if (_onRow?.onDoubleClick) {
+            _onRow?.onDoubleClick(record, rowIndex);
+          } else if (onEdit) {
+            onEdit(record);
+          } else if (!editable && defaultEditCallback) {
+            defaultEditCallback(record)(event);
+          } else if (editable) {
+            //@ts-ignore
+            actionRef.current?.setEditableRowKeys([record[rowKey]]); //.startEditable(clickedRowKey);
+          }
+        }, // double click row
+        onContextMenu: (event: SyntheticEvent) => {
+          if (_onRow?.onContextMenu) {
+            _onRow?.onContextMenu(event);
+          }
+        }, // right button click row
+        onMouseEnter: (event: SyntheticEvent) => {
+          if (_onRow?.onMouseEnter) {
+            _onRow?.onMouseEnter(event);
+          }
+        }, // mouse enter row
+        onMouseLeave: (event: SyntheticEvent) => {
+          if (_onRow?.onMouseEnter) {
+            _onRow?.onMouseEnter(event);
+          }
+        }, // mouse leave row
+      };
+    },
     columns: (columns || []).map(col => {
       if (!['money', 'digit'].includes(col.valueType as string)) return col;
       const { valueType, ...o } = col;

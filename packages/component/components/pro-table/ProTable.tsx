@@ -33,6 +33,7 @@ const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
     defaultEditCallback,
     postData: convertPostData,
     actionRef,
+    onRow,
     ...sharedPageProps
     //@ts-ignore
   } = usePageList({ tableRef, editable: false, ...props });
@@ -103,6 +104,7 @@ const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
         // })}
         {...sharedPageProps}
         {...props}
+        onRow={onRow}
         actionRef={actionRef}
         columns={mergedColumns}
         postData={convertPostData}

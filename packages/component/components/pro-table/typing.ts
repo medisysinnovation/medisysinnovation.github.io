@@ -86,8 +86,6 @@ export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
       type: unknown;
     },
   ) => React.ReactNode;
-  onRowDblClick?: (entity: T, element: HTMLTableRowElement) => void;
-  onRowClick?: (entity: T, element: HTMLTableRowElement) => void;
   onEdit?: (entity: T) => void;
   rowKey?: RowKey;
   columns?: ProColumns<T, ValueType>[] & {
