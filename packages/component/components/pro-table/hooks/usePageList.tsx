@@ -172,7 +172,7 @@ const PageList = <
         }, // click row
         onDoubleClick: (event: SyntheticEvent) => {
           if (_onRow?.onDoubleClick) {
-            _onRow?.onDoubleClick(record, rowIndex);
+            _onRow?.onDoubleClick(event);
           } else if (onEdit) {
             onEdit(record);
           } else if (!editable && defaultEditCallback) {

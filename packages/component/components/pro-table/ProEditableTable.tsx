@@ -102,7 +102,7 @@ const MIEditableProTable = <T extends MIRecordType, U>({
   }, [originalColumns]);
   // @ts-ignore
   return (
-    <div ref={tableRef}>
+    <div ref={tableRef} style={{width:'100%'}}>
       <EditableProTable
         rowKey={rowKey}
         bordered

@@ -78,7 +78,7 @@ const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
   //@ts-ignore
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
   return (
-    <div ref={tableRef}>
+    <div ref={tableRef} style={{width:'100%'}}>
       <MyProTable
         rowKey={rowKey}
         bordered
