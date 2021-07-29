@@ -104,7 +104,7 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
     }
 
     // @ts-ignore
-    return (columns || [])
+    return (columns.filter(o=>!['options'].includes(o.dataIndex)) || [])
       .map((o) => ({
         title:
           // @ts-ignore
