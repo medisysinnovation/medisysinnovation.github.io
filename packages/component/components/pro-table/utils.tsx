@@ -1,3 +1,4 @@
+import React from 'react'
 import type { ProSchema } from '@ant-design/pro-utils';
 import type {RowKey,MIActionType,UseMIFetchDataAction,MITableColumn} from './typing'
 import { removeEmpty, convertToAPIObject } from '@medisys/utils';
