@@ -40,10 +40,10 @@
     "test:bak": "run-s test:unit test:lint test:build"
   },
   "dependencies": {
-    "@ant-design/pro-descriptions": "^1.8.0",
-    "@ant-design/pro-form": "^1.28.0",
-    "@ant-design/pro-layout": "^6.19.4",
-    "@ant-design/pro-table": "^2.40.0",
+    "@ant-design/pro-descriptions": "^1.9.0",
+    "@ant-design/pro-form": "^1.32.2",
+    "@ant-design/pro-layout": "^6.23.0",
+    "@ant-design/pro-table": "^2.45.0",
     "@medisys/provider": "^0.1.200",
     "@medisys/utils": "^0.1.216",
     "ahooks": "^2.10.4",

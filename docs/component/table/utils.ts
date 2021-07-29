@@ -30,13 +30,12 @@ import type { ProColumns } from '@ant-design/pro-table';
     // hideInForm: true,
     valueType:'digit',
     fieldProps: {
-      precision: 2,
+      precision: 3,
     },
   },  
   {
     dataIndex: 'closeDate',
-   
-    valueType:'dateTime'
+    valueType:'dateTime',
   }, 
   {
     dataIndex:'options',

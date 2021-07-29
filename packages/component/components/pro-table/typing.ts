@@ -69,6 +69,11 @@ export type MIProEditableTableProps<T extends MIRecordType, U> = EditableProTabl
     reloadOnSave?:boolean;
   }
 }
+
+export type MITableColumn<T, ValueType> = ProColumns<T, ValueType> & {
+  sortBy? :string
+}
+
 export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   ProTableProps<T, U, ValueType>,
   'request' | 'columns'
@@ -88,8 +93,6 @@ export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   ) => React.ReactNode;
   onEdit?: (entity: T) => void;
   rowKey?: RowKey;
-  columns?: ProColumns<T, ValueType>[] & {
-    sortBy? :string
-  };
+  columns?: MITableColumn<T, ValueType>[]
 };
 

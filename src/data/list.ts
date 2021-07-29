@@ -1,10 +1,12 @@
+import moment from 'moment';
 const sampleListData = [
   {
     id: '20d6aa1a-f5e4-4140-9f1a-73b53f9161ed',
     code: 'sss',
-    balance: 111111,
+    balance: 111111.5,
     displayValue: 'Female',
     description: 'Female',
+    closeDate: '2021-12-12T08:00:00+08:00',
     isActive: true,
     createDate: '2021-05-27T11:23:43.570485+08:00',
     createdByUser: 'Administrator',
