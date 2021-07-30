@@ -24,8 +24,7 @@ export type MIRecordType ={
   isUserMaintainable?: boolean;
 } & {
   [key: string]: number | string | boolean,
- }
-
+}
 
 export type APIInterface<T extends MIRecordType> = {
   remove?: (keys: string[]) => Promise<unknown>;
@@ -51,7 +50,11 @@ export type APIInterface<T extends MIRecordType> = {
   ) => Promise<unknown>;
 };
 
-type SharedTableProps<T extends MIRecordType>={
+export type MIProTableColumnType<T, ValueType>=ProColumns<T, ValueType>[] & {
+  sortBy? :string
+}
+
+type SharedTableProps<T extends MIRecordType,ValueType>={
   features?: TableFeature<T>[];
   defaultColumns?: ExtraColumn[];
   optionColumnRender?: any[];
@@ -59,12 +62,13 @@ type SharedTableProps<T extends MIRecordType>={
   editable?: MIRowEditableConfig<T>;
   // model name, refer to @/models folder
   model?: string;
+  columns?: MIProTableColumnType<T, ValueType>;
 }
 
 export type MIRowEditableConfig<T> = RowEditableConfig<T> & {
   onRowDataChanged: (entities: T[]) => void;
 };
-export type MIProEditableTableProps<T extends MIRecordType, U> = EditableProTableProps<T, U>  &  SharedTableProps<T> & {
+export type MIProEditableTableProps<T extends MIRecordType, U,ValueType> = EditableProTableProps<T, U>  &  SharedTableProps<T,ValueType> & {
   behavior?:{
     reloadOnSave?:boolean;
   }
@@ -72,7 +76,7 @@ export type MIProEditableTableProps<T extends MIRecordType, U> = EditableProTabl
 export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   ProTableProps<T, U, ValueType>,
   'request' | 'columns'
-> & SharedTableProps<T> & {
+> & SharedTableProps<T,ValueType> & {
 
   request?: () => Promise<unknown>;
   editable?: MIRowEditableConfig<T>;
@@ -88,8 +92,5 @@ export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   ) => React.ReactNode;
   onEdit?: (entity: T) => void;
   rowKey?: RowKey;
-  columns?: ProColumns<T, ValueType>[] & {
-    sortBy? :string
-  };
 };
 
