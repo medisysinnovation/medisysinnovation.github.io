@@ -1,26 +1,24 @@
 import React, {
-  useContext,
   useEffect,
   useState,
   useCallback,
   useRef,
   useImperativeHandle,
+  useContext,
 } from 'react';
-import { miRequest, getRowKey, useMIActionType } from '../utils';
+import {
+  miRequest,
+  getRowKey,
+  useMIActionType,
+  columnConverter,
+} from '../utils';
+import { ConfigProvider } from '../../provider';
 import { MIConfig } from '@medisys/utils';
 import { MIProTableProps, APIInterface } from '../typing';
-import { ConfigProvider } from '../../provider';
 import { MIActionType } from '../typing';
 import { PageContext } from '../../context';
-import { Statistic } from 'antd';
-import { valueType } from 'antd/lib/statistic/utils';
 import { SyntheticEvent } from 'react';
 
-const localeMapper: {
-  [key: string]: string;
-} = {
-  en: 'en-US',
-};
 const getUseModel = MIConfig.getModelHook;
 type RowSelectionType = MIProTableProps<any, any, any>['rowSelection'] & {
   // selectOnClick: boolean;
@@ -199,41 +197,7 @@ const PageList = <
         }, // mouse leave row
       };
     },
-    columns: (columns || []).map(col => {
-      if (!['money', 'digit'].includes(col.valueType as string)) return col;
-      const { valueType, ...o } = col;
-      // console.log(col, {
-      //   //@ts-ignore
-      //   align: ['money', 'digit'].includes(valueType) ? 'right' : o.align,
-      //   ...o,
-      //   valueType: {
-      //     type: valueType,
-      //     ...(typeof valueType === 'object' ? valueType : {}),
-      //     locale: localeMapper[locale],
-      //   },
-      // });
-      return {
-        //@ts-ignore
-        align: ['money', 'digit'].includes(valueType) ? 'right' : o.align,
-        render:
-          valueType === 'digit'
-            ? (_: any, entity: { [x: string]: valueType | undefined }) => {
-                return (
-                  <Statistic
-                    value={entity[col.dataIndex as any]}
-                    {...col?.fieldProps}
-                  />
-                );
-              }
-            : undefined,
-        ...o,
-        valueType: {
-          type: valueType,
-          ...(typeof valueType === 'object' ? valueType : {}),
-          locale: localeMapper[locale],
-        },
-      };
-    }),
+    columns: (columns || []).map(columnConverter({ locale })),
   };
 };
 

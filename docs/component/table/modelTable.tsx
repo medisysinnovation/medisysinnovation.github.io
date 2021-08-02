@@ -1,14 +1,8 @@
-import React, { useEffect, useRef, useContext } from 'react';
-
+import React, { useEffect } from 'react';
 import { useModel } from 'dumi';
-import {
-  ProTable,
-  ConfigProvider,
-  Button,
-  PageContext,
-} from '@medisys/component';
+import { ProTable, Button, PageContext } from '@medisys/component';
 
-import { MIConfig, sleep } from '@medisys/utils';
+import { MIConfig } from '@medisys/utils';
 import { defaultColumns } from './utils';
 
 MIConfig.setConfig({

@@ -1,6 +1,9 @@
+import React from 'react'
 import type { ProSchema } from '@ant-design/pro-utils';
-import type {RowKey,MIActionType,UseMIFetchDataAction} from './typing'
+import type {RowKey,MIActionType,UseMIFetchDataAction,MITableColumn} from './typing'
 import { removeEmpty, convertToAPIObject } from '@medisys/utils';
+import { Statistic } from 'antd';
+import { valueType } from 'antd/lib/statistic/utils';
 
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (request: () => Promise<unknown>, params: Parameters) => {
@@ -121,4 +124,59 @@ export function useMIActionType<T>(
   // eslint-disable-next-line no-param-reassign
   ref.current = userAction
   return userAction
+}
+
+
+const localeMapper: {
+  [key: string]: string;
+} = {
+  en: 'en-US',
+};
+
+
+export const columnConverter =({locale}:Record<string,any>)=> <T, ValueType>(col:MITableColumn<T, ValueType>) => {
+
+  if (!['money', 'digit', 'date', 'dateTime'].includes(col.valueType as string)) return col;
+  const { valueType, ...o } = col;
+
+  const opts:Record<string,any>={}
+
+  switch (valueType) {
+    case 'date':
+      opts.fieldProps={
+        format:'DD-MMM-YYYY'
+      }
+      opts.valueType=valueType
+      break;
+    case 'dateTime':
+      opts.fieldProps={
+        format:'DD-MMM-YYYY HH:mm:ss'
+      }
+      opts.valueType=valueType
+      break;
+    case 'digit':
+      opts.render=(_: any, entity: { [x: string]: valueType | undefined }) => {
+        return (
+          <Statistic
+            value={entity[col.dataIndex as any]}
+            {...col?.fieldProps}
+          />
+        );
+      }
+      break; 
+    default:
+      break;
+  }
+
+  return {
+    //@ts-ignore
+    align: ['money', 'digit'].includes(valueType) ? 'right' : o.align,
+    ...o,
+    valueType: {
+      type: valueType,
+      ...(typeof valueType === 'object' ? valueType : {}),
+      locale: localeMapper[locale],
+    },
+    ...opts,
+  };
 }
