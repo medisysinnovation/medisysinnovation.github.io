@@ -8,6 +8,7 @@ import { Form, Modal } from 'antd';
 import { useEventListener, useDebounceFn } from 'ahooks';
 import { Prompt, PromptProps } from 'react-router-dom';
 import { useHistory, BrowserRouter as Router } from 'react-router-dom';
+import { removeEmpty } from '@medisys/utils';
 import useForm from './useForm';
 import { FormInstance, FormProps } from 'antd/lib/Form';
 // import MIFormContext, { MIFormContextPayload } from '../context/formContext';
@@ -50,7 +51,12 @@ const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
 > = (props, ref) => {
-  const { discardCheck = false, resetOnSubmit = true, ...restProps } = props;
+  const {
+    initialValues,
+    discardCheck = false,
+    resetOnSubmit = true,
+    ...restProps
+  } = props;
   const { form, children, onFinish } = restProps;
   const [wrapForm] = useForm(form);
   React.useImperativeHandle(ref, () => {
@@ -143,6 +149,7 @@ const _MIForm: ForwardRefRenderFunction<
   const element = (
     <div ref={divRef} className="medisys-form">
       <Form
+        initialValues={removeEmpty(initialValues!)}
         {...restProps}
         form={wrapForm}
         onFinish={(values: any) => {

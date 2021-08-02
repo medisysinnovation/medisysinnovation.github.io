@@ -10,7 +10,7 @@ import type { MIProEditableTableProps,MIRecordType } from '../typing';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useOptionRender = <
-  T extends MIRecordType, U
+  T extends MIRecordType, U, VT
 >({
   features = [],
   rowKey,
@@ -21,7 +21,7 @@ const useOptionRender = <
   recordCreatorProps={
     record:{} as T
   }
-}:MIProEditableTableProps<T, U> & {
+}:MIProEditableTableProps<T, U, VT> & {
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
   rowKey:string;
 }) => {

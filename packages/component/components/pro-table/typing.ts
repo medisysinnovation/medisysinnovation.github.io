@@ -68,7 +68,7 @@ type SharedTableProps<T extends MIRecordType,ValueType>={
 export type MIRowEditableConfig<T> = RowEditableConfig<T> & {
   onRowDataChanged: (entities: T[]) => void;
 };
-export type MIProEditableTableProps<T extends MIRecordType, U,ValueType> = EditableProTableProps<T, U>  &  SharedTableProps<T,ValueType> & {
+export type MIProEditableTableProps<T extends MIRecordType, U, ValueType> = EditableProTableProps<T, U>  &  SharedTableProps<T, ValueType> & {
   behavior?:{
     reloadOnSave?:boolean;
   }

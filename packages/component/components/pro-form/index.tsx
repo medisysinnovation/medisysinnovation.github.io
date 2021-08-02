@@ -1,6 +1,8 @@
 import React from 'react';
 import OrgProForm from '@ant-design/pro-form';
 import type { ProFormProps } from '@ant-design/pro-form/lib/layouts/ProForm';
+import { removeEmpty } from '@medisys/utils';
+
 // import type { GroupProps } from '@ant-design/pro-form/lib/interface';
 import Form from '../form'
 
@@ -9,14 +11,14 @@ const ProForm = (
     model?: string;
   },
 ) => {
-  const { onFinish, model, ...restProps } = props;
-
+  const { onFinish, model,initialValues, ...restProps } = props;
   return (
     <OrgProForm
+    initialValues={removeEmpty(initialValues!)}
       onFinish={async (values) => {
         if (onFinish) {
           await onFinish({
-            ...restProps.initialValues,
+            ...initialValues,
             ...values,
           });
         }

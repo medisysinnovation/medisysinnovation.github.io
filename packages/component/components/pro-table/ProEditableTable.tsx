@@ -28,7 +28,7 @@ import type { ParamsType } from '@ant-design/pro-provider';
 
 
 
-const MIEditableProTable = <T extends MIRecordType, U>({
+const MIEditableProTable = <T extends MIRecordType, U, VT>({
   editable,
   features = ['batchRemove', 'edit', 'duplicate', 'remove'],
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
@@ -37,7 +37,7 @@ const MIEditableProTable = <T extends MIRecordType, U>({
     reloadOnSave:true
   },
   ...props
-}: MIProEditableTableProps<T, U>) => {
+}: MIProEditableTableProps<T, U, VT>) => {
   const [selectedRows, setSelectedRows] = useState<T[]>([]);
   // const [editableKeys, setEditableRowKeys] = useState<React.Key[]>([]);
   // const [cols, setCols] = useState<ProColumns<T>[]>([]);
@@ -228,12 +228,13 @@ const MIEditableProTable = <T extends MIRecordType, U>({
 const EditableProviderWrap=<
   T extends MIRecordType,
   U extends ParamsType = ParamsType,
+  VT ='text'
 >(
-  props: MIProEditableTableProps<T, U>,
+  props: MIProEditableTableProps<T, U,VT>,
 ) => {
   return (
     <ConfigProviderWrap>
-      <MIEditableProTable<T, U> {...props} />
+      <MIEditableProTable<T, U, VT> {...props} />
     </ConfigProviderWrap>
   );
 };

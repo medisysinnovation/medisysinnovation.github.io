@@ -8,7 +8,6 @@ export default ({ fieldProps, ...props }: ComponentProps) => {
   const intl = useIntl();
 
   const defaultFieldProps = {
-    value: null,
     placeholder: intl.getMessage('form.datepicker', 'Select date'),
   };
 
