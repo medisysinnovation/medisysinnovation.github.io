@@ -184,6 +184,8 @@ const DataSelectDemo = () => {
       />
       <ProForm initialValues={{ testuser: 1 }}>
         <ProSelect
+          label="User"
+          readonly
           placeholder="User"
           dataSource={ds}
           name="testuser"

@@ -44,7 +44,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
     current?: number;
     keyword?: string;
 }, sort: Record<string, SortOrder>, filter: Record<string, React.ReactText[]>) => Promise<Partial<RequestData<VT>>>;
-
+  pro?:boolean;
   /* deprecated */
   text?: boolean;
   url?: string;
@@ -104,13 +104,13 @@ const MIDataSource = <VT extends SelectValue>(
     request,
     manualRequest,
     params = {},
+    pro,
     ...restProps
   } = props;
   const {remoteDataFormatter,...otherProps}=props
 
   const [list, setList] = useState<VT[]>([]);
   const [filteredList, setFilteredList] = useState<VT[]>([]);
-  //console.log(restProps);
   const [dataSourceLoading, setDataSourceLoading] = useState(false);
   const prevDependency = usePrevious(dependencies) || defaultDependencies;
   const setRawData = (newData: VT[]) => {
@@ -242,7 +242,7 @@ const MIDataSource = <VT extends SelectValue>(
         setFilteredList(list.filter(filter));
     }
   }, [dependencies]);
-  if (text || readonly) {
+  if (!pro && (text || readonly)) {
     const options = filteredList.filter(
       (opt: VT) =>
         //@ts-ignore

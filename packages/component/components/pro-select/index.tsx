@@ -17,10 +17,9 @@ const ProSelect = <VT extends SelectValue & {
     },
 ) => {
   const intl = useIntl();
-
   const { children, ...restProps } = props;
   return (
-    <DataSource {...(restProps as MIDataSourceProps<VT>)}>
+    <DataSource pro {...(restProps as MIDataSourceProps<VT>)}>
       {({
         dataSource = [],
         valueField = 'id',
