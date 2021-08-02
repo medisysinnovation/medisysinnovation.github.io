@@ -25,8 +25,10 @@ const ProSelect = <VT extends SelectValue & {
         valueField = 'id',
         displayField = 'text',
         filter,
+        request,
         ...payload
       }: MIDataSourceProps<VT>) => {
+        // console.log(dataSource,payload)
         // console.log(dataSource,payload,dataSource.map((o:any) => ({ value: o[valueField], label: o[displayField] })))
         return (
           <ProFormSelect

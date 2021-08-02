@@ -74,6 +74,26 @@ interface T2 {
   value: string;
   label: string;
 }
+
+const request = async (
+  // 第一个参数 params 查询表单和 params 参数的结合
+  // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
+  params: {
+    pageSize: number;
+    current: number;
+  },
+  sort,
+  filter,
+) => {
+  return new Promise(resolve => {
+    resolve({
+      data: [{ value: 1, label: 123 }],
+
+      success: true,
+      total: 123,
+    });
+  });
+};
 const DataSelectDemo = () => {
   const [v, setV] = useState(0);
   const myRef = React.useRef();
@@ -108,25 +128,7 @@ const DataSelectDemo = () => {
       <Select
         placeholder="Test"
         code="abc"
-        request={async (
-          // 第一个参数 params 查询表单和 params 参数的结合
-          // 第一个参数中一定会有 pageSize 和  current ，这两个参数是 antd 的规范
-          params: {
-            pageSize: number;
-            current: number;
-          },
-          sort,
-          filter,
-        ) => {
-          return new Promise(resolve => {
-            resolve({
-              data: [{ value: 1, label: 123 }],
-
-              success: true,
-              total: 123,
-            });
-          });
-        }}
+        request={request}
         // onChange={(v: number, opt) => {
         //   setCurrentRole(v);
         //   setCurrentUser(undefined);
@@ -196,6 +198,13 @@ const DataSelectDemo = () => {
             setCurrentRole(opt.data.roleId);
           }}
           value={currentUser}
+          valueField="value"
+          displayField="label"
+        />
+        <ProSelect
+          label="Test Request Source"
+          request={request}
+          name="testuser"
           valueField="value"
           displayField="label"
         />
