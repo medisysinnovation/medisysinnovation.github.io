@@ -9,6 +9,7 @@ export default function() {
     <div>
       <Input id="input-test" style={{ width: 300, marginRight: 10 }} />
       <Button
+        type="primary"
         onClick={() => {
           abc(document.getElementById('input-test').value);
         }}

@@ -23,6 +23,7 @@ export const uniqueid = () => {
 };
 
 export const removeEmpty = (values: Record<string, any>) => {
+  if (!values) return values;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return Object.fromEntries(
     Object.entries(values).filter(([_, v]) => v !== '' && v.length !== 0),
