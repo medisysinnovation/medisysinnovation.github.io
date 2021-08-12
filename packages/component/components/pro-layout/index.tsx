@@ -2,16 +2,16 @@ import ProLayout, {
   PageContainer,
   SettingDrawer,
 } from '@ant-design/pro-layout';
-import type { BasicLayoutContext } from '@ant-design/pro-layout/lib/BasicLayout';
 
-type MIProLayout = BasicLayoutContext & {
+type InternalType = typeof ProLayout;
+
+interface ProLayoutInterface extends InternalType {
   PageContainer: typeof PageContainer;
   SettingDrawer: typeof SettingDrawer;
-};
+}
+
+let MIProLayout = ProLayout as ProLayoutInterface;
+
 export { PageContainer, SettingDrawer };
-//@ts-ignore
-const MIProLayout = ProLayout as MIProLayout;
-MIProLayout.PageContainer = PageContainer;
-MIProLayout.SettingDrawer = SettingDrawer;
 
 export default MIProLayout;
