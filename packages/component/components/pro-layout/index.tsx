@@ -14,4 +14,6 @@ let MIProLayout = ProLayout as ProLayoutInterface;
 
 export { PageContainer, SettingDrawer };
 
+MIProLayout.PageContainer = PageContainer;
+MIProLayout.SettingDrawer = SettingDrawer;
 export default MIProLayout;

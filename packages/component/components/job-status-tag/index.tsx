@@ -25,7 +25,7 @@ const JobStatusTag: React.FC<JobStatusTagProps> = props => {
     float = 'left',
   } = props;
   const { getPrefixCls } = React.useContext(ConfigProvider.ConfigContext);
-  const prefixCls = getPrefixCls('', 'mi-ant-jst');
+  const prefixCls = getPrefixCls('', 'ant-jst');
   const classes = classnames(
     prefixCls,
     {
