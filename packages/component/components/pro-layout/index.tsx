@@ -2,9 +2,9 @@ import ProLayout, {
   PageContainer,
   SettingDrawer,
 } from '@ant-design/pro-layout';
+import type { BasicLayoutContext } from '@ant-design/pro-layout/lib/BasicLayout';
 
-type ComponentProps = React.ComponentProps<typeof ProLayout>;
-type MIProLayout = ComponentProps & {
+type MIProLayout = BasicLayoutContext & {
   PageContainer: typeof PageContainer;
   SettingDrawer: typeof SettingDrawer;
 };
