@@ -28,8 +28,8 @@ export type MIRecordType ={
 
 export type APIInterface<T extends MIRecordType> = {
   remove?: (keys: string[]) => Promise<unknown>;
-  create?: (params?:Record<string, any> ,body?: T, options?: Record<string, any>) => Promise<unknown>;
-  update?: (params?:Record<string, any>, body?: T, options?: Record<string, any>) => Promise<unknown>;
+  create?: (body?: T, options?: Record<string, any>) => Promise<unknown>;
+  update?: (body?: T, options?: Record<string, any>) => Promise<unknown>;
   query?: (
     params: {
       id: string;

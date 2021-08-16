@@ -17,6 +17,8 @@ export { DragDropListTypes } from './drag-drop-list/interface.d';
 export { default as DragDropList } from './drag-drop-list';
 export { default as ProLayout } from './pro-layout';
 export { ProTable } from './pro-table';
+export { ProList } from './pro-list';
+
 export { default as ProForm } from './pro-form';
 
 export { default as ProSelect } from './pro-select';
@@ -31,5 +33,6 @@ export { default as ProDatePicker } from './pro-datepicker';
 export * from './provider';
 export * from './context';
 
+//These two component used by PSA only
 export { JobCounter } from './job-counter';
 export { JobStatusTag } from './job-status-tag';

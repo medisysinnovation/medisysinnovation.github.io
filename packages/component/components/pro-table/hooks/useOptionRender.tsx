@@ -17,7 +17,6 @@ const useOptionRender = <
   api,
   tableRef,
   editable,
-  params,
   recordCreatorProps={
     record:{} as T
   }
@@ -64,7 +63,7 @@ const useOptionRender = <
                 ? ((await query!({ id: entity[rowKey] as string })) as any)
                 : { data: entity };
 
-              const newId: any = await create!(params,{
+              const newId: any = await create!({
                 //@ts-ignore
                 ...recordCreatorProps?.record,
                 ...opt.getNewValue(latestEntity),
@@ -117,7 +116,7 @@ const useOptionRender = <
                   ...latestEntity,
                   [opt.filedName]: !latestEntity[opt.filedName],
                 };
-                await update!(params,newEntity);
+                await update!(newEntity);
                 if (opt) await action?.reloadAndRest?.();
                 message.success('Status updated');
                 editable?.onRowDataChanged?.([newEntity]);
