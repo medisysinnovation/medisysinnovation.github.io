@@ -1,7 +1,11 @@
 import ProList from '@ant-design/pro-list';
-type ProListType = typeof ProList;
-const MIProList = (props: ProListType) => {
-  return <ProList {...props} />;
+import { ProListProps } from '@ant-design/pro-list/es/index';
+const MIProList = <
+  RecordType extends Record<string, any>,
+  U extends Record<string, any> = Record<string, any>
+>(
+  props: ProListProps<RecordType, U>,
+) => {
+  return <ProList<RecordType, U> {...props} />;
 };
-
 export default MIProList;
