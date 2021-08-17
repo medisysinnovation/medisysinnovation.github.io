@@ -3,9 +3,10 @@ import ProTable, { TableDropdown } from '@ant-design/pro-table';
 import EditableProTable from './ProEditableTable';
 import { useColumns, useOptionRender, usePageList } from './hooks';
 import FooterPanel from './FooterPanel';
-import { MIProTableProps,MIRecordType } from './typing';
-import type { ParamsType } from '@ant-design/pro-provider';
-import { useIntl ,ConfigProviderWrap} from '../locale';
+import { MIProTableProps } from './typing';
+import { ParamsType } from '@ant-design/pro-provider';
+import { useIntl, ConfigProviderWrap } from '../locale';
+import { MIRecordType } from '../hook/typing';
 
 // import PageContextWrap from './PageContextWrap';
 const MyProTable = ProTable as any;
@@ -51,7 +52,7 @@ const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
             // @ts-ignore
             onClick={defaultEditCallback!(entity)}
           >
-           {intl.getMessage('table.action.edit', 'Edit')}
+            {intl.getMessage('table.action.edit', 'Edit')}
           </a>
         ),
       },
@@ -78,7 +79,7 @@ const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
   //@ts-ignore
   const mergedColumns = useColumns({ columns, defaultColumns, optionRender });
   return (
-    <div ref={tableRef} style={{width:'100%'}}>
+    <div ref={tableRef} style={{ width: '100%' }}>
       <MyProTable
         rowKey={rowKey}
         bordered
@@ -138,6 +139,6 @@ const ProviderWarp = <
 };
 
 ProviderWarp.TableDropdown = TableDropdown;
-ProviderWarp.Editable =EditableProTable
+ProviderWarp.Editable = EditableProTable;
 
 export default ProviderWarp;

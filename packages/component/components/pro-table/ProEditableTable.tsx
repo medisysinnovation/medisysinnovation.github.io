@@ -1,20 +1,28 @@
-import React,{ useState, useRef, useMemo } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { EditableProTable } from '@ant-design/pro-table';
 import Button from '../button';
 import { message } from 'antd';
 import { getDefaultErrorMessage } from './utils';
-import type { ActionRenderConfig, NewLineConfig } from '@ant-design/pro-utils/es/useEditableArray';
+import {
+  ActionRenderConfig,
+  NewLineConfig,
+} from '@ant-design/pro-utils/es/useEditableArray';
 import { SaveEditableAction, CancelEdit } from './ActionButton';
 import ProTable from './ProTable';
-import type { ProColumns } from '@ant-design/pro-table';
+import { ProColumns } from '@ant-design/pro-table';
 import { uniqueid } from '@medisys/utils';
-
 import { PlusOutlined } from '@ant-design/icons';
-import type { MIProEditableTableProps,MIRecordType } from './typing';
-import { useColumns, useOptionRender, usePageList, useHighlight } from './hooks';
+import { MIProEditableTableProps } from './typing';
+import {
+  useColumns,
+  useOptionRender,
+  usePageList,
+  useHighlight,
+} from './hooks';
 import FooterPanel from './FooterPanel';
-import { ConfigProviderWrap,useIntl } from '../locale'
-import type { ParamsType } from '@ant-design/pro-provider';
+import { ConfigProviderWrap, useIntl } from '../locale';
+import { ParamsType } from '@ant-design/pro-provider';
+import { MIRecordType } from '../hook/typing';
 
 // import { convertMessages } from '@/utils/validation/validUtil';
 // import type { FormInstance, FormItemProps } from 'antd/lib/form';
@@ -26,15 +34,13 @@ import type { ParamsType } from '@ant-design/pro-provider';
 //   });
 // }
 
-
-
 const MIEditableProTable = <T extends MIRecordType, U, VT>({
   editable,
   features = ['batchRemove', 'edit', 'duplicate', 'remove'],
   defaultColumns = ['createdBy', 'updatedBy', 'options'],
   recordCreatorProps,
-  behavior={
-    reloadOnSave:true
+  behavior = {
+    reloadOnSave: true,
   },
   ...props
 }: MIProEditableTableProps<T, U, VT>) => {
@@ -45,8 +51,16 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
   const [lastRowId, setLastRowId] = useState();
   const intl = useIntl();
   //@ts-ignore
-  const { api, model, rowKey,columns,postData, actionRef,onRow, ...sharedPageProps } = usePageList({
-    tableRef,
+  const {
+    api,
+    model,
+    rowKey,
+    columns,
+    postData,
+    actionRef,
+    onRow,
+    ...sharedPageProps
+  } = usePageList({
     editable: true,
     ...props,
   });
@@ -78,12 +92,12 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
 
   const mergedColumns = useMemo(() => {
     // @ts-ignore
-    return (originalColumns || []).map((o) => {
+    return (originalColumns || []).map(o => {
       // @ts-ignore
       if (o.formItemProps?.rules) {
         // @ts-ignore
         // eslint-disable-next-line no-param-reassign
-        o.formItemProps.rules = o.formItemProps.rules.map((r) => {
+        o.formItemProps.rules = o.formItemProps.rules.map(r => {
           return {
             message: getDefaultErrorMessage(r, o),
             ...r,
@@ -101,7 +115,7 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
   }, [originalColumns]);
   // @ts-ignore
   return (
-    <div ref={tableRef} style={{width:'100%'}}>
+    <div ref={tableRef} style={{ width: '100%' }}>
       <EditableProTable
         rowKey={rowKey}
         bordered
@@ -115,8 +129,11 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
           style: {
             display: 'none',
           },
-          creatorButtonText:intl.getMessage('table.action.add','Add New Record'),
-          ...recordCreatorProps
+          creatorButtonText: intl.getMessage(
+            'table.action.add',
+            'Add New Record',
+          ),
+          ...recordCreatorProps,
         }}
         form={
           {
@@ -129,7 +146,8 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
           // editableKeys,
           // onChange: setEditableRowKeys,
           deletePopconfirmMessage: 'Delete this row?',
-          onlyAddOneLineAlertMessage: 'Only one line can be added at the same time',
+          onlyAddOneLineAlertMessage:
+            'Only one line can be added at the same time',
           onlyOneLineEditorAlertMessage: 'Only one line can be edited',
           // @ts-ignore
           actionRender: (
@@ -155,28 +173,41 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
                   disabled: row.isUserMaintainable === false,
                 }}
               />,
-              <CancelEdit key="cancel" action={actionRef?.current} {...config} />,
+              <CancelEdit
+                key="cancel"
+                action={actionRef?.current}
+                {...config}
+              />,
             ];
           },
-          onSave: async (rowId, row:T, newLine) => {
+          onSave: async (rowId, row: T, newLine) => {
             if (!create || !update) {
               throw new Error('`create` and `update` api function not passed');
             }
             const newId: any = newLine ? await create(row) : await update(row);
-            message.success(newLine?intl.getMessage('table.message.recordCreated', 'Record created') :intl.getMessage('table.message.recordUpdated', 'Record updated'));
+            message.success(
+              newLine
+                ? intl.getMessage(
+                    'table.message.recordCreated',
+                    'Record created',
+                  )
+                : intl.getMessage(
+                    'table.message.recordUpdated',
+                    'Record updated',
+                  ),
+            );
             setLastRowId(newId || rowId);
             // console.log(key);
             actionRef.current?.cancelEditable(rowId);
-            if(behavior.reloadOnSave){
+            if (behavior.reloadOnSave) {
               actionRef.current?.reloadAndRest?.();
             }
             editable?.onRowDataChanged?.([row]);
-
           },
           ...editable,
         }}
         rowSelection={{
-          onChange: (_, _selectedRows:T[]) => {
+          onChange: (_, _selectedRows: T[]) => {
             setSelectedRows(_selectedRows);
           },
         }}
@@ -186,20 +217,21 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
             record={{
               [rowKey]: uniqueid() as unknown,
               //@ts-ignore
-              ...recordCreatorProps?.record
+              ...recordCreatorProps?.record,
             }}
           >
-            <Button type="primary">    
+            <Button type="primary">
               {
-              //@ts-ignore
-              <PlusOutlined />
-              } {intl.getMessage('table.action.new', 'New')}
+                //@ts-ignore
+                <PlusOutlined />
+              }{' '}
+              {intl.getMessage('table.action.new', 'New')}
             </Button>
           </ProTable.Editable.RecordCreator>,
         ]}
         pagination={{
           hideOnSinglePage: true,
-          pageSize: 9999,//TODO: allow config
+          pageSize: 9999, //TODO: allow config
         }}
         {...sharedPageProps}
         {...props}
@@ -223,13 +255,12 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
   );
 };
 
-
-const EditableProviderWrap=<
+const EditableProviderWrap = <
   T extends MIRecordType,
   U extends ParamsType = ParamsType,
-  VT ='text'
+  VT = 'text'
 >(
-  props: MIProEditableTableProps<T, U,VT>,
+  props: MIProEditableTableProps<T, U, VT>,
 ) => {
   return (
     <ConfigProviderWrap>
@@ -237,7 +268,6 @@ const EditableProviderWrap=<
     </ConfigProviderWrap>
   );
 };
-
 
 EditableProviderWrap.RecordCreator = EditableProTable.RecordCreator;
 

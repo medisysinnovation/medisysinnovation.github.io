@@ -1,44 +1,23 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import ProList from '@ant-design/pro-list';
 import { ProListProps } from '@ant-design/pro-list/es/index';
-import { queryListRequest } from '../pro-table/utils';
-import { APIInterface } from 'components/pro-table/typing';
-import { MIConfig } from '@medisys/utils';
+import { useList } from '../hook';
+import { SharedListProps } from '../hook/typing';
 
 export declare type MIProListTypeProps<
   RecordType extends Record<string, any>,
   U extends Record<string, any> = Record<string, any>
-> = ProListProps<RecordType, U> & {
-  api: APIInterface<RecordType>;
-  model?: string;
-};
-
-const getUseModel = MIConfig.getModelHook;
+> = ProListProps<RecordType, U> & SharedListProps<RecordType, U>;
 
 const MIProList = <
   RecordType extends Record<string, any>,
   U extends Record<string, any> = Record<string, any>
->({
-  request,
-  api,
-  model,
-  ...props
-}: MIProListTypeProps<RecordType, U>) => {
-  const { api: modelAPI } = getUseModel()(model as any) || {
-    api: {},
-  };
+>(
+  props: MIProListTypeProps<RecordType, U>,
+) => {
+  const sharedListProps = useList(props);
 
-  const { queryList } = api || modelAPI;
-
-  const _request = useCallback(
-    queryListRequest({
-      request,
-      queryHandler: queryList,
-    }),
-    [request, queryList],
-  );
-
-  return <ProList<RecordType, U> request={_request} {...props} />;
+  return <ProList<RecordType, U> {...props} {...sharedListProps} />;
 };
 
 export default MIProList;

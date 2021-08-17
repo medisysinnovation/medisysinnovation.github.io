@@ -1,28 +1,27 @@
 import React, { useCallback, useState } from 'react';
-import type { ProCoreActionType } from '@ant-design/pro-utils';
+import { ProCoreActionType } from '@ant-design/pro-utils';
 import { DeleteWrapper } from '../ActionButton';
 import { uniqueid } from '@medisys/utils';
 import { message } from 'antd';
-import type { TableFeature, ColumnAction } from './useColumns';
+import { TableFeature, ColumnAction } from './useColumns';
 import useHighlight from './useHighlight';
-import { useIntl } from  '../../locale';
-import type { MIProEditableTableProps,MIRecordType } from '../typing';
+import { useIntl } from '../../locale';
+import { MIProEditableTableProps } from '../typing';
+import { MIRecordType } from '../../hook/typing';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const useOptionRender = <
-  T extends MIRecordType, U, VT
->({
+const useOptionRender = <T extends MIRecordType, U, VT>({
   features = [],
   rowKey,
   api,
   tableRef,
   editable,
-  recordCreatorProps={
-    record:{} as T
-  }
-}:MIProEditableTableProps<T, U, VT> & {
+  recordCreatorProps = {
+    record: {} as T,
+  },
+}: MIProEditableTableProps<T, U, VT> & {
   tableRef: React.MutableRefObject<HTMLDivElement | undefined>;
-  rowKey:string;
+  rowKey: string;
 }) => {
   const intl = useIntl();
 
@@ -49,14 +48,16 @@ const useOptionRender = <
             disabled={entity.isUserMaintainable === false}
             onClick={() => action.startEditable?.(entity[rowKey] as React.Key)}
           >
-            {intl.getMessage('table.action.edit','Edit')}
+            {intl.getMessage('table.action.edit', 'Edit')}
           </a>
         ),
         duplicate: (
           <a
             key="duplicate"
             onClick={async () => {
-              const opt = (features.find((o) => (o as ColumnAction<T>)?.code === 'duplicate') || {
+              const opt = (features.find(
+                o => (o as ColumnAction<T>)?.code === 'duplicate',
+              ) || {
                 getNewValue: (v: T) => v,
               }) as ColumnAction<T>;
               const { data: latestEntity } = query
@@ -71,14 +72,17 @@ const useOptionRender = <
                 [rowKey]: uniqueid(),
               });
               if (opt) await action?.reloadAndRest?.();
-              message.success(intl.getMessage('table.action.recordDuplicated','Record duplicated'));
+              message.success(
+                intl.getMessage(
+                  'table.action.recordDuplicated',
+                  'Record duplicated',
+                ),
+              );
               setLastRowId(newId);
               editable?.onRowDataChanged?.([newId]);
-
             }}
           >
-            {intl.getMessage('table.action.duplicate','Duplicate')}
-            
+            {intl.getMessage('table.action.duplicate', 'Duplicate')}
           </a>
         ),
         remove: (
@@ -86,16 +90,20 @@ const useOptionRender = <
             key="remove"
             rowKey={rowKey as string}
             onRemove={remove!}
-            onComplete={(success) => {
+            onComplete={success => {
               if (success) action?.reloadAndRest?.();
             }}
             rows={[entity]}
           >
-            <a disabled={entity.isUserMaintainable === false}>{intl.getMessage('table.action.delete','Delete')}</a>
+            <a disabled={entity.isUserMaintainable === false}>
+              {intl.getMessage('table.action.delete', 'Delete')}
+            </a>
           </DeleteWrapper>
         ),
         toggleStatus: () => {
-          const opt = (features.find((o) => (o as ColumnAction<T>)?.code === 'toggleStatus') || {
+          const opt = (features.find(
+            o => (o as ColumnAction<T>)?.code === 'toggleStatus',
+          ) || {
             filedName: 'isActive',
           }) as ColumnAction<T>;
           return (
@@ -104,11 +112,16 @@ const useOptionRender = <
               // @ts-ignore
               onClick={async () => {
                 const { data: latestEntity } = query
-                //@ts-ignore
-                  ? ((await query!({ id: entity[rowKey] })) as any)
+                  ? //@ts-ignore
+                    ((await query!({ id: entity[rowKey] })) as any)
                   : { data: entity };
                 if (entity[opt.filedName] !== latestEntity[opt.filedName]) {
-                  message.warning(intl.getMessage('table.message.dirtyDataUpdate','Data has been changed'));
+                  message.warning(
+                    intl.getMessage(
+                      'table.message.dirtyDataUpdate',
+                      'Data has been changed',
+                    ),
+                  );
                   action?.reload();
                   return;
                 }
@@ -120,26 +133,28 @@ const useOptionRender = <
                 if (opt) await action?.reloadAndRest?.();
                 message.success('Status updated');
                 editable?.onRowDataChanged?.([newEntity]);
-
               }}
             >
-              {entity[opt.filedName] === true ? intl.getMessage('table.action.deactivate','Deactivate') : intl.getMessage('table.action.activate','Activate')}
+              {entity[opt.filedName] === true
+                ? intl.getMessage('table.action.deactivate', 'Deactivate')
+                : intl.getMessage('table.action.activate', 'Activate')}
             </a>
           );
         },
       };
-      features.forEach((f,idx) => {
+      features.forEach((f, idx) => {
         const action = (fn: TableFeature<T>, list: JSX.Element[]) => {
           if (typeof fn === 'string') {
             //@ts-ignore
             if (defaultFeatures[fn]) action(defaultFeatures[fn], list);
           } else if (typeof fn === 'object' && (fn as ColumnAction<T>)?.code) {
             list.push(
-              <span key={idx}>{
-                (fn as ColumnAction<T>)?.render
-                ? (fn as ColumnAction<T>)?.render(entity)
-                //@ts-ignore
-                : defaultFeatures[(fn as ColumnAction<T>)?.code]}</span>
+              <span key={idx}>
+                {(fn as ColumnAction<T>)?.render
+                  ? (fn as ColumnAction<T>)?.render(entity)
+                  : //@ts-ignore
+                    defaultFeatures[(fn as ColumnAction<T>)?.code]}
+              </span>,
             );
           } else if (typeof fn === 'function') {
             list.push(<span key={idx}>{fn(entity)}</span>);
@@ -152,7 +167,7 @@ const useOptionRender = <
 
       return ary;
     },
-    [features, remove, rowKey, create, update, query, setLastRowId,editable],
+    [features, remove, rowKey, create, update, query, setLastRowId, editable],
   );
 
   return cb;
