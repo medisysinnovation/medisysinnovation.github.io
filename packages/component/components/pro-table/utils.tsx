@@ -90,17 +90,9 @@ export const queryListRequest = ({
     };
   }, {});
 
-  console.log(request, queryHandler);
-  return (
-    request?.apply(undefined, [params, convertedSort, filter]) ||
-    MIConfig.getConfig('requestWrap')?.(queryHandler)?.apply(undefined, [
-      params,
-      convertedSort,
-      filter,
-    ]) ||
-    // @ts-ignore
-    miRequest(queryHandler)?.apply(undefined, [params, convertedSort, filter])
-  );
+  return (MIConfig.getConfig('requestWrap') || miRequest)(
+    request || queryHandler,
+  ).apply(undefined, [params, convertedSort, filter]);
 };
 
 export const getDefaultErrorMessage = (
