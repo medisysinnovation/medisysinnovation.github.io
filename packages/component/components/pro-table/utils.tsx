@@ -1,22 +1,25 @@
-import React from 'react'
-import type { ProSchema } from '@ant-design/pro-utils';
-import type {RowKey,MIActionType,UseMIFetchDataAction,MITableColumn} from './typing'
-import { removeEmpty, convertToAPIObject } from '@medisys/utils';
+import React from 'react';
+import { ProSchema } from '@ant-design/pro-utils';
+import {
+  RowKey,
+  MIActionType,
+  UseMIFetchDataAction,
+  MITableColumn,
+} from './typing';
+import { removeEmpty, convertToAPIObject, MIConfig } from '@medisys/utils';
 import { Statistic } from 'antd';
 import { valueType } from 'antd/lib/statistic/utils';
 
 type Parameters = { onSuccess: () => void; onError: () => void };
-export const miRequest = (request: () => Promise<unknown>, params: Parameters) => {
+export const miRequest = (
+  request: () => Promise<unknown>,
+  params: Parameters,
+) => {
   if (typeof request !== 'function') return null;
   const { onSuccess, onError } = params || {};
   let result = {
     success: false,
     data: {},
-    // "errorCode": "1001",
-    // "errorMessage": "error message",
-    // "showType": 2,
-    // "traceId": "someid",
-    // "host": "10.1.1.1"
   };
   return async function innerRequest(...args: any[]) {
     // eslint-disable-next-line no-param-reassign
@@ -63,15 +66,63 @@ export const miRequest = (request: () => Promise<unknown>, params: Parameters) =
   };
 };
 
-export const getDefaultErrorMessage = ({ required, min, max, len }: any, colSchema: ProSchema) => {
+export const queryListRequest = ({
+  request,
+  queryHandler,
+  columns,
+}: {
+  request?: Function;
+  queryHandler?: unknown;
+  columns?: unknown[];
+}) => <T extends Record<string, any>>(
+  params: any,
+  sort: any,
+  filter: any,
+): Promise<T> => {
+  //TODO: fix sort error when dataIndex is in ['a','id'] format
+  const convertedSort = Object.keys(sort || {}).reduce((acc, curr) => {
+    return {
+      ...acc,
+      //@ts-ignore
+      [(columns || []).find(o => o.dataIndex === curr)?.sortBy || curr]: sort[
+        curr
+      ],
+    };
+  }, {});
+
+  console.log(request, queryHandler);
+  return (
+    request?.apply(undefined, [params, convertedSort, filter]) ||
+    MIConfig.getConfig('requestWrap')?.(queryHandler)?.apply(undefined, [
+      params,
+      convertedSort,
+      filter,
+    ]) ||
+    // @ts-ignore
+    miRequest(queryHandler)?.apply(undefined, [params, convertedSort, filter])
+  );
+};
+
+export const getDefaultErrorMessage = (
+  { required, min, max, len }: any,
+  colSchema: ProSchema,
+) => {
   if (required) return 'This field is required';
   const { valueType } = colSchema;
-  if (!valueType || valueType === 'password' || valueType === 'text' || valueType === 'textarea') {
-    if (len !== undefined) return `This field must be exactly ${len} characters`;
+  if (
+    !valueType ||
+    valueType === 'password' ||
+    valueType === 'text' ||
+    valueType === 'textarea'
+  ) {
+    if (len !== undefined)
+      return `This field must be exactly ${len} characters`;
     if (min !== undefined && max !== undefined)
       return `This field must be between ${min} and ${max} characters`;
-    if (min !== undefined) return `This field must be at least ${min} characters`;
-    if (max !== undefined) return `This field cannot be longer than ${min} characters`;
+    if (min !== undefined)
+      return `This field must be at least ${min} characters`;
+    if (max !== undefined)
+      return `This field cannot be longer than ${min} characters`;
   } else if (valueType === 'digit') {
     if (len !== undefined) return `This field must equal ${len}`;
     if (min !== undefined && max !== undefined)
@@ -83,7 +134,6 @@ export const getDefaultErrorMessage = ({ required, min, max, len }: any, colSche
   return 'Validation error';
 };
 
-
 export const getRowKey = (rowKey: RowKey) => {
   if (typeof rowKey === 'function' && rowKey) {
     return rowKey();
@@ -92,14 +142,13 @@ export const getRowKey = (rowKey: RowKey) => {
   return rowKey;
 };
 
-
 export function useMIActionType<T>(
   ref: React.MutableRefObject<MIActionType | undefined>,
   action: UseMIFetchDataAction<T>,
   //@ts-ignore
   props: any,
 ) {
-  if(!ref)return
+  if (!ref) return;
   // const {
   //   dataSource,
   //   currentData
@@ -108,7 +157,7 @@ export function useMIActionType<T>(
   //@ts-ignore
   const userAction: MIActionType = {
     ...ref?.current,
-    getRecords: () => action.dataSource || action.currentData || []
+    getRecords: () => action.dataSource || action.currentData || [],
   };
   // const {actionRef, updateState} =  PageContext.useContainer();
   // useEffect(()=>{
@@ -122,10 +171,9 @@ export function useMIActionType<T>(
   // },[userAction])
 
   // eslint-disable-next-line no-param-reassign
-  ref.current = userAction
-  return userAction
+  ref.current = userAction;
+  return userAction;
 }
-
 
 const localeMapper: {
   [key: string]: string;
@@ -133,37 +181,44 @@ const localeMapper: {
   en: 'en-US',
 };
 
-
-export const columnConverter =({locale}:Record<string,any>)=> <T, ValueType>(col:MITableColumn<T, ValueType>) => {
-
-  if (!['money', 'digit', 'date', 'dateTime'].includes(col.valueType as string)) return col;
+export const columnConverter = ({ locale }: Record<string, any>) => <
+  T,
+  ValueType
+>(
+  col: MITableColumn<T, ValueType>,
+) => {
+  if (!['money', 'digit', 'date', 'dateTime'].includes(col.valueType as string))
+    return col;
   const { valueType, ...o } = col;
 
-  const opts:Record<string,any>={}
+  const opts: Record<string, any> = {};
 
   switch (valueType) {
     case 'date':
-      opts.fieldProps={
-        format:'DD-MMM-YYYY'
-      }
-      opts.valueType=valueType
+      opts.fieldProps = {
+        format: 'DD-MMM-YYYY',
+      };
+      opts.valueType = valueType;
       break;
     case 'dateTime':
-      opts.fieldProps={
-        format:'DD-MMM-YYYY HH:mm:ss'
-      }
-      opts.valueType=valueType
+      opts.fieldProps = {
+        format: 'DD-MMM-YYYY HH:mm:ss',
+      };
+      opts.valueType = valueType;
       break;
     case 'digit':
-      opts.render=(_: any, entity: { [x: string]: valueType | undefined }) => {
+      opts.render = (
+        _: any,
+        entity: { [x: string]: valueType | undefined },
+      ) => {
         return (
           <Statistic
             value={entity[col.dataIndex as any]}
             {...col?.fieldProps}
           />
         );
-      }
-      break; 
+      };
+      break;
     default:
       break;
   }
@@ -179,4 +234,4 @@ export const columnConverter =({locale}:Record<string,any>)=> <T, ValueType>(col
     },
     ...opts,
   };
-}
+};

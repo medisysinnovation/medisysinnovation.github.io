@@ -7,10 +7,10 @@ import React, {
   useContext,
 } from 'react';
 import {
-  miRequest,
   getRowKey,
   useMIActionType,
   columnConverter,
+  queryListRequest,
 } from '../utils';
 import { ConfigProvider } from '../../provider';
 import { MIConfig } from '@medisys/utils';
@@ -113,35 +113,13 @@ const PageList = <
   );
 
   const _request = useCallback(
-    async (params: any, sort: any, filter: any) => {
-      //TODO: fix sort error when dataIndex is in ['a','id'] format
-      const convertedSort = Object.keys(sort || {}).reduce((acc, curr) => {
-        return {
-          ...acc,
-          //@ts-ignore
-          [(columns || []).find(o => o.dataIndex === curr)?.sortBy ||
-          curr]: sort[curr],
-        };
-      }, {});
-      return (
-        request?.apply(undefined, [params, convertedSort, filter]) ||
-        MIConfig.getConfig('requestWrap')?.(queryList)?.apply(undefined, [
-          params,
-          convertedSort,
-          filter,
-        ]) ||
-        // @ts-ignore
-        miRequest(queryList)?.apply(undefined, [params, convertedSort, filter])
-      );
-    },
-    [
+    queryListRequest({
       request,
-      miRequest,
-      queryList,
-      MIConfig.getConfig('requestWrap')?.(queryList),
-    ],
+      queryHandler: queryList,
+    }),
+    [request, queryList],
   );
-
+  console.log(queryList);
   return {
     actionRef,
     api: api || modelAPI,
