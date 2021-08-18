@@ -8,7 +8,7 @@
     "docs:deploy": "gh-pages -d docs-dist",
     "docs:analyze": "cross-env ANALYZE=1 dumi build",
     "build": "father-build",
-    "deploy": "npm run docs:build && npm run docs:deploy",
+    "deploy": "yarn run docs:build && yarn run docs:deploy",
     "release": "lerna run build && lerna publish",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",

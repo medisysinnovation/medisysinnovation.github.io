@@ -26,7 +26,7 @@ $ npm start
 Build documentation,
 
 ```bash
-$ npm run docs:build
+$ yarn run docs:build
 ```
 
 Build library using lerna
@@ -38,13 +38,13 @@ $ lerna run build
 Release package to npm
 
 ```bash
-$ npm run release
+$ yarn run release
 ```
 
 Deploy documentation
 
 ```bash
-$ npm run deploy
+$ yarn run deploy
 ```
 
 ### TypeScript

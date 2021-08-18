@@ -1,11 +1,11 @@
 {
   "packages": ["packages/*"],
   "version": "0.1.235",
-  "npmClient": "npm",
+  "npmClient": "yarn",
   "command": {
     "publish": {
       "ignoreChanges": ["ignored-file", "*.md"],
-      "npmClient": "npm",
+      "npmClient": "yarn",
       "verifyAccess": false,
       "graphType": "all"
     },

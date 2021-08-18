@@ -26,8 +26,8 @@
     "url": "git+https://github.com/medisysinnovation/medisys.git"
   },
   "scripts": {
-    "build": "npm run compile && npm run dist",
-    "build:online": "npm run compile && NODE_OPTIONS='--max-old-space-size=4096' npm run dist",
+    "build": "yarn run compile && yarn run dist",
+    "build:online": "yarn run compile && NODE_OPTIONS='--max-old-space-size=4096' yarn run dist",
     "compile": "antd-tools run compile",
     "compile:less": "antd-tools run compile:less",
     "dist": "antd-tools run dist",
