@@ -22,12 +22,19 @@ export const uniqueid = () => {
   return uuid;
 };
 
-export const removeEmpty = (values: Record<string, any>) => {
-  if (!values) return values;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  return Object.fromEntries(
-    Object.entries(values).filter(([_, v]) => v !== '' && v.length !== 0),
-  );
+export const omitUndefined = <T>(obj: T): T => {
+  const newObj = {} as T;
+  Object.keys(obj || {}).forEach(key => {
+    //@ts-ignore
+    if (obj[key] !== undefined) {
+      //@ts-ignore
+      newObj[key] = obj[key];
+    }
+  });
+  if (Object.keys(newObj).length < 1) {
+    return undefined as any;
+  }
+  return newObj;
 };
 
 export const convertToAPIObject = (values: Record<string, any>) => {

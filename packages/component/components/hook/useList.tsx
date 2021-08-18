@@ -53,7 +53,7 @@ const useList = <
     {},
   );
   //@ts-ignore
-  useImperativeHandle(pageActionRef, () => {
+  useImperativeHandle(propsActionRef || pageActionRef, () => {
     return {
       //@ts-ignore
       ...actionRef.current,
@@ -61,10 +61,10 @@ const useList = <
     };
   });
 
-  if (propsActionRef) {
-    // @ts-ignore
-    propsActionRef.current = actionRef.current;
-  }
+  // if (propsActionRef) {
+  //   // @ts-ignore
+  //   propsActionRef.current = actionRef.current;
+  // }
 
   const _request = useCallback(
     queryListRequest({

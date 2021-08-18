@@ -1,6 +1,6 @@
 import React from 'react';
 import { RowKey, MIActionType, UseMIFetchDataAction } from './typing';
-import { removeEmpty, convertToAPIObject, MIConfig } from '@medisys/utils';
+import { omitUndefined, convertToAPIObject, MIConfig } from '@medisys/utils';
 
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (
@@ -16,7 +16,7 @@ export const miRequest = (
   return async function innerRequest(...args: any[]) {
     // eslint-disable-next-line no-param-reassign
     args[0] = {
-      ...convertToAPIObject(removeEmpty(args[0])),
+      ...convertToAPIObject(omitUndefined(args[0])),
       sorting:
         args[1] !== undefined && Object.keys(args[1]).length > 0
           ? [

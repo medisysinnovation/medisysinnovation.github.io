@@ -1,21 +1,21 @@
 import React from 'react';
 import OrgProForm from '@ant-design/pro-form';
-import type { ProFormProps } from '@ant-design/pro-form/lib/layouts/ProForm';
-import { removeEmpty } from '@medisys/utils';
+import { ProFormProps } from '@ant-design/pro-form/lib/layouts/ProForm';
+import { omitUndefined } from '@medisys/utils';
 
 // import type { GroupProps } from '@ant-design/pro-form/lib/interface';
-import Form from '../form'
+import Form from '../form';
 
 const ProForm = (
   props: ProFormProps & {
     model?: string;
   },
 ) => {
-  const { onFinish, model,initialValues, ...restProps } = props;
+  const { onFinish, model, initialValues, ...restProps } = props;
   return (
     <OrgProForm
-    initialValues={removeEmpty(initialValues!)}
-      onFinish={async (values) => {
+      initialValues={omitUndefined(initialValues!)}
+      onFinish={async values => {
         if (onFinish) {
           await onFinish({
             ...initialValues,

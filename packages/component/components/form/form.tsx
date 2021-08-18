@@ -8,7 +8,7 @@ import { Form, Modal } from 'antd';
 import { useEventListener, useDebounceFn } from 'ahooks';
 import { Prompt, PromptProps } from 'react-router-dom';
 import { useHistory, BrowserRouter as Router } from 'react-router-dom';
-import { removeEmpty } from '@medisys/utils';
+import { omitUndefined } from '@medisys/utils';
 import useForm from './useForm';
 import { FormInstance, FormProps } from 'antd/lib/Form';
 // import MIFormContext, { MIFormContextPayload } from '../context/formContext';
@@ -149,7 +149,7 @@ const _MIForm: ForwardRefRenderFunction<
   const element = (
     <div ref={divRef} className="medisys-form">
       <Form
-        initialValues={removeEmpty(initialValues!)}
+        initialValues={omitUndefined(initialValues!)}
         {...restProps}
         form={wrapForm}
         onFinish={(values: any) => {
