@@ -27,9 +27,9 @@ const useList = <
   dataSource,
   actionRef: propsActionRef,
 }: Omit<SharedListProps<T, U>, 'editable' | 'rowSelection'>) => {
-  const { api: modelAPI, dispatch, ...restModel } = getUseModel()(
-    model as any,
-  ) || { api: {} };
+  const { api: modelAPI, ...restModel } = getUseModel()(model as any) || {
+    api: {},
+  };
 
   const { queryList } = api || modelAPI;
   const key = getRowKey(rowKey);

@@ -71,7 +71,10 @@ const PageList = <
             defaultEditCallback(record)(event);
           } else if (editable) {
             //@ts-ignore
-            actionRef.current?.setEditableRowKeys([record[rowKey]]); //.startEditable(clickedRowKey);
+            sharedListProps.actionRef?.current?.setEditableRowKeys([
+              //@ts-ignore
+              record[rowKey],
+            ]); //.startEditable(clickedRowKey);
           }
         }, // double click row
         onContextMenu: (event: SyntheticEvent) => {
