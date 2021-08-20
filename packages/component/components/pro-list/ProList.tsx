@@ -33,14 +33,14 @@ const MIProList = <
   RecordType extends Record<string, any>,
   U extends Record<string, any> = Record<string, any>
 >({
-  request,
   search,
   sort,
-  actionRef: propsActionRef,
   editable,
   ...props
 }: MIProListTypeProps<RecordType, U>) => {
-  const sharedListProps = useList(props);
+  const { request, actionRef: propsActionRef, ...sharedListProps } = useList(
+    props,
+  );
 
   const [filter, setFilter] = useState<
     Record<string, any> & {
