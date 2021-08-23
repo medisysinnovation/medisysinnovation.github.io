@@ -1,14 +1,19 @@
 import { useMemo } from 'react';
-import type { ProColumns } from '@ant-design/pro-table';
+import { ProColumns } from '@ant-design/pro-table';
 import DatePicker from '../../date-picker';
 import humps from 'humps';
-import { useIntl } from  '../../locale';
+import { useIntl } from '../../locale';
 
 export type ExtraColumn = 'createdBy' | 'updatedBy' | 'options';
-export type DefaultTableOption = 'edit' | 'remove' | 'duplicate' | 'batchRemove' | 'toggleStatus';
+export type DefaultTableOption =
+  | 'edit'
+  | 'remove'
+  | 'duplicate'
+  | 'batchRemove'
+  | 'toggleStatus';
 export type ColumnAction<T> = {
   code: DefaultTableOption;
-  filedName: string;
+  fieldName: string;
   render: (entity: T) => React.ReactNode;
   getNewValue: (v: any) => any;
 };
@@ -19,8 +24,16 @@ export type TableFeature<T> =
   | TableFeatureRender<T>
   | ColumnAction<T>;
 
+export declare type BaseTableRowDataSchema = {
+  id?: string;
+  createDate?: string;
+  updateDate?: string;
+  updatedByUser?: string;
+  createdByUser?: string;
+} & Record<string, any>;
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MergedColumns = <T, _U, ValueType = 'text'>({
+const useColumns = <T extends BaseTableRowDataSchema, _U, ValueType = 'text'>({
   columns = [],
   defaultColumns = [],
   extraColumns = [],
@@ -44,7 +57,10 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
         hideInSearch: true,
       });
       extraCols.push({
-        title: intl.getMessage('table.column.createByAndDate', 'Create By / Date'),
+        title: intl.getMessage(
+          'table.column.createByAndDate',
+          'Create By / Date',
+        ),
         dataIndex: 'createDate',
         editable: false,
         hideInSearch: true,
@@ -56,10 +72,11 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
           return <DatePicker.RangePicker showTime />;
         },
         render: (_dom: React.ReactNode, entity: T) => {
-          // @ts-ignore
           if (!entity.createdByUser) return '-';
-          // @ts-ignore
-          return `${entity.createdByUser} ${intl.getMessage('table.template.on', 'on')} ${entity.createDate?.format()}`;
+          return `${entity.createdByUser} ${intl.getMessage(
+            'table.template.on',
+            'on',
+          )} ${entity.createDate?.format()}`;
         },
       });
     }
@@ -71,7 +88,10 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
         hideInSearch: true,
       });
       extraCols.push({
-        title: intl.getMessage('table.column.updateByAndDate', 'Update By / Date'),
+        title: intl.getMessage(
+          'table.column.updateByAndDate',
+          'Update By / Date',
+        ),
         dataIndex: 'updateDate',
         editable: false,
         hideInSearch: true,
@@ -83,10 +103,11 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
           return <DatePicker.RangePicker showTime />;
         },
         render: (_dom: React.ReactNode, entity: T) => {
-          // @ts-ignore
           if (!entity.updatedByUser) return '-';
-          // @ts-ignore
-          return `${entity.updatedByUser} ${intl.getMessage('table.template.on', 'on')} ${entity.updateDate?.format()}`;
+          return `${entity.updatedByUser} ${intl.getMessage(
+            'table.template.on',
+            'on',
+          )} ${entity.updateDate?.format()}`;
         },
       });
     }
@@ -95,27 +116,30 @@ const MergedColumns = <T, _U, ValueType = 'text'>({
       extraCols.push({
         title: intl.getMessage('table.column.option', 'Option'),
         dataIndex: 'options',
-        align:'center',
+        align: 'center',
         valueType: 'option',
         render: optionRender,
         fixed: 'right',
-        ...columns.find(o=>o.dataIndex==='options')
+        ...columns.find(o => o.dataIndex === 'options'),
       });
     }
 
-    // @ts-ignore
-    return (columns.filter(o=>!['options'].includes(o.dataIndex)) || [])
-      .map((o) => ({
-        title:
-          // @ts-ignore
-          typeof o.dataIndex === 'string' ? humps.pascalize(o.dataIndex, { separator: ' ' }) : '',
-        ...o,
-      }))
-      // @ts-ignore
-      ?.concat(extraCols.concat(extraColumns)) as ProColumns<T>[];
+    return (
+      (columns.filter(o => !['options'].includes(o.dataIndex as string)) || [])
+        .map(o => ({
+          title:
+            typeof o.dataIndex === 'string'
+              ? //@ts-ignore
+                humps.pascalize(o.dataIndex, { separator: ' ' })
+              : '',
+          ...o,
+        }))
+        // @ts-ignore
+        ?.concat(extraCols.concat(extraColumns)) as ProColumns<T>[]
+    );
   }, [columns, defaultColumns, extraColumns, optionRender]);
 
   return mergedColumns;
 };
 
-export default MergedColumns;
+export default useColumns;

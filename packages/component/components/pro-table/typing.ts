@@ -8,17 +8,13 @@ import { EditableProTableProps } from '@ant-design/pro-table/lib/components/Edit
 import { ExtraColumn, TableFeature } from './hooks/useColumns';
 import { MIRecordType, SharedListProps } from '../hook/typing';
 
-export type MIProTableColumnType<T, ValueType> = ProColumns<T, ValueType>[] & {
-  sortBy?: string;
-};
-
 type SharedTableProps<T extends MIRecordType, U> = SharedListProps<T, U> & {
   features?: TableFeature<T>[];
   defaultColumns?: ExtraColumn[];
   optionColumnRender?: any[];
   editable?: MIRowEditableConfig<T>;
   // model name, refer to @/models folder
-  columns?: MIProTableColumnType<T, U>;
+  columns?: MITableColumn<T, U>[];
 };
 
 export type MIRowEditableConfig<T> = RowEditableConfig<T> & {
@@ -44,7 +40,6 @@ export type MIProTableProps<T extends MIRecordType, U, ValueType> = Omit<
   'request' | 'columns'
 > &
   SharedTableProps<T, U> & {
-    editable?: MIRowEditableConfig<T>;
     optionColumnEditRender?: (
       dom: React.ReactNode,
       entity: T,

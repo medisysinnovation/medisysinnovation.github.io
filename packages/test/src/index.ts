@@ -6,4 +6,12 @@ const bcd = () => {
   return 1;
 };
 
-export { abc, bcd };
+const bcd2 = () => {
+  return 2;
+};
+
+const bcd3 = () => {
+  return 3;
+};
+
+export { abc, bcd, bcd3 };

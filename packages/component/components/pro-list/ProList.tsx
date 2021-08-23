@@ -17,7 +17,7 @@ export declare type MIProListTypeProps<
   RecordType extends Record<string, any>,
   U extends Record<string, any> = Record<string, any>
 > = SharedListProps<RecordType, U> &
-  Omit<ProListProps<RecordType, U>, 'search'> & {
+  Omit<ProListProps<RecordType, U>, 'search' | 'request'> & {
     search?: ProListProps<RecordType, U>['search'] & {
       formProps: ProFormProps;
       content: React.ReactNode;

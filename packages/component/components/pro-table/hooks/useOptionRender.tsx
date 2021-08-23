@@ -104,7 +104,7 @@ const useOptionRender = <T extends MIRecordType, U, VT>({
           const opt = (features.find(
             o => (o as ColumnAction<T>)?.code === 'toggleStatus',
           ) || {
-            filedName: 'isActive',
+            fieldName: 'isActive',
           }) as ColumnAction<T>;
           return (
             <a
@@ -115,7 +115,7 @@ const useOptionRender = <T extends MIRecordType, U, VT>({
                   ? //@ts-ignore
                     ((await query!({ id: entity[rowKey] })) as any)
                   : { data: entity };
-                if (entity[opt.filedName] !== latestEntity[opt.filedName]) {
+                if (entity[opt.fieldName] !== latestEntity[opt.fieldName]) {
                   message.warning(
                     intl.getMessage(
                       'table.message.dirtyDataUpdate',
@@ -127,7 +127,7 @@ const useOptionRender = <T extends MIRecordType, U, VT>({
                 }
                 const newEntity = {
                   ...latestEntity,
-                  [opt.filedName]: !latestEntity[opt.filedName],
+                  [opt.fieldName]: !latestEntity[opt.fieldName],
                 };
                 await update!(newEntity);
                 if (opt) await action?.reloadAndRest?.();
@@ -135,7 +135,7 @@ const useOptionRender = <T extends MIRecordType, U, VT>({
                 editable?.onRowDataChanged?.([newEntity]);
               }}
             >
-              {entity[opt.filedName] === true
+              {entity[opt.fieldName] === true
                 ? intl.getMessage('table.action.deactivate', 'Deactivate')
                 : intl.getMessage('table.action.activate', 'Activate')}
             </a>

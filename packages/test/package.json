@@ -25,13 +25,14 @@
   "scripts": {
     "build": "father-build",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage",
-    "build:bak": "microbundle --no-compress --format modern,es,cjs,umd",
-    "build:compress:bak": "microbundle --format modern,cjs",
-    "test:bak": "run-s test:unit test:lint test:build"
+    "test:coverage": "umi-test --coverage"
   },
   "bugs": {
     "url": "https://github.com/medisysinnovation/medisys/issues"
   },
-  "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac"
+  "gitHead": "32b555f5d286504cdb800c1132352a4a8cfcfdac",
+  "devDependencies": {
+    "father-build": "^1.19.8",
+    "umi-test": "^1.9.6"
+  }
 }
