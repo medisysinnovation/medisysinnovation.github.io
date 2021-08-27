@@ -1,15 +1,13 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { useEventListener } from 'ahooks';
 import { SelectProps, SelectValue } from 'antd/es/select';
-import type { RequestData} from '@ant-design/pro-table/es/typing'
-import type { ParamsType } from '@ant-design/pro-provider';
-import type { SortOrder } from 'antd/lib/table/interface';
-import {
-  useMountMergeState,
-} from '@ant-design/pro-utils';
+import { RequestData } from '@ant-design/pro-table/es/typing';
+import { ParamsType } from '@ant-design/pro-provider';
+import { SortOrder } from 'antd/lib/table/interface';
+import { useMountMergeState } from '@ant-design/pro-utils';
 import { MIConfig, GET } from '@medisys/utils';
 import { usePrevious } from '../hook';
-import {pickProps} from '../utils'
+import { pickProps } from '../utils';
 
 export enum CodeTableSourceFilterRule {
   StartsWidth,
@@ -24,7 +22,7 @@ export declare type FilterFunc<OptionType> = (
 export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   code?: string;
   readonly?: boolean;
-  spliter?:string;
+  spliter?: string;
   valueField?: string;
   displayField?: string;
   dependencies?: any[];
@@ -36,15 +34,19 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
   onDataSourceChange?: (array: VT[]) => void;
   remoteDataFormatter?: (source: any) => VT[];
   children?: React.ReactNode;
-    /** @name 是否手动触发请求 */
-    manualRequest?: boolean;
-  params?:ParamsType;
-  request?: (params: ParamsType & {
-    pageSize?: number;
-    current?: number;
-    keyword?: string;
-}, sort: Record<string, SortOrder>, filter: Record<string, React.ReactText[]>) => Promise<Partial<RequestData<VT>>>;
-  pro?:boolean;
+  /** @name 是否手动触发请求 */
+  manualRequest?: boolean;
+  params?: ParamsType;
+  request?: (
+    params: ParamsType & {
+      pageSize?: number;
+      current?: number;
+      keyword?: string;
+    },
+    sort: Record<string, SortOrder>,
+    filter: Record<string, React.ReactText[]>,
+  ) => Promise<Partial<RequestData<VT>>>;
+  pro?: boolean;
   /* deprecated */
   text?: boolean;
   url?: string;
@@ -56,8 +58,13 @@ export interface MIDataSourceChildrenProps<VT> {
   dataSource: VT[];
 }
 
-const loadRemoteData = async ({ url, request, code, remoteDataFormatter }: any) => {
-  const result =request? await request() : await GET(url, { pageSize: 9999 });
+const loadRemoteData = async ({
+  url,
+  request,
+  code,
+  remoteDataFormatter,
+}: any) => {
+  const result = request ? await request() : await GET(url, { pageSize: 9999 });
   const data = remoteDataFormatter ? remoteDataFormatter(result) : result?.data;
   if (code) {
     MIConfig.updateState({
@@ -81,14 +88,11 @@ const loadRemoteData = async ({ url, request, code, remoteDataFormatter }: any) 
 
 const codeLoading: { [key: string]: boolean } = {};
 const defaultDependencies: any[] = [];
-const MIDataSource = <VT extends SelectValue>(
-  props: MIDataSourceProps<VT>,
-) => {
+const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
   const {
     code,
     valueField = 'value',
     displayField = 'label',
-    children,
     dataSource,
     dataSourceLoader,
     filter,
@@ -96,7 +100,7 @@ const MIDataSource = <VT extends SelectValue>(
     url,
     text,
     readonly,
-    spliter=', ',
+    spliter = ', ',
     onChange,
     onDataSourceChange,
     filterOption,
@@ -107,7 +111,7 @@ const MIDataSource = <VT extends SelectValue>(
     pro,
     ...restProps
   } = props;
-  const {remoteDataFormatter,...otherProps}=props
+  const { remoteDataFormatter, ...otherProps } = props;
 
   const [list, setList] = useState<VT[]>([]);
   const [filteredList, setFilteredList] = useState<VT[]>([]);
@@ -149,11 +153,14 @@ const MIDataSource = <VT extends SelectValue>(
       };
       // eslint-disable-next-line no-underscore-dangle
       delete (actionParams as any)._timestamp;
-      const response = await request((actionParams as unknown) as ParamsType, proSort, proFilter);
+      const response = await request(
+        (actionParams as unknown) as ParamsType,
+        proSort,
+        proFilter,
+      );
       return response as RequestData<VT>;
     };
-  }, [params,request, proFilter, proSort]);// formSearch, proFilter, proSort, 
-
+  }, [params, request, proFilter, proSort]); // formSearch, proFilter, proSort,
 
   useEffect(() => {
     if (code) {
@@ -202,7 +209,7 @@ const MIDataSource = <VT extends SelectValue>(
 
         loadRemoteData({
           url,
-          request:fetchData,
+          request: fetchData,
           code,
           remoteDataFormatter,
         }).then((data: any) => {
@@ -213,7 +220,6 @@ const MIDataSource = <VT extends SelectValue>(
       }
     }
   }, [url, request]);
-
 
   useEffect(() => {
     if (dataSource) {
@@ -246,15 +252,25 @@ const MIDataSource = <VT extends SelectValue>(
     const options = filteredList.filter(
       (opt: VT) =>
         //@ts-ignore
-        opt[valueField] === restProps.value || Array.isArray( restProps.value) && restProps.value.includes( opt[valueField] ),
+        opt[valueField] === restProps.value ||
+        (Array.isArray(restProps.value) &&
+          //@ts-ignore
+          restProps.value.includes(opt[valueField])),
     );
     //@ts-ignore
-    if (options.length>0) return <span {...pickProps(restProps,['className','style'])}>{
-      options.map((o,i)=>{
-        //@ts-ignore
-        return <span key={o[displayField]}>{o[displayField]}{i<options.length-1?spliter:''}</span>
-      })}
-    </span>;
+    if (options.length > 0)
+      return (
+        <span {...pickProps(restProps, ['className', 'style'])}>
+          {options.map((o: any, i) => {
+            return (
+              <span key={o[displayField]}>
+                {o[displayField] as string}
+                {i < options.length - 1 ? spliter : ''}
+              </span>
+            );
+          })}
+        </span>
+      );
     return null;
   }
   const handleFilter = useMemo(() => {
@@ -279,11 +295,12 @@ const MIDataSource = <VT extends SelectValue>(
     filterOption: handleFilter,
     onChange: handleOnChange,
   };
+  const { children, ...funcProps } = sharedProps;
+
   if (typeof children === 'function') {
     return children({
       dataSource: filteredList,
-
-      ...sharedProps,
+      ...funcProps,
     } as MIDataSourceProps<VT>);
   }
   //@ts-ignore

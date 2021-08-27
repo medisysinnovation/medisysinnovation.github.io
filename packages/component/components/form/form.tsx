@@ -50,13 +50,8 @@ export interface MIFormProps<Values = any> extends FormProps<Values> {
 const _MIForm: ForwardRefRenderFunction<
   FormInstance | undefined,
   MIFormProps
-> = (props, ref) => {
-  const {
-    initialValues,
-    discardCheck = false,
-    resetOnSubmit = true,
-    ...restProps
-  } = props;
+> = ({ discardCheck, ...props }, ref) => {
+  const { initialValues, resetOnSubmit = true, ...restProps } = props;
   const { form, children, onFinish } = restProps;
   const [wrapForm] = useForm(form);
   React.useImperativeHandle(ref, () => {

@@ -5,7 +5,6 @@ import { MIDataSourceProps } from '../data-source';
 import { SelectValue } from 'antd/es/select';
 import { FormItemProps } from 'antd';
 import { useIntl } from '../locale';
-import TestSelect from './test';
 
 type ComponentProps = React.ComponentProps<typeof ProFormSelect>;
 
@@ -51,7 +50,5 @@ const ProSelect = <
     </DataSource>
   );
 };
-
-ProSelect.TestSelect = TestSelect;
 
 export default ProSelect;
