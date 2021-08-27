@@ -51,7 +51,7 @@ const MIProList = <
     Record<string, any> & {
       sort?: Sorting[];
     }
-  >({});
+  >(search?.formProps?.initialValues || {});
   const localActionRef = useRef<MIListActionType>();
   const { actionRef: pageActionRef } = PageContext.useContainer();
   const [form] = ProForm.useForm();

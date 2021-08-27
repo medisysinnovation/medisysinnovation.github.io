@@ -17,6 +17,9 @@ function MIList<
         valueField = 'value',
         displayField = 'label',
         filter,
+        filterOption,
+        onChange,
+        children,
         ...payload
       }: MIDataSourceProps<VT>) => {
         return <List {...(payload as MIListProps<VT>)} />;

@@ -21,6 +21,7 @@ const MIDataSelect = <
         valueField = 'value',
         displayField = 'label',
         filter,
+        request,
         ...payload
       }: MIDataSourceProps<VT>) => {
         // console.log(payload, dataSource);

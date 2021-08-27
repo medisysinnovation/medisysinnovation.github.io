@@ -187,15 +187,15 @@ const DataSelectDemo = () => {
       <ProForm initialValues={{ testuser: 1 }}>
         <ProSelect
           label="User"
-          readonly
+          // readonly
           placeholder="User"
           dataSource={ds}
           name="testuser"
           onChange={(v: number, opt) => {
-            console.log(v, opt);
+            // console.log(v, opt);
 
             setCurrentUser(v);
-            setCurrentRole(opt.data.roleId);
+            setCurrentRole(opt?.data?.roleId);
           }}
           value={currentUser}
           valueField="value"
