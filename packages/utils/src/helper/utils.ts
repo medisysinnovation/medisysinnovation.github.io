@@ -22,7 +22,7 @@ export const uniqueid = () => {
   return uuid;
 };
 
-export const omitUndefined = <T>(obj: T): T => {
+export const omitUndefined = <T>(obj: T, allowEmpty: boolean = true): T => {
   const newObj = {} as T;
   Object.keys(obj || {}).forEach(key => {
     //@ts-ignore
@@ -32,7 +32,7 @@ export const omitUndefined = <T>(obj: T): T => {
     }
   });
   if (Object.keys(newObj).length < 1) {
-    return undefined as any;
+    return allowEmpty ? obj : (undefined as any);
   }
   return newObj;
 };

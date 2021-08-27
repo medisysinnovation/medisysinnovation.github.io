@@ -3,7 +3,8 @@ import { sampleListData } from '@/data';
 export default () => {
   return {
     api: {
-      queryList: async () => {
+      queryList: async (a, b, c, d) => {
+        console.log(a, b, c, d);
         return Promise.resolve({
           data: {
             data: sampleListData,

@@ -1,6 +1,12 @@
 import React from 'react';
-import { RowKey, MIActionType, UseMIFetchDataAction } from './typing';
+import {
+  RowKey,
+  MIActionType,
+  UseMIFetchDataAction,
+  MIQueryListType,
+} from './typing';
 import { omitUndefined, convertToAPIObject, MIConfig } from '@medisys/utils';
+import { SortOrder } from 'antd/lib/table/interface';
 
 type Parameters = { onSuccess: () => void; onError: () => void };
 export const miRequest = (
@@ -14,6 +20,12 @@ export const miRequest = (
     data: {},
   };
   return async function innerRequest(...args: any[]) {
+    // console.log(
+    //   args,
+    //   args[0],
+    //   args[1] !== undefined,
+    //   Object.keys(args[1]).length > 0,
+    // );
     // eslint-disable-next-line no-param-reassign
     args[0] = {
       ...convertToAPIObject(omitUndefined(args[0])),
@@ -24,10 +36,6 @@ export const miRequest = (
                 sortBy: Object.keys(args[1])[0],
                 order: Object.values(args[1])[0] === 'ascend' ? 'ASC' : 'DESC',
               },
-              // {
-              //   sortBy: 'clientId',
-              //   order: 'ASC',
-              // },
             ]
           : [],
     };
@@ -58,7 +66,7 @@ export const miRequest = (
   };
 };
 
-export const queryListRequest = ({
+export const queryListRequest = <U extends Record<string, any>>({
   request,
   queryHandler,
   columns,
@@ -66,25 +74,30 @@ export const queryListRequest = ({
   request?: Function;
   queryHandler?: unknown;
   columns?: unknown[];
-}) => <T extends Record<string, any>>(
-  params: any,
-  sort: any,
-  filter: any,
-): Promise<T> => {
+}) => (
+  params: U,
+  options: Record<string, SortOrder>,
+  filter: Record<string, React.ReactText[] | null>,
+): MIQueryListType<U> | undefined => {
+  // console.log(params, options, filter);
   //TODO: fix sort error when dataIndex is in ['a','id'] format
-  const convertedSort = Object.keys(sort || {}).reduce((acc, curr) => {
+  const convertedSort = Object.keys(options || {}).reduce((acc, curr) => {
     return {
       ...acc,
       //@ts-ignore
-      [(columns || []).find(o => o.dataIndex === curr)?.sortBy || curr]: sort[
-        curr
-      ],
+      [(columns || []).find(o => o.dataIndex === curr)?.sortBy ||
+      curr]: options[curr],
     };
   }, {});
 
-  return (MIConfig.getConfig('requestWrap') || miRequest)(
-    request || queryHandler,
-  ).apply(undefined, [params, convertedSort, filter]);
+  const fn = request || queryHandler;
+  if (!fn) return undefined;
+
+  return (MIConfig.getConfig('requestWrap') || miRequest)(fn).apply(undefined, [
+    params,
+    convertedSort,
+    filter,
+  ]);
 };
 
 export const getRowKey = (rowKey: RowKey) => {

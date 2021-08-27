@@ -8,7 +8,12 @@ import React, {
 import ProList from '@ant-design/pro-list';
 import { ProListProps } from '@ant-design/pro-list/es/index';
 import { useList } from '../hook';
-import { MIActionType, SharedListProps, Sorting } from '../hook/typing';
+import {
+  MIActionType,
+  MIQueryListType,
+  SharedListProps,
+  Sorting,
+} from '../hook/typing';
 import { ProFormProps } from '@ant-design/pro-form';
 import ProForm from '../pro-form';
 import { PageContext } from '../context';
@@ -66,17 +71,30 @@ const MIProList = <
       };
     },
   );
+
+  // const f: MIQueryListType<U> | undefined = (params, options, _filter) => {
+  //   if (!request) return undefined;
+  //   const { sort: sortField, ...restFilter } = filter;
+  //   return request(
+  //     {
+  //       ...params,
+  //       ...restFilter,
+  //     },
+  //     options || sort || sortField || {},
+  //     {},
+  //   );
+  // };
   const wrappedRequest = useCallback(
-    (params: any, options: any) => {
-      if (!request) return null;
+    (argus: Parameters<MIQueryListType<U>>) => {
+      if (!request) return undefined;
       const { sort: sortField, ...restFilter } = filter;
       return request(
+        //@ts-ignore
         {
-          ...params,
+          ...argus[0],
           ...restFilter,
-          Sorting: sort || sortField || [],
         },
-        options,
+        argus?.[1] || sort || sortField || {},
         {},
       );
     },

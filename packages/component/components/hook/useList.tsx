@@ -25,6 +25,7 @@ const useList = <
   rowKey = 'id',
   model,
   dataSource,
+  columns,
   actionRef: propsActionRef,
 }: Omit<SharedListProps<T, U>, 'editable' | 'rowSelection'>) => {
   const { api: modelAPI, ...restModel } = getUseModel()(model as any) || {
@@ -67,9 +68,10 @@ const useList = <
   // }
 
   const _request = useCallback(
-    queryListRequest({
+    queryListRequest<T>({
       request,
       queryHandler: queryList,
+      columns,
     }),
     [request, queryList],
   );

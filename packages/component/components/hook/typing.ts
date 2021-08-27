@@ -1,4 +1,5 @@
 import { ProTableProps, ActionType } from '@ant-design/pro-table';
+import { SortOrder } from 'antd/lib/table/interface';
 
 type GetRowKey = () => string;
 export type RowKey = string | GetRowKey;
@@ -23,20 +24,16 @@ export type MIRecordType = {
   [key: string]: number | string | boolean;
 };
 
-export type MIQueryListType = (
-  params: {
-    // query
-    Name?: string;
-    IsActive?: boolean;
-    Sorting?: Sorting[];
-    PageSize?: number;
-    Current?: number;
-    Total?: number;
-  },
-  options?: Record<string, any>,
+export type MIQueryListType<U extends Record<string, any>> = (
+  params: U,
+  options?: Record<string, SortOrder>,
+  filters?: Record<string, React.ReactText[] | null>,
 ) => Promise<unknown>;
 
-export type APIInterface<T extends MIRecordType> = {
+export type APIInterface<
+  T extends MIRecordType,
+  U extends Record<string, any>
+> = {
   remove?: (keys: string[]) => Promise<unknown>;
   create?: (body?: T, options?: Record<string, any>) => Promise<unknown>;
   update?: (body?: T, options?: Record<string, any>) => Promise<unknown>;
@@ -46,16 +43,16 @@ export type APIInterface<T extends MIRecordType> = {
     },
     options?: Record<string, any>,
   ) => Promise<unknown>;
-  queryList?: MIQueryListType;
+  queryList?: MIQueryListType<U>;
 };
 
 export type SharedListProps<T extends MIRecordType, U> = Omit<
   ProTableProps<T, U>,
   'request' | 'rowKey'
 > & {
-  api?: APIInterface<T>;
+  api?: APIInterface<T, U>;
   model?: string;
-  request?: MIQueryListType;
+  request?: MIQueryListType<U>;
   actionRef?: React.MutableRefObject<MIActionType | undefined>;
   rowKey?: RowKey;
 };

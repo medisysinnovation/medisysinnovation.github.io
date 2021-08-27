@@ -29,9 +29,24 @@ const ListDemo = props => {
       <ProList
         // actionRef={actionRef}
         model="couter"
+        sort={{
+          name: 'ascend',
+        }}
+        // request={async (a, b, c, d) => {
+        //   console.log(a, b, c, d);
+        //   return {
+        //     data: [],
+        //     // success 请返回 true，
+        //     // 不然 table 会停止解析数据，即使有数据
+        //     success: true,
+        //     // 不传会使用 data 的长度，如果是分页一定要传
+        //     total: 123,
+        //   };
+        // }}
         metas={{
           title: {
             dataIndex: 'name',
+            defaultSortOrder: 'ascend',
           },
           avatar: undefined,
           actions: {

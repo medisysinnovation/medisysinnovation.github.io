@@ -21,7 +21,6 @@ const PageList = <
   onEdit,
   rowKey = 'id',
   editable,
-  columns,
   ...props
 }: Omit<MIProTableProps<T, U, ValueType>, 'editable' | 'rowSelection'> & {
   onEdit?: (entity: T) => void;
@@ -94,7 +93,7 @@ const PageList = <
         }, // mouse leave row
       };
     },
-    columns: (columns || []).map(columnConverter({ locale })),
+    columns: (props.columns || []).map(columnConverter({ locale })),
   };
 };
 
