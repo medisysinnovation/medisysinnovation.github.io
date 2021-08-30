@@ -26,6 +26,12 @@ const EditableTableDemo = props => {
         // ref={actionRef}
         dataSource={sampleListData}
         columns={defaultColumns}
+        beforeSearchSubmit={values => {
+          return {
+            ...values,
+            // createDate: ['2021-08-25', '2021-08-26'],
+          };
+        }}
         features={['edit']}
         onRow={r => {
           return {

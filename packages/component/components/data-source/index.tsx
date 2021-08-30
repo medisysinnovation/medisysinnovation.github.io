@@ -183,7 +183,7 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
           });
         } else {
           setDataSourceLoading(true);
-          MIConfig.loadData(code);
+          MIConfig.loadData(code, params);
         }
       }
     }
