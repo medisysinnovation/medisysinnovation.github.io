@@ -37,6 +37,7 @@ export default function() {
         </Form.Item>
         <Form.Item name="dateFilter">
           <RangePicker
+            allowEmpty={[true, true]}
             autoTransformTime={autoTransform}
             // autoTransformTime={}
             // onChange={v => {
@@ -50,7 +51,12 @@ export default function() {
             // }}
           />
         </Form.Item>
-        <ProRangeDatePicker name="dateFilter" />
+        <ProRangeDatePicker
+          name="dateFilter"
+          fieldProps={{
+            allowEmpty: [true, true],
+          }}
+        />
         {/* <Form.Item shouldUpdate>
           {form => {
             const { dateFilter = [], autoTransform } = form.getFieldsValue();

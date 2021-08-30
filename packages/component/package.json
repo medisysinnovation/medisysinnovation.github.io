@@ -48,7 +48,7 @@
     "@medisys/provider": "^0.1.200",
     "@medisys/utils": "^0.1.240",
     "ahooks": "^2.10.4",
-    "antd": "^4.16.2",
+    "antd": "^4.16.13",
     "classnames": "^2.2.6",
     "csstype": "^3.0.8",
     "humps": "^2.0.1",

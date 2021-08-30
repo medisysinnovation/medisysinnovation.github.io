@@ -22,15 +22,15 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
   const [momentValue, setMomentValue] = useState();
   useEffect(() => {
     const v = value
-      ?.map(o => (moment.isMoment(o) ? o : moment(o)))
-      .map(o => (o.isValid() ? o : undefined));
+      ?.map(o => (moment.isMoment(o) ? o : o ? moment(o) : o))
+      .map(o => (o?.isValid() ? o : undefined));
 
     if (autoTransformTime && !showTime) {
       let needChange = false;
       if (
         v?.length === 2 &&
-        (v?.[0]?.format('HH:mm:ss') !== '00:00:00' ||
-          v?.[1]?.format('HH:mm:ss') !== '23:59:59')
+        ((v?.[0] && v?.[0]?.format('HH:mm:ss') !== '00:00:00') ||
+          (v?.[1] && v?.[1]?.format('HH:mm:ss') !== '23:59:59'))
       ) {
         needChange = true;
       }
@@ -38,6 +38,7 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
         if (i === 0) return o?.startOf('day');
         return o?.endOf('day');
       });
+
       if (needChange) {
         //@ts-ignore
         props.onChange(converted);
