@@ -282,7 +282,7 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
         );
       return option?.children?.toLowerCase().startsWith(input.toLowerCase());
     };
-  }, [filterRule]);
+  }, [filterRule, filterOption]);
 
   const handleOnChange = (value: VT, option: Object) => {
     const opt = filteredList.find((opt: any) => opt[valueField] === value);

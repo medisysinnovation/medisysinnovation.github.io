@@ -127,8 +127,9 @@ const DataSelectDemo = () => {
     <>
       <Select
         placeholder="Test"
-        code="abc"
-        request={request}
+        // code="abc"
+        // request={request}
+        options={test_data.users}
         // onChange={(v: number, opt) => {
         //   setCurrentRole(v);
         //   setCurrentUser(undefined);
