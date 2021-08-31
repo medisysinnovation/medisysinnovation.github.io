@@ -274,6 +274,7 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
     return null;
   }
   const handleFilter = useMemo(() => {
+    if (filterOption === false) return false;
     if (filterOption) return filterOption;
     return (input: string, option: any) => {
       if (filterRule === CodeTableSourceFilterRule.Contains)
@@ -296,7 +297,6 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
     onChange: handleOnChange,
   };
   const { children, ...funcProps } = sharedProps;
-
   if (typeof children === 'function') {
     return children({
       dataSource: filteredList,

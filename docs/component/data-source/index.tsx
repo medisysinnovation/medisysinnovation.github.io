@@ -123,13 +123,30 @@ const DataSelectDemo = () => {
   const [currentRole, setCurrentRole] = useState(1);
   const [currentUser, setCurrentUser] = useState(1);
 
+  const [search, setSearch] = useState([]);
+
+  const fetchData = async v => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(test_data.users.filter(x => x.label.indexOf(v) >= 0));
+      }, 1000);
+    });
+  };
+  console.log(search);
   return (
     <>
       <Select
         placeholder="Test"
         // code="abc"
         // request={request}
-        options={test_data.users}
+        options={search}
+        showSearch
+        filterOption={false}
+        onSearch={v => {
+          fetchData(v).then(r => {
+            setSearch(r);
+          });
+        }}
         // onChange={(v: number, opt) => {
         //   setCurrentRole(v);
         //   setCurrentUser(undefined);
@@ -141,6 +158,7 @@ const DataSelectDemo = () => {
         // }}
         // value={currentRole}
       />
+      <p>test</p>
       <Select
         placeholder="Role"
         code="roles"
