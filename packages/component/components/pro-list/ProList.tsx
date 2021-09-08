@@ -94,7 +94,7 @@ const MIProList = <
           ...argus[0],
           ...restFilter,
         },
-        argus?.[1] || sort || sortField || {},
+        sort || sortField || argus?.[1] || {},
         {},
       );
     },
