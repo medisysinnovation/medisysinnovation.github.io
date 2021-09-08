@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
@@ -99,7 +99,7 @@ const DataSelectDemo = () => {
   const myRef = React.useRef();
   const [ds, setDs] = useState([]);
   useEffect(() => {
-    // console.log(myRef);
+    console.log(myRef);
     setTimeout(() => {
       setDs([
         { value: 1, label: 'U_ABC', roleId: 1 },
@@ -137,6 +137,7 @@ const DataSelectDemo = () => {
     <>
       <Select
         placeholder="Test"
+        ref={myRef}
         // code="abc"
         // request={request}
         options={search}
@@ -158,7 +159,6 @@ const DataSelectDemo = () => {
         // }}
         // value={currentRole}
       />
-      <p>test</p>
       <Select
         placeholder="Role"
         code="roles"

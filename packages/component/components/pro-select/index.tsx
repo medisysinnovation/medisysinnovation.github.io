@@ -5,8 +5,7 @@ import { MIDataSourceProps } from '../data-source';
 import { SelectValue } from 'antd/es/select';
 import { FormItemProps } from 'antd';
 import { useIntl } from '../locale';
-
-type ComponentProps = React.ComponentProps<typeof ProFormSelect>;
+import { ProFormSelectProps } from '@ant-design/pro-form/es/components/Select';
 
 const ProSelect = <
   VT extends SelectValue & {
@@ -14,7 +13,7 @@ const ProSelect = <
   }
 >(
   props: MIDataSourceProps<VT> &
-    ComponentProps & {
+    ProFormSelectProps<VT> & {
       formItemProps?: FormItemProps;
     },
 ) => {

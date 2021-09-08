@@ -17,9 +17,9 @@ export default function() {
           <DatePicker />
         </Form.Item>
         <Form.Item name="momentDate">
-          <DatePicker />
+          <DatePicker showTime />
         </Form.Item>
-        <ProDatePicker name="stringDate" />
+        <ProDatePicker fieldProps={{ showTime: true }} />
       </Form>
     </div>
   );

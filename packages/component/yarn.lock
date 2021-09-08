@@ -72,7 +72,7 @@
     react-color "2.19.3"
     swr "^0.5.6"
 
-"@ant-design/pro-form@1.35.0", "@ant-design/pro-form@^1.35.0":
+"@ant-design/pro-form@1.35.0":
   version "1.35.0"
   resolved "https://registry.yarnpkg.com/@ant-design/pro-form/-/pro-form-1.35.0.tgz#fa22254822e3cabd3de77536a6c6aa02f4ed2213"
   integrity sha512-uhQSzw8RY3o/GrZ1haTXMBVDKKDfxXXcwlHTJfMLC2narifTq2t93QW7hp7iu1D9y8rfNVyQyhquDP48yOOPIQ==

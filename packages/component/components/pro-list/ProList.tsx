@@ -85,7 +85,7 @@ const MIProList = <
   //   );
   // };
   const wrappedRequest = useCallback(
-    (argus: Parameters<MIQueryListType<U>>) => {
+    (...argus: Parameters<MIQueryListType<U>>) => {
       if (!request) return undefined;
       const { sort: sortField, ...restFilter } = filter;
       return request(

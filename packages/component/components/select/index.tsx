@@ -24,17 +24,14 @@ const MIDataSelect = <
         request,
         ...payload
       }: MIDataSourceProps<VT>) => {
-        const sharedProps = {
-          ref,
-          style: { minWidth: 100 },
-          ...payload,
-        };
-        // console.log(payload, dataSource);
-        if (payload.options) {
-          return <Select {...sharedProps} />;
-        }
         return (
-          <Select {...sharedProps}>
+          <Select
+            {...{
+              ref,
+              style: { minWidth: 100 },
+              ...payload,
+            }}
+          >
             {children
               ? children
               : dataSource.map((o: VT & { [index: string]: string }) => {
