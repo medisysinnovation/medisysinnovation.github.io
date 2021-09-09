@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, ReactNode } from 'react';
 import { useEventListener } from 'ahooks';
 import { SelectProps, SelectValue } from 'antd/es/select';
 import { RequestData } from '@ant-design/pro-table/es/typing';
@@ -47,6 +47,7 @@ export interface MIDataSourceProps<VT> extends SelectProps<VT> {
     filter: Record<string, React.ReactText[]>,
   ) => Promise<Partial<RequestData<VT>>>;
   pro?: boolean;
+  onRenderText?: (value: SelectValue) => string | ReactNode;
   /* deprecated */
   text?: boolean;
   url?: string;
@@ -109,6 +110,7 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
     manualRequest,
     params = {},
     pro,
+    onRenderText,
     ...restProps
   } = props;
   const { remoteDataFormatter, ...otherProps } = props;
@@ -249,6 +251,9 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
     }
   }, [dependencies]);
   if (!pro && (text || readonly)) {
+    if (onRenderText) {
+      return onRenderText(restProps.value);
+    }
     const options = filteredList.filter(
       (opt: VT) =>
         //@ts-ignore
@@ -264,7 +269,7 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
           {options.map((o: any, i) => {
             return (
               <span key={o[displayField]}>
-                {o[displayField] as string}
+                {o[displayField] || '-'}
                 {i < options.length - 1 ? spliter : ''}
               </span>
             );

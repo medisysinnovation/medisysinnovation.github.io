@@ -13,9 +13,27 @@ const MIDataSelect = <
   ref: React.Ref<RefSelectProps>,
 ) => {
   const { children, ...restProps } = props;
+  const config: MIDataSourceProps<VT> = {};
+  if (children && restProps.optionLabelProp) {
+    config.onRenderText = (value: SelectValue) => {
+      if (restProps.mode) {
+        return (Array.isArray(value) ? value : value ? [value] : [])
+          .map(
+            v =>
+              (children as any[]).find(o => o.key === `${v}`)?.props[
+                restProps.optionLabelProp || 'label'
+              ],
+          )
+          .join(restProps.spliter || ',');
+      }
 
+      return (children as any[]).find(o => o.key === `${value}`).props[
+        restProps.optionLabelProp || 'label'
+      ];
+    };
+  }
   return (
-    <DataSource {...(restProps as MIDataSourceProps<VT>)}>
+    <DataSource {...config} {...(restProps as MIDataSourceProps<VT>)}>
       {({
         dataSource = [],
         valueField = 'value',

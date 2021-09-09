@@ -132,7 +132,10 @@ const DataSelectDemo = () => {
       }, 1000);
     });
   };
-  console.log(search);
+  const onChange = (v: number, opt) => {
+    setCurrentUser(v);
+    setCurrentRole(opt.data?.roleId);
+  };
   return (
     <>
       <Select
@@ -162,13 +165,7 @@ const DataSelectDemo = () => {
       <Select
         placeholder="Role"
         code="roles"
-        mode="multiple"
-        onChange={(v: number, opt) => {
-          setCurrentRole(v);
-          setCurrentUser(undefined);
-
-          console.log(v, opt);
-        }}
+        onChange={onChange}
         onDataSourceChange={arr => {
           console.log(arr);
         }}
@@ -179,27 +176,46 @@ const DataSelectDemo = () => {
         placeholder="User"
         code="users"
         filter={(v, opt) => {
-          console.log(v.roleId === currentRole);
           return v.roleId === currentRole;
         }}
-        onChange={(v: number, opt) => {
-          console.log(v, opt);
-
-          setCurrentUser(v);
-          setCurrentRole(opt.data.roleId);
-        }}
+        onChange={onChange}
         value={currentUser}
         dependencies={[currentRole]}
       />
+      <p>test</p>
+      <Select
+        value={currentUser}
+        optionLabelProp={'fullLabel'}
+        mode="multiple"
+        onChange={onChange}
+        readonly
+      >
+        {test_data.users
+          // @ts-ignore
+          ?.map((x: any) => {
+            return (
+              // @ts-ignore
+              <Select.Option
+                key={x.value}
+                value={x.value}
+                label={x.label}
+                fullLabel={`${x.value} / ${x.label}`}
+              >
+                <div>
+                  <label>Value / Label</label>
+                  <br />
+                  <span>
+                    {x.value} / {x.label}
+                  </span>
+                </div>
+              </Select.Option>
+            );
+          })}
+      </Select>
       <Select
         placeholder="User"
         dataSource={ds}
-        onChange={(v: number, opt) => {
-          console.log(v, opt);
-
-          setCurrentUser(v);
-          setCurrentRole(opt.data.roleId);
-        }}
+        onChange={onChange}
         value={currentUser}
         dependencies={[currentRole]}
       />
@@ -210,12 +226,7 @@ const DataSelectDemo = () => {
           placeholder="User"
           dataSource={ds}
           name="testuser"
-          onChange={(v: number, opt) => {
-            // console.log(v, opt);
-
-            setCurrentUser(v);
-            setCurrentRole(opt?.data?.roleId);
-          }}
+          onChange={onChange}
           value={currentUser}
           valueField="value"
           displayField="label"
