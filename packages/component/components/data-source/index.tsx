@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo, ReactNode } from 'react';
 import { useEventListener } from 'ahooks';
-import { SelectProps, SelectValue } from 'antd/es/select';
+import { SelectProps } from 'antd/es/select';
 import { RequestData } from '@ant-design/pro-table/es/typing';
 import { ParamsType } from '@ant-design/pro-provider';
 import { SortOrder } from 'antd/lib/table/interface';
@@ -8,6 +8,7 @@ import { useMountMergeState } from '@ant-design/pro-utils';
 import { MIConfig, GET } from '@medisys/utils';
 import { usePrevious } from '../hook';
 import { pickProps } from '../utils';
+import { SelectValue } from 'antd/lib/select';
 
 export enum CodeTableSourceFilterRule {
   StartsWidth,
@@ -89,7 +90,9 @@ const loadRemoteData = async ({
 
 const codeLoading: { [key: string]: boolean } = {};
 const defaultDependencies: any[] = [];
-const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
+const MIDataSource = <VT extends Record<string, any>>(
+  props: MIDataSourceProps<VT>,
+) => {
   const {
     code,
     valueField = 'value',
@@ -252,7 +255,7 @@ const MIDataSource = <VT extends SelectValue>(props: MIDataSourceProps<VT>) => {
   }, [dependencies]);
   if (!pro && (text || readonly)) {
     if (onRenderText) {
-      return onRenderText(restProps.value);
+      return onRenderText(restProps.value as SelectValue);
     }
     const options = filteredList.filter(
       (opt: VT) =>

@@ -6,9 +6,7 @@ import DataSource, { MIDataSourceProps } from '../data-source';
 export interface MIDataSelectProps<VT> extends MIDataSourceProps<VT> {}
 
 const { Option } = Select;
-const MIDataSelect = <
-  VT extends SelectValue = SelectValue & { [index: string]: string }
->(
+const MIDataSelect = <VT extends Record<string, any>>(
   props: MIDataSelectProps<VT>,
   ref: React.Ref<RefSelectProps>,
 ) => {
@@ -33,7 +31,7 @@ const MIDataSelect = <
     };
   }
   return (
-    <DataSource {...config} {...(restProps as MIDataSourceProps<VT>)}>
+    <DataSource<VT> {...config} {...(restProps as MIDataSourceProps<VT>)}>
       {({
         dataSource = [],
         valueField = 'value',
@@ -43,6 +41,7 @@ const MIDataSelect = <
         ...payload
       }: MIDataSourceProps<VT>) => {
         return (
+          //@ts-ignore
           <Select
             {...{
               ref,

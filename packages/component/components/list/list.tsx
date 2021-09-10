@@ -2,17 +2,17 @@ import React from 'react';
 import { List } from 'antd';
 import { ListProps } from 'antd/lib/list';
 import DataSource, { MIDataSourceProps } from '../data-source';
-import { SelectValue } from 'antd/es/select';
 
 export interface MIListProps<VT> extends ListProps<VT> {
-  code?: boolean;
+  code?: string;
 }
 
-function MIList<
-  VT extends SelectValue = SelectValue & { [index: string]: string }
->({ ...restProps }: MIListProps<VT>) {
+function MIList<VT extends Record<string, any>>({
+  ...restProps
+}: MIListProps<VT>) {
   return (
-    <DataSource {...(restProps as MIDataSourceProps<VT>)}>
+    //@ts-ignore
+    <DataSource<VT> {...restProps}>
       {({
         valueField = 'value',
         displayField = 'label',
@@ -22,7 +22,7 @@ function MIList<
         children,
         ...payload
       }: MIDataSourceProps<VT>) => {
-        return <List {...(payload as MIListProps<VT>)} />;
+        return <List<VT> {...(payload as MIListProps<VT>)} />;
       }}
     </DataSource>
   );

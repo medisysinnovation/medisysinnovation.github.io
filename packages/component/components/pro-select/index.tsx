@@ -2,14 +2,13 @@ import React from 'react';
 import { ProFormSelect } from '@ant-design/pro-form';
 import DataSource from '../data-source';
 import { MIDataSourceProps } from '../data-source';
-import { SelectValue } from 'antd/es/select';
 import { FormItemProps } from 'antd';
 import { useIntl } from '../locale';
 import { ProFormSelectProps } from '@ant-design/pro-form/es/components/Select';
 
 const ProSelect = <
-  VT extends SelectValue & {
-    [key: string]: number | string;
+  VT extends {
+    [key: string]: any;
   }
 >(
   props: MIDataSourceProps<VT> &
