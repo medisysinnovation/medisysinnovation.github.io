@@ -111,12 +111,10 @@ const MIDataSource = <VT extends Record<string, any>>(
     dependencies = defaultDependencies,
     request,
     manualRequest,
-    params = {},
     pro,
-    onRenderText,
     ...restProps
   } = props;
-  const { remoteDataFormatter, ...otherProps } = props;
+  const { remoteDataFormatter, onRenderText, params, ...otherProps } = props;
 
   const [list, setList] = useState<VT[]>([]);
   const [filteredList, setFilteredList] = useState<VT[]>([]);
@@ -128,7 +126,7 @@ const MIDataSource = <VT extends Record<string, any>>(
     setList(d);
   };
   //@ts-ignore
-  useEventListener('mi_datasourcechanged_' + code, (e: CustomEvent) => {
+  useEventListener('mi_data_source_changed_' + code, (e: CustomEvent) => {
     //console.log(2, e.detail);
 
     setRawData(e.detail ?? []);

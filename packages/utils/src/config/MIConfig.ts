@@ -1,6 +1,6 @@
 import immutable from 'immutable';
 import getRequest from './baseRequest';
-import type { RequestConfig,RequestMethod } from './baseRequest'
+import { RequestConfig, RequestMethod } from './baseRequest';
 // console.log(immutable);
 const { Map, List } = immutable;
 export interface ModalStaticFunctions {
@@ -13,13 +13,16 @@ export interface StateProps {
   dataSource?: Object;
 }
 type KeyValuePair = { [key: string]: any };
-type RequestWrap = (request: () => Promise<unknown>, params: any)=>((...args: any[]) => Promise<unknown>) | null
+type RequestWrap = (
+  request: () => Promise<unknown>,
+  params: any,
+) => ((...args: any[]) => Promise<unknown>) | null;
 export interface MedisysConfigProps extends KeyValuePair {
   dataLoader?: ({ code, ...props }: { code: string }) => Promise<[]>;
   urls?: { [key: string]: string };
   cache?: boolean;
   request?: RequestConfig;
-  requestWrap?:RequestWrap;
+  requestWrap?: RequestWrap;
 }
 
 const loadingStates: { [key: string]: boolean } = {};
@@ -28,7 +31,7 @@ let localStore: StateProps = {
   dataSource: JSON.parse(sessionStorage.getItem('mi_ds') || '{}'),
 };
 
-const _me:Record<string,any> = {
+const _me: Record<string, any> = {
   imt_current: immutable.fromJS(localStore),
 };
 let _config: MedisysConfigProps = {
@@ -49,10 +52,10 @@ let _config: MedisysConfigProps = {
     lastActiveTime: '_lat',
   },
   dataLoader: undefined,
-  request:undefined,
+  request: undefined,
 };
-let requestInstance:RequestMethod
-let useModel:any
+let requestInstance: RequestMethod;
+let useModel: any;
 class MIConfig {
   static setConfig({
     dataLoader,
@@ -75,11 +78,11 @@ class MIConfig {
       ..._config.keys,
       ...keys,
     };
-    if(request){
-      requestInstance = getRequest(request)
+    if (request) {
+      requestInstance = getRequest(request);
     }
-    if(model){
-      useModel=model
+    if (model) {
+      useModel = model;
     }
     _config = {
       ..._config,
@@ -90,21 +93,24 @@ class MIConfig {
   static getConfig(key: keyof MedisysConfigProps) {
     return _config[key];
   }
-  static getRequest(config?:RequestConfig) {
-    if(config){
-      requestInstance= getRequest(config)
+  static getRequest(config?: RequestConfig) {
+    if (config) {
+      requestInstance = getRequest(config);
     }
     return requestInstance;
   }
   static getModelHook() {
-    if(!useModel){
-      useModel= MIConfig.getConfig('model')
+    if (!useModel) {
+      useModel = MIConfig.getConfig('model');
     }
-    return useModel || function(){
-      return {
-        api:{}
+    return (
+      useModel ||
+      function() {
+        return {
+          api: {},
+        };
       }
-    };
+    );
   }
   static initialization() {
     var ds = _me.imt_current.get('dataSource');
@@ -112,7 +118,7 @@ class MIConfig {
     ds.keySeq().forEach((code: string) => {
       // console.log(ds.get(code)?.toJS(), code);
       document.dispatchEvent(
-        new CustomEvent('mi_datasourcechanged_' + code, {
+        new CustomEvent('mi_mi_data_source_changed__' + code, {
           bubbles: true,
           detail: ds.get(code)?.toJS() ?? [],
         }),
@@ -144,21 +150,34 @@ class MIConfig {
   static async loadData(code: string, params?: any) {
     // console.log(code, _config.dataLoader);
     if (!_config.dataLoader) {
-      throw 'No default loader configed, please use `config` function set default dataLoader';
+      throw 'No default loader config found, please use `config` function set default dataLoader';
     }
 
     if (loadingStates[code]) {
-      return;
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          reject(new Error(`request code data ${code} time out`));
+        }, 10000);
+        const interval = setInterval(() => {
+          if (loadingStates[code] === false) {
+            clearInterval(interval);
+            clearTimeout(timeout);
+            setTimeout(() => {
+              resolve(MIConfig.getData(code));
+            }, 1);
+          }
+        }, 100);
+      });
     }
     loadingStates[code] = true;
-    let data:[]=[]
+    let data: [] = [];
     try {
-          //@ts-ignore
-     data = await _config.dataLoader({ code, ...params });
+      //@ts-ignore
+      data = await _config.dataLoader({ code, ...params });
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    
+
     delete loadingStates[code];
     if (data) {
       this.updateState({
@@ -209,7 +228,7 @@ class MIConfig {
 
       imt_dataSource.keySeq().forEach((code: string) => {
         document.dispatchEvent(
-          new CustomEvent('mi_datasourcechanged_' + code, {
+          new CustomEvent('mi_mi_data_source_changed__' + code, {
             bubbles: true,
             detail: imt_dataSource.get(code)?.toJS(),
           }),

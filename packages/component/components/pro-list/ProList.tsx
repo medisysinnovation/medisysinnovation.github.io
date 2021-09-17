@@ -41,6 +41,7 @@ const MIProList = <
   search,
   sort,
   editable,
+  className,
   ...props
 }: MIProListTypeProps<RecordType, U>) => {
   const { request, actionRef: propsActionRef, ...sharedListProps } = useList(
@@ -145,10 +146,10 @@ const MIProList = <
   );
 
   return (
-    <>
+    <section className={className}>
       {searchDom}
       {listDom}
-    </>
+    </section>
   );
 };
 
