@@ -98,7 +98,7 @@ const _MIForm: ForwardRefRenderFunction<
     wrapForm.resetFields();
     if (divRef.current)
       divRef.current.dispatchEvent(
-        new CustomEvent('discardform', { bubbles: true }),
+        new CustomEvent('discard_form', { bubbles: true }),
       );
   };
 
@@ -109,7 +109,7 @@ const _MIForm: ForwardRefRenderFunction<
       discardForm();
     }
   };
-  useEventListener('aboutdiscardform', tryDiscardForm, {
+  useEventListener('about_discard_form', tryDiscardForm, {
     target: divRef,
   });
 

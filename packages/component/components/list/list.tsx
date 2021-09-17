@@ -53,13 +53,13 @@ function MIList<VT extends Record<string, any>>({
 //   //     //@ts-ignore
 //   //     onCancel(e);
 //   // };
-//   useEventListener('discardform', (e: FormEvent) => {
+//   useEventListener('discard_form', (e: FormEvent) => {
 //     if (onCancel && isVisible(ref?.current)) {
 //       //@ts-ignore
 //       onCancel(e);
 //     }
 //   });
-//   useEventListener('loadingstatechanged', (e: FormEvent) => {
+//   useEventListener('loading_state_changed', (e: FormEvent) => {
 //     if (model && isVisible(ref?.current)) {
 //       const models = e.detail?.models ?? {};
 //       // console.log(model, models[model]);
@@ -79,7 +79,7 @@ function MIList<VT extends Record<string, any>>({
 
 //       // setTimeout(() => {
 //       //   if (ref.current)
-//       //     ref.current.addEventListener('discardform', onDiscardForm);
+//       //     ref.current.addEventListener('discard_form', onDiscardForm);
 //       // }, 1);
 //     } else {
 //       setFalse();
@@ -87,7 +87,7 @@ function MIList<VT extends Record<string, any>>({
 
 //     // return () => {
 //     //   if (ref.current)
-//     //     ref.current.removeEventListener('discardform', onDiscardForm);
+//     //     ref.current.removeEventListener('discard_form', onDiscardForm);
 //     // };
 //   }, [visible]);
 
@@ -103,7 +103,7 @@ function MIList<VT extends Record<string, any>>({
 //           // console.log(123123, form);
 
 //           if (form && triggerDiscard) {
-//             form.dispatchEvent(new CustomEvent('aboutdiscardform'));
+//             form.dispatchEvent(new CustomEvent('about_discard_form'));
 
 //             return false;
 //           } else {

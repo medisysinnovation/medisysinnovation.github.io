@@ -18,9 +18,9 @@ const MIButton: React.FC<MIButtonProps> = ({ triggerDiscard, ...props }) => {
           const form = e.currentTarget.closest('.medisys-form');
           if (form) {
             e.currentTarget.dispatchEvent(
-              new CustomEvent('aboutdiscardform', { bubbles: true }),
+              new CustomEvent('about_discard_form', { bubbles: true }),
             );
-            form.addEventListener('discardform', () => {
+            form.addEventListener('discard_form', () => {
               if (onClick) onClick(e);
             });
           } else if (onClick) {

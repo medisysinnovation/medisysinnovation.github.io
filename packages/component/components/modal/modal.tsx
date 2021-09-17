@@ -50,14 +50,14 @@ const MIModal: React.FC<MIModalProps> = ({
   //     onCancel(e);
   // };
   //@ts-ignore
-  useEventListener('discardform', (e: FormEvent) => {
+  useEventListener('discard_form', (e: FormEvent) => {
     if (onCancel && isVisible(ref?.current)) {
       //@ts-ignore
       onCancel(e);
     }
   });
   //@ts-ignore
-  useEventListener('loadingstatechanged', (e: FormEvent) => {
+  useEventListener('loading_state_changed', (e: FormEvent) => {
     if (model && isVisible(ref?.current)) {
       const models = e.detail?.models ?? {};
       // console.log(model, models[model]);
@@ -77,7 +77,7 @@ const MIModal: React.FC<MIModalProps> = ({
 
       // setTimeout(() => {
       //   if (ref.current)
-      //     ref.current.addEventListener('discardform', onDiscardForm);
+      //     ref.current.addEventListener('discard_form', onDiscardForm);
       // }, 1);
     } else {
       setFalse();
@@ -85,7 +85,7 @@ const MIModal: React.FC<MIModalProps> = ({
 
     // return () => {
     //   if (ref.current)
-    //     ref.current.removeEventListener('discardform', onDiscardForm);
+    //     ref.current.removeEventListener('discard_form', onDiscardForm);
     // };
   }, [visible]);
 
@@ -101,7 +101,7 @@ const MIModal: React.FC<MIModalProps> = ({
           // console.log(123123, form);
 
           if (form && triggerDiscard) {
-            form.dispatchEvent(new CustomEvent('aboutdiscardform'));
+            form.dispatchEvent(new CustomEvent('about_discard_form'));
 
             return false;
           } else {

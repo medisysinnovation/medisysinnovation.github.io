@@ -14,7 +14,7 @@ const MIProgressButton: React.FC<MIProgressButtonProps> = ({
   const [spinning, setSpinning] = useState(false);
 
   //@ts-ignore
-  useEventListener('loadingstatechanged', (e: FormEvent) => {
+  useEventListener('loading_state_changed', (e: FormEvent) => {
     const models = e.detail?.models ?? {};
     if (model) setSpinning(!!models[model]);
   });

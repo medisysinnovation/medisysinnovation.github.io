@@ -118,7 +118,7 @@ class MIConfig {
     ds.keySeq().forEach((code: string) => {
       // console.log(ds.get(code)?.toJS(), code);
       document.dispatchEvent(
-        new CustomEvent('mi_mi_data_source_changed__' + code, {
+        new CustomEvent('mi_data_source_changed_' + code, {
           bubbles: true,
           detail: ds.get(code)?.toJS() ?? [],
         }),
@@ -159,7 +159,7 @@ class MIConfig {
           reject(new Error(`request code data ${code} time out`));
         }, 10000);
         const interval = setInterval(() => {
-          if (loadingStates[code] === false) {
+          if (!loadingStates[code]) {
             clearInterval(interval);
             clearTimeout(timeout);
             setTimeout(() => {
@@ -206,7 +206,7 @@ class MIConfig {
       // console.log(loading);
       // console.log('loading state changed', loading, localStore.loading);
       document.dispatchEvent(
-        new CustomEvent('loadingstatechanged', {
+        new CustomEvent('loading_state_changed', {
           bubbles: true,
           detail: loading,
         }),
@@ -228,7 +228,7 @@ class MIConfig {
 
       imt_dataSource.keySeq().forEach((code: string) => {
         document.dispatchEvent(
-          new CustomEvent('mi_mi_data_source_changed__' + code, {
+          new CustomEvent('mi_data_source_changed_' + code, {
             bubbles: true,
             detail: imt_dataSource.get(code)?.toJS(),
           }),
