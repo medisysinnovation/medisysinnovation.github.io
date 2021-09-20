@@ -57,12 +57,14 @@ export const columnConverter = ({ locale }: Record<string, any>) => <
     case 'date':
       opts.fieldProps = {
         format: 'DD-MMM-YYYY',
+        ...o?.fieldProps,
       };
       opts.valueType = valueType;
       break;
     case 'dateTime':
       opts.fieldProps = {
         format: 'DD-MMM-YYYY HH:mm:ss',
+        ...o?.fieldProps,
       };
       opts.valueType = valueType;
       break;
