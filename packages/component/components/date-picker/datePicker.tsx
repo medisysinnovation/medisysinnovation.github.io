@@ -1,32 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { DatePicker } from 'antd';
 import { defaultFormat } from './utils';
+import { parseValueToMoment } from '@medisys/utils';
 import RangePicker from './rangePicker';
 import moment from 'moment';
 type ComponentProps = React.ComponentProps<typeof DatePicker>;
 
-const MIDatePicker = ({ value, ...props }: ComponentProps) => {
-  const [momentValue, setMomentValue] = useState(
-    value?.isValid ? value : undefined,
-  );
-  useEffect(() => {
-    if (value) {
-      if (!value?.isValid) {
-        const v = moment(value);
-        if (!v.isValid() && !!value) {
-          throw new Error('Invalid moment format: ' + value);
-        }
-        //@ts-ignore
-        props.onChange(v);
-        //@ts-ignore
-        setMomentValue(v);
-      } else {
-        setMomentValue(value);
-      }
-    } else {
-      setMomentValue(undefined);
-    }
-  }, [value]);
+const MIDatePicker = ({
+  value,
+  readonly,
+  ...props
+}: ComponentProps & {
+  readonly?: boolean;
+}) => {
+  const momentValue = parseValueToMoment(value as any) as moment.Moment;
+
+  if (readonly) {
+    return (
+      //@ts-ignore
+      <span>{value ? momentValue.format(props?.format || 'L') : '-'}</span>
+    );
+  }
   return <DatePicker format={defaultFormat} value={momentValue} {...props} />;
 };
 

@@ -1,4 +1,5 @@
 import { MIConfig } from '../config';
+import moment from 'moment';
 
 export type ValidKey = 'refreshToken' | 'accessToken';
 
@@ -44,4 +45,31 @@ export const convertToAPIObject = (values: Record<string, any>) => {
       return o;
     }),
   );
+};
+
+export const defaultFormat = 'YYYY-MM-DD HH:mm';
+
+export const isNil = (value: any) => value === null || value === undefined;
+
+type DateValue =
+  | moment.Moment
+  | moment.Moment[]
+  | string
+  | string[]
+  | number
+  | number[];
+
+export const parseValueToMoment = (
+  value: DateValue,
+  formatter?: string,
+): moment.Moment | moment.Moment[] | null | undefined => {
+  if (isNil(value) || moment.isMoment(value)) {
+    return value as moment.Moment | null | undefined;
+  }
+  if (Array.isArray(value)) {
+    return (value as any[]).map(
+      v => parseValueToMoment(v, formatter) as moment.Moment,
+    );
+  }
+  return moment(value, formatter);
 };

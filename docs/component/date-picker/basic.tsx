@@ -18,6 +18,7 @@ export default function() {
         </Form.Item>
         <Form.Item name="momentDate">
           <DatePicker showTime />
+          <DatePicker showTime readonly />
         </Form.Item>
         <ProDatePicker fieldProps={{ showTime: true }} />
       </Form>
