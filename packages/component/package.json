@@ -1,6 +1,6 @@
 {
   "name": "@medisys/component",
-  "version": "0.1.253",
+  "version": "0.1.254",
   "description": "Medisys UI Component",
   "author": "Chris Lu Yi <chris_lu@medinno.onmicrosoft.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
@@ -46,7 +46,7 @@
     "@ant-design/pro-list": "^1.12.1",
     "@ant-design/pro-table": "^2.49.0",
     "@medisys/provider": "^0.1.200",
-    "@medisys/utils": "^0.1.252",
+    "@medisys/utils": "^0.1.254",
     "ahooks": "^2.10.4",
     "antd": "^4.16.13",
     "classnames": "^2.2.6",
