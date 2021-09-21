@@ -4,8 +4,8 @@ export default {
     input: '请输入',
     select: '请选择',
     datepicker: '选择日期',
-    rangeDatepickerStart: '请选择',
-    rangeDatepickerEnd: '请选择',
+    rangeDatepickerStart: '选择开始日期',
+    rangeDatepickerEnd: '选择结束日期',
   },
   table: {
     column: {

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { useIntl } from '../locale';
+
 // import { useWhyDidYouUpdate, useEventListener } from 'ahooks';
 
 import { DatePicker } from 'antd';
@@ -18,6 +20,8 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
   showTime,
   ...props
 }) => {
+  const intl = useIntl();
+
   // console.log(value, autoTransformTime, showTime);
   const [momentValue, setMomentValue] = useState();
   useEffect(() => {
@@ -59,6 +63,10 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
       value={momentValue}
       //@ts-ignore
       showTime={showTime}
+      placeholder={[
+        intl.getMessage('form.rangeDatepickerStart', 'Select start date'),
+        intl.getMessage('form.rangeDatepickerEnd', 'Select end date'),
+      ]}
       {...props}
     />
   );

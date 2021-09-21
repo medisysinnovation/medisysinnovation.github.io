@@ -4,8 +4,8 @@ export default {
     input: 'Please input',
     select: 'Please select',
     datepicker: 'Select date',
-    rangeDatepickerStart: 'Please select',
-    rangeDatepickerEnd: 'Please select',
+    rangeDatepickerStart: 'Select start date',
+    rangeDatepickerEnd: 'Select end date',
   },
   table: {
     column: {
