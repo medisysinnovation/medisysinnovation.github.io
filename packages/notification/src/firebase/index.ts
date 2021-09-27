@@ -36,7 +36,9 @@ export type CallbackConfig = {
 const _config: {
   fcm?: FirebaseConfig | undefined;
   callback?: CallbackConfig;
-} = {};
+} = {
+  callback: {},
+};
 
 export const updateFirebaseMessagingConfig = (config: FirebaseConfig) => {
   Object.assign(_config.callback, config);
