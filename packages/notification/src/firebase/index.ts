@@ -24,12 +24,13 @@ export type FirebaseConfig = FirebaseOptions & {
   vapidKey?: string;
   serverKey?: string;
   onGetFirebaseConfigAsync?: () => Promise<FirebaseConfig>;
+  onGetSenderTokenAsync?: () => Promise<string>;
 };
 
 export type CallbackConfig = {
   // fcm?: FirebaseConfig | undefined;
   onMessageReceived?: (payload: ReceivedMessagePayload) => void;
-  onGetSenderTokenAsync?: () => Promise<string>;
+  onSenderTokenReceived?: (token: string) => void;
   onTokenReceived?: (token: string) => boolean;
 };
 
@@ -46,6 +47,7 @@ export const updateFirebaseMessagingConfig = (config: FirebaseConfig) => {
 
 export const initFirebaseMessagingAsync = async ({
   onGetFirebaseConfigAsync,
+  onGetSenderTokenAsync,
   ...config
 }: FirebaseConfig & CallbackConfig) => {
   if (_config.fcm)
@@ -121,9 +123,10 @@ export const initFirebaseMessagingAsync = async ({
           }
         }
       });
-      if (_config?.callback?.onGetSenderTokenAsync) {
-        const _senderToken = await _config?.callback?.onGetSenderTokenAsync();
+      if (onGetSenderTokenAsync) {
+        const _senderToken = await onGetSenderTokenAsync();
         if (_senderToken) {
+          _config?.callback?.onSenderTokenReceived!(_senderToken);
           fcmSendMessageToken = _senderToken;
         }
       }
