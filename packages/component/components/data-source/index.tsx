@@ -174,7 +174,7 @@ const MIDataSource = <VT extends Record<string, any>>(
         setRawData(existList);
         return;
       }
-      if (!url) {
+      if (!url && !request) {
         if (list.length) {
           return;
         }

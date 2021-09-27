@@ -48,7 +48,6 @@ const MessagingDemo = () => {
     e => {
       const topic = form.getFieldValue('topic');
 
-      console.log(e);
       unsubscribeTopicAsync({
         token: registrationToken,
         topic,
