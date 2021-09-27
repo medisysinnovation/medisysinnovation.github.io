@@ -29,6 +29,10 @@
     "firebase": "^8.5.0",
     "umi-request": "^1.3.5"
   },
+  "devDependencies": {
+    "father-build": "^1.19.8",
+    "umi-test": "^1.9.6"
+  },
   "scripts": {
     "build": "father-build",
     "test": "umi-test",

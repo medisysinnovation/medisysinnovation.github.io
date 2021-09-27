@@ -24,39 +24,56 @@ export type FirebaseConfig = FirebaseOptions & {
   vapidKey?: string;
   serverKey?: string;
   onGetFirebaseConfigAsync?: () => Promise<FirebaseConfig>;
+};
+
+export type CallbackConfig = {
+  // fcm?: FirebaseConfig | undefined;
   onMessageReceived?: (payload: ReceivedMessagePayload) => void;
   onGetSenderTokenAsync?: () => Promise<string>;
   onTokenReceived?: (token: string) => boolean;
 };
 
+const _config: {
+  fcm?: FirebaseConfig | undefined;
+  callback?: CallbackConfig;
+} = {};
+
+export const updateFirebaseMessagingConfig = (config: FirebaseConfig) => {
+  Object.assign(_config.callback, config);
+};
+
 export const initFirebaseMessagingAsync = async ({
-  onTokenReceived,
-  onGetSenderTokenAsync,
-  onMessageReceived = () => {},
   onGetFirebaseConfigAsync,
   ...config
-}: FirebaseConfig) => {
+}: FirebaseConfig & CallbackConfig) => {
+  if (_config.fcm)
+    throw new Error(
+      'Firebase message should not be initialized twice. Use `updateConfig` to update callback if intend to',
+    );
+
   if (onGetFirebaseConfigAsync) {
-    fcmConfig = await onGetFirebaseConfigAsync!();
-    const { vapidKey, serverKey, ...otherConfig } = fcmConfig;
+    _config.fcm = await onGetFirebaseConfigAsync!();
+    const { vapidKey, serverKey, ...otherConfig } = _config.fcm;
 
     initFirebaseConfig({
-      ...fcmConfig,
+      ..._config.fcm,
       ...config,
     });
   } else {
     initFirebaseConfig(config);
   }
 
+  updateFirebaseMessagingConfig(config);
+
   const messaging = app.messaging();
   try {
     const currentToken = await messaging.getToken({
-      vapidKey: config.vapidKey || fcmConfig!.vapidKey,
+      vapidKey: config.vapidKey || _config.fcm!.vapidKey,
     });
     if (currentToken) {
       let proceed = true;
-      if (onTokenReceived) {
-        proceed = onTokenReceived(currentToken) ?? true;
+      if (_config?.callback?.onTokenReceived) {
+        proceed = _config?.callback?.onTokenReceived(currentToken) ?? true;
       }
       //@ts-ignore
       messaging?.swRegistration?.active.postMessage({
@@ -83,7 +100,7 @@ export const initFirebaseMessagingAsync = async ({
             //   data: parsedData,
             // });
 
-            onMessageReceived({
+            _config?.callback?.onMessageReceived!({
               ...data,
               ...data.data,
               data: parsedData,
@@ -95,15 +112,15 @@ export const initFirebaseMessagingAsync = async ({
             //   ...data.firebaseMessaging?.payload,
             //   messageType: data.firebaseMessaging?.type,
             // });
-            onMessageReceived({
+            _config?.callback?.onMessageReceived!({
               ...data.firebaseMessaging?.payload,
               messageType: data.firebaseMessaging?.type,
             });
           }
         }
       });
-      if (onGetSenderTokenAsync) {
-        const _senderToken = await onGetSenderTokenAsync();
+      if (_config?.callback?.onGetSenderTokenAsync) {
+        const _senderToken = await _config?.callback?.onGetSenderTokenAsync();
         if (_senderToken) {
           fcmSendMessageToken = _senderToken;
         }
