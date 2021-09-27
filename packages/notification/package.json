@@ -1,6 +1,6 @@
 {
   "name": "@medisys/notification",
-  "version": "0.1.258",
+  "version": "0.1.259",
   "description": "Notification based on firebase",
   "author": "Chris Lu Yi <chrisluyi@gmail.com>",
   "homepage": "https://github.com/medisysinnovation/medisys#readme",
