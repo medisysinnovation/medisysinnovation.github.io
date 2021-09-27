@@ -5,7 +5,7 @@ import { FirebaseOptions } from '@firebase/app-types';
 import request from 'umi-request';
 //Firebase messaging restful api
 //https://documenter.getpostman.com/view/5523742/RzZFBG7C#3864fe44-5434-43d1-a5a0-a46ac51bb5a8
-let fcmConfig: FirebaseConfig | undefined = undefined;
+
 let fcmSendMessageToken = '';
 export const initFirebaseConfig = (option: FirebaseOptions) => {
   if (!app.apps.length) {
@@ -81,7 +81,7 @@ export const initFirebaseMessagingAsync = async ({
       messaging?.swRegistration?.active.postMessage({
         type: 'init',
         data: {
-          ...fcmConfig,
+          ..._config.fcm,
           ...config,
         },
       });
@@ -142,8 +142,8 @@ export const subscribeTopicAsync = async ({
   topic,
   serverKey,
 }: {
-  token: string;
-  topic: string;
+  token?: string;
+  topic?: string;
   serverKey?: string;
 }) => {
   //Subscribe topic
@@ -152,7 +152,7 @@ export const subscribeTopicAsync = async ({
     // `https://iid.googleapis.com/iid/v1/${token}/rel/topics/${topic}`,
     {
       headers: {
-        Authorization: `Bearer ${serverKey || fcmConfig?.serverKey}`,
+        Authorization: `Bearer ${serverKey || _config.fcm?.serverKey}`,
       },
       body: JSON.stringify({
         to: '/topics/' + topic,
@@ -173,16 +173,16 @@ export const unsubscribeTopicAsync = async ({
   topic,
   serverKey,
 }: {
-  token: string;
-  topic: string;
-  serverKey: string;
+  token?: string;
+  topic?: string;
+  serverKey?: string;
 }) => {
   //Subscribe topic
   const r = await request.post(
     `https://iid.googleapis.com/iid/v1:batchRemove`, //`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${topic}`,
     {
       headers: {
-        Authorization: `Bearer ${serverKey || fcmConfig?.serverKey}`,
+        Authorization: `Bearer ${serverKey || _config.fcm?.serverKey}`,
       },
       body: JSON.stringify({
         to: '/topics/' + topic,
@@ -285,7 +285,7 @@ export const sendMessageAsync = async ({
   const send = async () => {
     const r = await request.post(
       `https://fcm.googleapis.com/v1/projects/${projectId ||
-        fcmConfig!.projectId}/messages:send`,
+        _config.fcm!.projectId}/messages:send`,
       // `https://fcm.googleapis.com/fcm/send`,
       {
         headers: {
