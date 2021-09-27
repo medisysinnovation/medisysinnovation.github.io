@@ -41,8 +41,11 @@ const _config: {
   callback: {},
 };
 
-export const updateFirebaseMessagingConfig = (config: FirebaseConfig) => {
-  Object.assign(_config.callback, config);
+export const updateFirebaseMessagingConfig = (config: CallbackConfig) => {
+  _config.callback = {
+    ..._config.callback,
+    ...config,
+  };
 };
 
 export const initFirebaseMessagingAsync = async ({
