@@ -51,8 +51,11 @@ export const updateFirebaseMessagingConfig = (config: CallbackConfig) => {
 export const initFirebaseMessagingAsync = async ({
   onGetFirebaseConfigAsync,
   onGetSenderTokenAsync,
+  callback,
   ...config
-}: FirebaseConfig & CallbackConfig) => {
+}: FirebaseConfig & {
+  callback: CallbackConfig;
+}) => {
   if (_config.fcm)
     throw new Error(
       'Firebase message should not be initialized twice. Use `updateConfig` to update callback if intend to',
@@ -70,7 +73,7 @@ export const initFirebaseMessagingAsync = async ({
     initFirebaseConfig(config);
   }
 
-  updateFirebaseMessagingConfig(config);
+  updateFirebaseMessagingConfig(callback);
 
   const messaging = app.messaging();
   try {
