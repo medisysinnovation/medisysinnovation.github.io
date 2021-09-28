@@ -6,13 +6,6 @@ import request from 'umi-request';
 //Firebase messaging restful api
 //https://documenter.getpostman.com/view/5523742/RzZFBG7C#3864fe44-5434-43d1-a5a0-a46ac51bb5a8
 
-let fcmSendMessageToken = '';
-export const initFirebaseConfig = (option: FirebaseOptions) => {
-  if (!app.apps.length) {
-    app.initializeApp(option);
-  }
-};
-
 export type ReceivedMessagePayload = {
   /** This is your message payload, 'notification' prop is reserved, use to config browser notification content */
   data?: MessageData;
@@ -32,6 +25,19 @@ export type CallbackConfig = {
   onMessageReceived?: (payload: ReceivedMessagePayload) => void;
   onSenderTokenReceived?: (token: string) => void;
   onTokenReceived?: (token: string) => boolean;
+};
+
+let fcmSendMessageToken = '';
+export const initFirebaseConfig = (option: FirebaseOptions) => {
+  if (!app.apps.length) {
+    app.initializeApp(option);
+  }
+};
+
+export const removeFirebaseToken = async () => {
+  const messaging = app.messaging();
+  fcmSendMessageToken = '';
+  return await messaging.deleteToken();
 };
 
 const _config: {
@@ -110,7 +116,7 @@ export const initFirebaseMessagingAsync = async ({
             //   data: parsedData,
             // });
 
-            _config?.callback?.onMessageReceived!({
+            _config?.callback?.onMessageReceived?.({
               ...data,
               ...data.data,
               data: parsedData,
@@ -122,7 +128,7 @@ export const initFirebaseMessagingAsync = async ({
             //   ...data.firebaseMessaging?.payload,
             //   messageType: data.firebaseMessaging?.type,
             // });
-            _config?.callback?.onMessageReceived!({
+            _config?.callback?.onMessageReceived?.({
               ...data.firebaseMessaging?.payload,
               messageType: data.firebaseMessaging?.type,
             });
@@ -132,7 +138,7 @@ export const initFirebaseMessagingAsync = async ({
       if (onGetSenderTokenAsync) {
         const _senderToken = await onGetSenderTokenAsync();
         if (_senderToken) {
-          _config?.callback?.onSenderTokenReceived!(_senderToken);
+          _config?.callback?.onSenderTokenReceived?.(_senderToken);
           fcmSendMessageToken = _senderToken;
         }
       }
