@@ -13,7 +13,9 @@ const MIDatePicker = ({
 }: ComponentProps & {
   readonly?: boolean;
 }) => {
-  const momentValue = parseValueToMoment(value as any) as moment.Moment;
+  const momentValue = parseValueToMoment(value as any) as
+    | moment.Moment
+    | undefined;
 
   if (readonly) {
     return (
