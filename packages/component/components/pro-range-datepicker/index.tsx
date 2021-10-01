@@ -8,8 +8,8 @@ export default ({ fieldProps, ...props }: ComponentProps) => {
 
   const defaultFieldProps = {
     placeholder: [
-      intl.getMessage('form.rangedatepicker', 'Please select'),
-      intl.getMessage('form.rangedatepicker', 'Please select'),
+      intl.getMessage('form.rangeDatepickerStart', 'Please select'),
+      intl.getMessage('form.rangeDatepickerEnd', 'Please select'),
     ] as [string, string],
   };
 

@@ -18,6 +18,7 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
   autoTransformTime = true,
   value,
   showTime,
+  placeholder,
   ...props
 }) => {
   const intl = useIntl();
@@ -63,10 +64,14 @@ const MIRangePicker: React.FC<MIRangePickerProps> = ({
       value={momentValue}
       //@ts-ignore
       showTime={showTime}
-      placeholder={[
-        intl.getMessage('form.rangeDatepickerStart', 'Select start date'),
-        intl.getMessage('form.rangeDatepickerEnd', 'Select end date'),
-      ]}
+      placeholder={
+        Array.isArray(placeholder)
+          ? placeholder
+          : [
+              intl.getMessage('form.rangeDatepickerStart', 'Select start date'),
+              intl.getMessage('form.rangeDatepickerEnd', 'Select end date'),
+            ]
+      }
       {...props}
     />
   );
