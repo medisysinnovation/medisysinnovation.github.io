@@ -1,6 +1,24 @@
 importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js');
 
+const omitUndefined = (obj, { allowEmpty = false, autoTrim = true } = {}) => {
+  const newObj = {};
+  Object.keys(obj || {}).forEach(key => {
+    //@ts-ignore
+    if (obj[key] !== undefined && obj[key] !== null) {
+      if (typeof obj[key] === 'string' && autoTrim) {
+        newObj[key] = obj[key].trim();
+      } else {
+        newObj[key] = obj[key];
+      }
+    }
+  });
+  if (Object.keys(newObj).length < 1) {
+    return allowEmpty ? obj : undefined;
+  }
+  return newObj;
+};
+
 let config = {
   subscribeFCM: true,
   sessionClosed: true,
@@ -36,6 +54,7 @@ self.addEventListener('notificationclick', event => {
     clients
       .matchAll({ includeUncontrolled: true, type: 'window' })
       .then(clientsArr => {
+        console.log(event.notification);
         // If a Window tab matching the targeted URL already exists, focus that;
         const hadWindowToFocus = clientsArr.some(windowClient =>
           !event.notification.data ||
@@ -57,6 +76,7 @@ const messageHandler = async payload => {
     '[firebase-messaging-sw.js] Received background message ',
     payload,
   );
+  // return
   const { data } = payload;
   const convertedData = data?.data ? JSON.parse(data.data) : data;
   const { notificationType, notification } = convertedData || {};
@@ -77,13 +97,17 @@ const messageHandler = async payload => {
     });
   });
 
-  const notify = defaultNotificationTemplate[notificationType];
-  if (notify) {
-    registration.showNotification(data.title || notify.title, notify.options);
-  } else if (notification) {
+  const notifyTemplate = defaultNotificationTemplate[notificationType];
+  if (notifyTemplate) {
     registration.showNotification(
-      data.title || notification.title,
-      notification.options,
+      data.title || notifyTemplate.title,
+      notifyTemplate.options,
+    );
+  } else if (notification) {
+    // console.log(omitUndefined(notification), notification);
+    registration.showNotification(
+      notification.title || data.title,
+      omitUndefined(notification),
     );
   }
 };
@@ -91,7 +115,7 @@ const messageHandler = async payload => {
 self.addEventListener('message', event => {
   const { data: eData } = event;
   const { type, data } = eData;
-  console.log(type, data);
+  // console.log(type, data);
   switch (type) {
     case 'init':
       if (!firebase.apps.length) {

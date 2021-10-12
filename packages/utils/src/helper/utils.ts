@@ -23,12 +23,27 @@ export const uniqueid = () => {
   return uuid;
 };
 
-export const omitUndefined = <T>(obj: T, allowEmpty: boolean = true): T => {
+export const isObject = (objValue: any) => {
+  return (
+    objValue && typeof objValue === 'object' && objValue.constructor === Object
+  );
+};
+
+export const omitUndefined = <T extends { [key: number]: any }>(
+  obj: T,
+  options: {
+    allowEmpty?: boolean;
+    autoTrim?: boolean;
+  } = {},
+): T => {
+  const { allowEmpty = true, autoTrim = true } = options;
   const newObj = {} as T;
-  Object.keys(obj || {}).forEach(key => {
-    //@ts-ignore
-    if (obj[key] !== undefined) {
-      //@ts-ignore
+  Object.keys(obj || {}).forEach((key: any) => {
+    if (typeof obj[key] === 'string' && autoTrim) {
+      newObj[key] = obj[key].trim();
+    } else if (isObject(obj[key])) {
+      newObj[key] = omitUndefined(obj[key], options);
+    } else {
       newObj[key] = obj[key];
     }
   });
