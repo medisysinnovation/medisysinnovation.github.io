@@ -233,8 +233,8 @@ const MIEditableProTable = <T extends MIRecordType, U, VT>({
           hideOnSinglePage: true,
           pageSize: 9999, //TODO: allow config
         }}
-        {...sharedPageProps}
         {...props}
+        {...sharedPageProps}
         onRow={onRow}
         columns={mergedColumns}
         actionRef={actionRef}

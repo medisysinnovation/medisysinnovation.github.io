@@ -103,8 +103,8 @@ const MIProTable = <T extends MIRecordType, U, ValueType = 'text'>({
         // toolBarRender={toolBarRender.map((o) => {
         //   return o;
         // })}
-        {...sharedPageProps}
         {...props}
+        {...sharedPageProps}
         onRow={onRow}
         actionRef={actionRef}
         columns={mergedColumns}

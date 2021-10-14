@@ -138,8 +138,8 @@ const MIProList = <
             }
           : false
       }
-      {...sharedListProps}
       {...props}
+      {...sharedListProps}
       request={wrappedRequest}
       actionRef={actionRef}
     />
