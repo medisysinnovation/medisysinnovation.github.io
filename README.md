@@ -10,17 +10,15 @@ https://medisysinnovation.github.io/components
 Install dependencies,
 
 ```bash
-$ npm i
+$ yarn install
 
 $ lerna bootstrap
-
-$ lerna run build
 ```
 
 Start the dev server,
 
 ```bash
-$ npm start
+$ yarn start
 ```
 
 Build documentation,
