@@ -20,18 +20,4 @@ hero:
 footer: Open-source MIT Licensed | Copyright © 2020-present<br />Powered by Medisys Innovation Pte Ltd
 ---
 
-## Getting Started
-
-```bash
-// Install Medisys Component
-$ npm install @material/component
-
-```
-
-### TypeScript
-
-`medisys` is written in TypeScript with complete definitions, check [Use in TypeScript](https://ant.design/docs/react/use-in-typescript) to getting started.
-
-## 🔗 Links
-
-- [Ant Design](https://ant.design/)
+<embed src="../README.md"></embed>
