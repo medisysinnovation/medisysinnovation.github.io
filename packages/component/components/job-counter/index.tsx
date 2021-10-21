@@ -23,7 +23,7 @@ const JobCounter = (props: any) => {
       </div>
       <h2
         style={{
-          color: 'grey',
+          color: '#ccc',
         }}
       >
         {count}
