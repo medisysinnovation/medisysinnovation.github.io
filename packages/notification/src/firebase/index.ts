@@ -14,6 +14,7 @@ export type ReceivedMessagePayload = {
 };
 
 export type FirebaseConfig = FirebaseOptions & {
+  registrationToken?: string;
   vapidKey?: string;
   serverKey?: string;
   onGetFirebaseConfigAsync?: () => Promise<FirebaseConfig>;
@@ -58,15 +59,11 @@ export const initFirebaseMessagingAsync = async ({
   onGetFirebaseConfigAsync,
   onGetSenderTokenAsync,
   callback,
+  registrationToken,
   ...config
 }: FirebaseConfig & {
   callback: CallbackConfig;
 }) => {
-  if (_config.fcm)
-    throw new Error(
-      'Firebase message should not be initialized twice. Use `updateConfig` to update callback if intend to',
-    );
-
   if (onGetFirebaseConfigAsync) {
     _config.fcm = await onGetFirebaseConfigAsync!();
     const { vapidKey, serverKey, ...otherConfig } = _config.fcm;
@@ -83,12 +80,14 @@ export const initFirebaseMessagingAsync = async ({
 
   const messaging = app.messaging();
   try {
-    const currentToken = await messaging.getToken({
-      vapidKey: config.vapidKey || _config.fcm!.vapidKey,
-    });
+    const currentToken = registrationToken
+      ? registrationToken
+      : await messaging.getToken({
+          vapidKey: config.vapidKey || _config.fcm!.vapidKey,
+        });
     if (currentToken) {
       let proceed = true;
-      if (_config?.callback?.onTokenReceived) {
+      if (!registrationToken && _config?.callback?.onTokenReceived) {
         proceed = _config?.callback?.onTokenReceived(currentToken) ?? true;
       }
       //@ts-ignore
