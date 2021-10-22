@@ -149,6 +149,8 @@ export const initFirebaseMessagingAsync = async ({
   } catch (error) {
     throw new Error('An error occurred while retrieving token. \r\n' + error);
   }
+
+  return messaging;
 };
 
 export const subscribeTopicAsync = async ({
